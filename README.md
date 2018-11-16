@@ -4,6 +4,6 @@ Cette application permettra à des étudiants de réaliser des exercices propos�
 
 ## Auteurs
 * **CORDIER Florian**
-* **RHORBACHER Léon**
+* **ROHRBACHER Léon**
 * **RALLI Alexandre**
 * **ZINK Anthony**
