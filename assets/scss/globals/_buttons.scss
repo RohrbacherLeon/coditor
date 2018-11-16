@@ -1,0 +1,19 @@
+.button_layout{
+    display: flex;
+    &--center{
+        justify-content: center;
+    }
+
+}
+
+
+.button{
+    display: block;
+    padding: 10px 14px;
+    border-radius: 4px;
+
+    &--green{
+        background-color: green;
+        color: white;
+    }
+}
