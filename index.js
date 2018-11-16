@@ -12,6 +12,20 @@ app.set('view engine', 'twig');
 app.get('/', (req, res) => {
     res.render('HomeView');
 });
+app.get('/login', (req, res) =>{
+    res.render('LoginView');
+});
+app.get('register', (req, res) =>{
+    res.render('RegisterView');
+});
+app.get('forgot_password', (req, res) => {
+    res.render('ForgotPasswordView');
+});
+/*
+app.get('exercises_:language', (req, res) => {
+    res.render('BrowsingView');
+});
+*/
 
 server.listen(8080, function(){
     console.log("Server running");
