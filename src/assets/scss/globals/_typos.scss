@@ -10,6 +10,12 @@
     font-size: 1em;
 }
 
+.text{
+    &--small{
+        font-size: 0.8em;
+    }
+}
+
 a{
     text-decoration: none;
     color: black;

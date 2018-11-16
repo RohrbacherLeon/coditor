@@ -1,9 +1,12 @@
+@import './globals/variables';
 @import './globals/reset';
 @import './globals/typos';
 @import './globals/buttons';
+@import './globals/form';
 @import './partials/menu';
 @import './views/exerciseView';
 @import './views/profileView';
+@import './views/loginView';
 
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 

@@ -1,22 +1,36 @@
 {% extends "layouts/master.twig" %}
 
 {% block content %}
+<div class='login'>
+    <h2 class="title">Connexion</h2>
+    <form action="#">
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" name="email">
+        </div>
+        <div class="form-group">
+            <label for="password">Mot de passe</label>
+            <input type="password" name="password">
+        </div>
+        <div class='button_layout button_layout--between'>
 
-<h2 class="page-title">Connexion</h2>
-<form action="#">
-    <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" name="email">
-    </div>
-    <div class="form-group">
-        <label for="password">Mot de passe</label>
-        <input type="password" name="password">
-    </div>
-    <div class="form-links">
-        <a href="#">Mot de passe oublié ?</a>
-        <a href="#">Pas encore de compte ?</a>
-    </div>
-    <button class="submit" type="submit">Connexion</button>
-</form>
+            <div class="form-links">
+                <a class='text--small' href="#">Mot de passe oublié ?</a>
+                <a class='text--small' href="#">Pas encore de compte ?</a>
+            </div>
+            
+            <button class="button button--green" type="submit">Connexion</button>
+        </div>
+    </form>
 
+    <p class='socials'>Ou se connecter avec :</p>
+    <div class='login__socials'>
+        <a class='box'>
+            <img class='icon' src='/images/google.svg'>
+        </a>
+        <a class='box'>
+            <img class='icon' src='/images/github-logo.svg'>
+        </a>
+    </div>
+</div>
 {% endblock %}
