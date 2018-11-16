@@ -28,7 +28,6 @@
                 flex-direction: column;
                 cursor: pointer;
                 position: relative;
-                
                 &__head{
                     display: flex;
                     align-items: center;
@@ -53,8 +52,11 @@
                     top: 100%;
                     right: 0;
                     border: 1px solid #333;
+                    background-color: white;
                     margin-top: 4px;
                     min-width: 130px;
+                    z-index: 100;
+
 
                     li a{
                         display: block;
