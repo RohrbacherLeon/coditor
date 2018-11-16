@@ -1,0 +1,30 @@
+{
+    "name": "coditor",
+    "version": "1.0.0",
+    "description": "Projet tutoré de LP CIASIE",
+    "main": "index.js",
+    "homepage": "https://github.com/RohrbacherLeon/coditor",
+    "bugs": {
+        "url": "https://github.com/RohrbacherLeon/coditor/issues"
+    },
+    "dependencies": {
+        "bcrypt": "^3.0.2",
+        "body-parser": "^1.18.3",
+        "express": "^4.16.4",
+        "mongodb": "^3.1.9",
+        "twig": "^1.12.0"
+    },
+    "scripts": {
+        "start": "node index.js"
+    },
+    "author": {
+        "name": "Rohrbacher Léon",
+        "url": "https://github.com/RohrbacherLeon/"
+    },
+    "contributors": [
+        "Cordier Florian (https://github.com/FlorianCordier)",
+        "Ralli Alexandre (https://github.com/alexdukeb)",
+        "Zink Anthony (https://github.com/AnthonyZink)"
+    ],
+    "license": "UNLICENSED"
+}
