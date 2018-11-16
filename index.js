@@ -7,6 +7,7 @@ const server = require('http').createServer(app);
 
 app.set('views', __dirname + '\\src\\views');
 //app.set('assets', __dirname + '\\assets');
+app.use(express.static(__dirname + '/assets'));
 app.set('view engine', 'twig');
 
 
