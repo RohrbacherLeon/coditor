@@ -1,0 +1,24 @@
+{% extends "layouts/master.twig" %}
+
+{% block content %}
+        
+<div class="main-content">
+    <div class="content-box">
+        <h3>Les plus populaires</h3>
+        <div class="row">
+            {% include './partials/series.twig' with {'title': {{title}}, 'descr': {{description}}} %}
+        </div>
+    </div>
+    <div class="content-box">
+        <div class="search-box">
+            <input type="text" name="search" placeholder="Recherche">
+            <button class="button-search"><i class="fa fa-search"></i></button>
+        </div>
+        <a href="#">Recherche avancée</a>
+    </div>
+    <div class="row">
+        {% include './partials/exercise.twig' with {'title': {{title}}, 'descr': {{description}}} %}             
+    </div>
+</div>
+
+{% endblock %}
