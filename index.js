@@ -1,26 +1,26 @@
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
 const server = require('http').createServer(app);
 
-//const router = express.Router();
-//const body_parser = require('body-parser');
 
+/***** VIEW CONFIGURATION *****/
 app.set('views', __dirname + '/src/views');
-app.use(express.static(__dirname + '/assets'));
 app.set('view engine', 'twig');
+/*****************************/
 
-app.get('/', (req, res) => {
-    res.render('HomeView');
-});
-app.get('/login', (req, res) =>{
-    res.render('LoginView');
-});
-app.get('register', (req, res) =>{
-    res.render('RegisterView');
-});
-app.get('forgot_password', (req, res) => {
-    res.render('ForgotPasswordView');
-});
+/***** MIDDLEWARES *****/
+app.use(express.static(__dirname + '/public'));
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+/*******************/
+
+/***** Routes *****/
+app.use('/', require('./routes/UserRoutes'));
+app.use('/profile', require('./routes/ProfileRoutes'));
+/*******************/
+
 /*
 app.get('exercises_:language', (req, res) => {
     res.render('BrowsingView');
@@ -28,5 +28,5 @@ app.get('exercises_:language', (req, res) => {
 */
 
 server.listen(8080, function(){
-    console.log("Server running");
+    console.log("Server running on port 8080");
 });
