@@ -5,13 +5,11 @@ const server = require('http').createServer(app);
 //const router = express.Router();
 //const body_parser = require('body-parser');
 
-app.set('views', __dirname + '\\src\\views');
-//app.set('assets', __dirname + '\\assets');
+app.set('views', __dirname + '/src/views');
 app.use(express.static(__dirname + '/assets'));
 app.set('view engine', 'twig');
 
-
-app.get('/home', (req, res) => {
+app.get('/', (req, res) => {
     res.render('HomeView');
 });
 
