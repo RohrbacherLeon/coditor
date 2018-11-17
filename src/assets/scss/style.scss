@@ -1,0 +1,21 @@
+@import './globals/variables';
+@import './globals/reset';
+@import './globals/typos';
+@import './globals/buttons';
+@import './globals/form';
+@import './partials/menu';
+@import './views/exerciseView';
+@import './views/profileView';
+@import './views/loginView';
+@import './views/registerView';
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+body{
+    max-width: 1600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: 'Open Sans'
+}

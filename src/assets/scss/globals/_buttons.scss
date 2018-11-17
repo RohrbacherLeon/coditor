@@ -1,0 +1,26 @@
+.button_layout{
+    display: flex;
+    &--center{
+        justify-content: center;
+    }
+
+    &--between{
+        justify-content: space-between;
+    }
+
+}
+
+
+.button{
+    display: block;
+    outline: none;
+    border: 0;
+    padding: 10px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &--green{
+        background-color: green;
+        color: white;
+    }
+}

@@ -1,0 +1,22 @@
+.title{
+    font-size: 1.7em;
+
+    &--small{
+        font-size: 1.3em;
+    }
+}
+
+.subtitle{
+    font-size: 1em;
+}
+
+.text{
+    &--small{
+        font-size: 0.8em;
+    }
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}

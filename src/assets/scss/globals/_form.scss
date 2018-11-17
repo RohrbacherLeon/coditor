@@ -1,0 +1,22 @@
+.form-group{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+
+    label{
+        margin-bottom: 0.3rem;
+    }
+
+    input{
+        border: 1px solid #333;
+        border-radius: 4px;
+        padding: 10px;
+        outline: none;
+        transition: border 0.3s;
+
+        &:focus{
+            border: 1px solid $primary-color;
+        }
+    }
+
+}
