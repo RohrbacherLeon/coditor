@@ -5,9 +5,9 @@
     justify-content: space-between;
 
     &__logo{
-        height: 60px;
-        width: 80px;
-        background-color: red;
+        img{
+            height: 80px;
+        }
     }
 
     &__right{
