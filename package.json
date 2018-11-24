@@ -8,11 +8,12 @@
         "url": "https://github.com/RohrbacherLeon/coditor/issues"
     },
     "dependencies": {
-        "bcrypt": "^3.0.2",
+        "bcryptjs": "^2.4.3",
         "body-parser": "^1.18.3",
         "dotenv": "^6.1.0",
         "express": "^4.16.4",
         "mongodb": "^3.1.9",
+        "mongoose": "^5.3.13",
         "twig": "^1.12.0"
     },
     "scripts": {

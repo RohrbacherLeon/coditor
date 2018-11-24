@@ -3,7 +3,15 @@ const express    = require('express');
 const app        = express();
 const bodyParser = require('body-parser');
 const server     = require('http').createServer(app);
+const mongoose   = require('mongoose');
 
+
+/***** MONGODB *****/
+mongoose.connect(`mongodb://${config.db.host}/${config.db.database}`, {
+    useCreateIndex: true,
+    useNewUrlParser: true
+});
+/*****************************/
 
 /***** VIEW CONFIGURATION *****/
 app.set('views', __dirname + '/src/views');
