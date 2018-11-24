@@ -1,7 +1,8 @@
-const express = require('express');
-const app = express();
+const config     = require('./config/config');
+const express    = require('express');
+const app        = express();
 const bodyParser = require('body-parser');
-const server = require('http').createServer(app);
+const server     = require('http').createServer(app);
 
 
 /***** VIEW CONFIGURATION *****/
@@ -27,6 +28,6 @@ app.get('exercises_:language', (req, res) => {
 });
 */
 
-server.listen(8080, function(){
-    console.log("Server running on port 8080");
+server.listen(config.app.port, () => {
+    console.log(`Server running on port ${config.app.port}`);
 });
