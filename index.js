@@ -4,7 +4,7 @@ const app        = express();
 const bodyParser = require('body-parser');
 const server     = require('http').createServer(app);
 const mongoose   = require('mongoose');
-
+const expressValidator = require('express-validator');
 
 /***** MONGODB *****/
 mongoose.connect(`mongodb://${config.db.host}/${config.db.database}`, {
@@ -23,6 +23,23 @@ app.use(express.static(__dirname + '/public'));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+app.use(expressValidator({
+    errorFormatter: function(param, msg, value) {
+        let namespace = param.split('.')
+        , root    = namespace.shift()
+        , formParam = root;
+  
+      while(namespace.length) {
+        formParam += '[' + namespace.shift() + ']';
+      }
+      return {
+        param : formParam,
+        msg   : msg,
+        value : value
+      };
+    }
+}));
 /*******************/
 
 /***** Routes *****/
