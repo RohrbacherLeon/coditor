@@ -12,11 +12,9 @@ router.get('/login', (req, res) =>{
 });
 
 
-router.get('/register', (req, res) =>{
-    res.render('RegisterView');
-});
+router.get('/register', UserController.register_get);
 
-router.post('/register', UserController.createUser);
+router.post('/register', UserController.register_post);
 
 router.get('/forgot_password', (req, res) => {
     res.render('ForgotPasswordView');

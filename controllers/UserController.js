@@ -1,6 +1,9 @@
 const User = require('../models/User')
 
-exports.createUser = (req, res) => {
+/**
+ * When register is reached with post method
+ */
+exports.register_post = (req, res) => {
     
     req.checkBody('first_name', 'Username is required').notEmpty();
     req.checkBody('last_name', 'Username is required').notEmpty();
@@ -28,4 +31,11 @@ exports.createUser = (req, res) => {
     }
 
     
+}
+
+/**
+ * When register is reached with get method
+ */
+exports.register_get = (req, res) => {
+    res.render('RegisterView');
 }

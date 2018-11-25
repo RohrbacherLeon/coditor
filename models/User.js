@@ -8,6 +8,10 @@ var schema = new mongoose.Schema({
 	password   : { type: String, required: true }
 });
 
+/**
+ * Create a user in the databases
+ * @param {object} data Data from the register form
+ */
 schema.statics.createUser = function(data, callback){
 
 	let newUser = new this;
