@@ -54,3 +54,10 @@ exports.logout = (req, res) => {
 exports.login_get = (req, res) => {
     res.render('LoginView');
 }
+
+/**
+ * When login is reached with post method
+ */
+exports.login_post = (req, res) => {
+    res.redirect('/');
+}
