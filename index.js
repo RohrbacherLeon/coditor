@@ -6,6 +6,12 @@ const server     = require('http').createServer(app);
 const mongoose   = require('mongoose');
 const expressValidator = require('express-validator');
 
+const flash = require('connect-flash');
+const session = require('express-session');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const cookieParser = require('cookie-parser');
+
 /***** MONGODB *****/
 mongoose.connect(`mongodb://${config.db.host}/${config.db.database}`, {
     useCreateIndex: true,
@@ -23,7 +29,20 @@ app.use(express.static(__dirname + '/public'));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cookieParser());
 
+// Express Session
+app.use(session({
+    secret: 'secret',
+    saveUninitialized: true,
+    resave: true
+}));
+
+// Passport init
+app.use(passport.initialize());
+app.use(passport.session());
+
+//Express validator
 app.use(expressValidator({
     errorFormatter: function(param, msg, value) {
         let namespace = param.split('.')
@@ -40,6 +59,18 @@ app.use(expressValidator({
       };
     }
 }));
+
+// Connect Flash
+app.use(flash());
+
+// Global Vars
+app.use(function (req, res, next) {
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
+  res.locals.user = req.user || null;
+  next();
+});
 /*******************/
 
 /***** Routes *****/

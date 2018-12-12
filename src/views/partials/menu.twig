@@ -3,12 +3,12 @@
         <img src='/images/logo.png' >
     </div>
     <div class="nav__right">
-    <!-- Si user non connecté-->
-        <!-- <a href="#">Se connecter</a> -->
-    <!-- Sinon-->
+    {% if user == null %}
+       <a href="/login">Se connecter</a>
+    {% else %}
         <div class="nav__right__connected">
-            <p>Nom</p>
-            <p>Prenom</p>
+            <p>{{user.last_name}}</p>
+            <p>{{user.first_name}}</p>
             <div class="dropdown" id="js-dropdown">
                 <div class="dropdown__head" id="js-dropdown-head">
                     <div class="img"></div>
@@ -18,10 +18,10 @@
                     <li><a href="#">Mon profile</a></li>
                     <li><a href="#">Series en cours</a></li>
                     <div class="separator"></div>
-                    <li><a href="#">Deconnexion</a></li>   
+                    <li><a href="/logout">Deconnexion</a></li>   
                 </ul>
             </div>
         </div>
     </div>
-    <!-- fin si -->
+    {% endif %}
 </nav>

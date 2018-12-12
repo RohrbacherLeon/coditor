@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-        <link rel="stylesheet" href="../assets/css/style.css">
+        <link rel="stylesheet" href="../public/css/style.css">
         <title>Coditor</title>
     </head>
     <body>
@@ -31,51 +31,49 @@
                 </div>
             </div>
         </nav>
-        <nav class="sidebar">
-            <div class="side-languages">
-                <ul>
-                    <li class="js"><a href="#">JavaScript</a></li>
-                    <li class="php"><a href="#">Php</a></li>
-                    <li class="java"><a href="#">Java</a></li>
+        
+        <div class="browsing">
+
+            <div class="browsing__languages">
+                <input type="search" class="search" placeholder="Language">
+                <ul class="languages">
+                    <li class="active">PHP</li>
+                    <li>Javascript</li>
+                    <li>Python</li>
                 </ul>
             </div>
-        </nav>
-        <div class="main-content">
-            <div class="content-box">
-                <h3>Les plus populaires</h3>
-                <div class="row">
-                    <div class="series">
-                        <h4>Tout sur javascript</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam convallis ante metus, sed mattis eros placerat sed. Praesent id orci vitae dolor
-                        dapibus dictum. Mauris sed eros eu elit tincidunt posuere. Phasellus ultricies mauris justo,</p>
-                    </div>
-                    <div class="series">
-                        <h4>Tout sur javascript</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam convallis ante metus, sed mattis eros placerat sed. Praesent id orci vitae dolor
-                        dapibus dictum. Mauris sed eros eu elit tincidunt posuere. Phasellus ultricies mauris justo,</p>
+            <div class="browsing__exercises">
+
+                <div class="popular">
+                    <h2 class="title">Les plus populaires</h2>
+                    <div class="popular__list">
+                        <a href="#" class="exercise"><p>Nom</p></a>
+                        <a href="#" class="exercise"><p>Nom</p></a>
+                        <a href="#" class="exercise"><p>Nom</p></a>
+                        <a href="#" class="exercise"><p>Nom</p></a>
                     </div>
                 </div>
-            </div>
-            <div class="content-box">
-                <div class="search-box">
-                    <input type="text" name="search" placeholder="Recherche">
-                    <button class="button-search"><i class="fa fa-search"></i></button>
+                <div class="searchbar">
+                    <input type="search" autofocus class="search" placeholder="Rechercher un tag">
+                    <p>Recherche avancée ></p>
                 </div>
-            </div>
-            <div class="row">
-                <div class="exercise">
-                    <h4>Un exercice parmis tant d'autres</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam convallis ante metus, sed mattis eros placerat sed. Praesent id orci vitae dolor</p>
+                <div class="exercises">
+                        <a href="#" class="exercise"><p>Nom</p></a>
+                        <a href="#" class="exercise"><p>Nom</p></a>
+                        <a href="#" class="exercise"><p>Nom</p></a>
+                        <a href="#" class="exercise"><p>Nom</p></a>
+                        <a href="#" class="exercise"><p>Nom</p></a>
+                        <a href="#" class="exercise"><p>Nom</p></a>
+                        <a href="#" class="exercise"><p>Nom</p></a>
+                        <a href="#" class="exercise"><p>Nom</p></a>
+                        <a href="#" class="exercise"><p>Nom</p></a>
+                        <a href="#" class="exercise"><p>Nom</p></a>
+                        <a href="#" class="exercise"><p>Nom</p></a>
+                        <a href="#" class="exercise"><p>Nom</p></a>
                 </div>
-                <div class="exercise">
-                    <h4>Un exercice parmis tant d'autres</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam convallis ante metus, sed mattis eros placerat sed. Praesent id orci vitae dolor</p>
-                </div>
-                <div class="exercise">
-                    <h4>Un exercice parmis tant d'autres</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam convallis ante metus, sed mattis eros placerat sed. Praesent id orci vitae dolor</p>
-                </div>               
+
             </div>
+
         </div>
         
         <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
