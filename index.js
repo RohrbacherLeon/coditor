@@ -75,14 +75,12 @@ app.use(function (req, res, next) {
 
 /***** Routes *****/
 app.use('/', require('./routes/UserRoutes'));
+app.use('/exercises', require('./routes/ExerciseRoutes'));
 app.use('/profile', require('./routes/ProfileRoutes'));
 /*******************/
 
-/*
-app.get('exercises_:language', (req, res) => {
-    res.render('BrowsingView');
-});
-*/
+
+
 
 server.listen(config.app.port, () => {
     console.log(`Server running on port ${config.app.port}`);
