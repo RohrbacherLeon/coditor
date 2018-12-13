@@ -7,9 +7,8 @@
             <div class="browsing__languages">
                 <input type="search" class="search" placeholder="Language">
                 <ul class="languages">
-                    <li class="active">PHP</li>
-                    <li>Javascript</li>
-                    <li>Python</li>
+                    <li id="php" class="active"><a href="{{url}}/exercises/php">PHP</a></li>
+                    <li id="js"><a href="{{url}}/exercises/js">Javascript</a></li>
                 </ul>
             </div>
             <div class="browsing__exercises">
@@ -28,22 +27,22 @@
                     <p>Recherche avancée ></p>
                 </div>
                 <div class="exercises">
-                        <a href="#" class="exercise"><p>Nom</p></a>
-                        <a href="#" class="exercise"><p>Nom</p></a>
-                        <a href="#" class="exercise"><p>Nom</p></a>
-                        <a href="#" class="exercise"><p>Nom</p></a>
-                        <a href="#" class="exercise"><p>Nom</p></a>
-                        <a href="#" class="exercise"><p>Nom</p></a>
-                        <a href="#" class="exercise"><p>Nom</p></a>
-                        <a href="#" class="exercise"><p>Nom</p></a>
-                        <a href="#" class="exercise"><p>Nom</p></a>
-                        <a href="#" class="exercise"><p>Nom</p></a>
-                        <a href="#" class="exercise"><p>Nom</p></a>
-                        <a href="#" class="exercise"><p>Nom</p></a>
+                    {% for exercise in datas %}
+                        <a href="#" class="exercise">
+                            <p>{{ exercise.title }}</p>
+                        </a>
+                    {% endfor %}
                 </div>
 
             </div>
 
         </div>
 
+{% endblock %}
+
+{% block scripts %}
+ <script src='/js/menu_languages.js'>
+    
+ 
+ </script>
 {% endblock %}
