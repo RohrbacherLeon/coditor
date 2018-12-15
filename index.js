@@ -77,6 +77,7 @@ app.use(function (req, res, next) {
 app.use('/', require('./routes/UserRoutes'));
 app.use('/exercises', require('./routes/ExerciseRoutes'));
 app.use('/profile', require('./routes/ProfileRoutes'));
+app.use('/api', require('./routes/ApiRoutes'));
 /*******************/
 
 

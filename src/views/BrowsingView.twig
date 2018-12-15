@@ -23,7 +23,9 @@
                     </div>
                 </div>
                 <div class="searchbar">
-                    <input type="search" autofocus class="search" placeholder="Rechercher un tag">
+                    <div class="autocomplete">
+                        <input id="searchByTag" type="search" autofocus class="search" placeholder="Rechercher un tag">
+                    </div>
                     <p>Recherche avancée ></p>
                 </div>
                 <div class="exercises">
@@ -41,7 +43,8 @@
 {% endblock %}
 
 {% block scripts %}
- <script src='/js/menu_languages.js'>
+ <script src='/js/menu_languages.js'></script>
+ <script src='/js/search_tag.js'></script>
     
  
  </script>

@@ -27,6 +27,10 @@ module.exports.byLanguage = function(language, callback){
 	Exercise.find(query, callback);
 }
 
+module.exports.getAllValuesOf = function(value, callback){
+	Exercise.find().distinct(value, callback);
+}
+
 module.exports.getAll = function(callback){
 	Exercise.find({}, callback);
 }

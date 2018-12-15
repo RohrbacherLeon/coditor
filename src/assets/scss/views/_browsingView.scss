@@ -4,6 +4,42 @@ $blue : blue;
     display: flex;
     flex-grow: 1;
 
+    .autocomplete {
+        position: relative;
+        display: inline-block;
+        flex-grow: 1;
+
+        &-items {
+            position: absolute;
+            border: 1px solid #d4d4d4;
+            border-bottom: none;
+            border-top: none;
+            z-index: 99;
+            /*position the autocomplete items to be the same width as the container:*/
+            top: 100%;
+            left: 0;
+            right: 0;
+
+            div {
+                padding: 10px;
+                cursor: pointer;
+                background-color: #fff; 
+                border-bottom: 1px solid #d4d4d4; 
+
+                &:hover {
+                    /*when hovering an item:*/
+                    background-color: #e9e9e9; 
+                  }
+            }
+        }
+
+        &-active {
+            background-color: DodgerBlue !important; 
+            color: #ffffff; 
+        }
+      }
+      
+
     &__languages{
         background-color: whitesmoke;
 
@@ -40,13 +76,15 @@ $blue : blue;
             display: flex;
             align-items: center;
             margin-top: 30px;
+            position: relative;
 
             .search{
-                width: 50%;
+                width: 100%;
             }
 
             p{
                 margin-left: 10px;
+                flex-grow: 1;
             }
         }
 
