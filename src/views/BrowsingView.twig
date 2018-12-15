@@ -2,23 +2,47 @@
 
 {% block content %}
         
-<div class="main-content">
-    <div class="content-box">
-        <h3>Les plus populaires</h3>
-        <div class="row">
-            {% include './partials/series.twig' with {'title': {{title}}, 'descr': {{description}}} %}
-        </div>
-    </div>
-    <div class="content-box">
-        <div class="search-box">
-            <input type="text" name="search" placeholder="Recherche">
-            <button class="button-search"><i class="fa fa-search"></i></button>
-        </div>
-        <a href="#">Recherche avancée</a>
-    </div>
-    <div class="row">
-        {% include './partials/exercise.twig' with {'title': {{title}}, 'descr': {{description}}} %}             
-    </div>
-</div>
+<div class="browsing">
 
+            <div class="browsing__languages">
+                <input type="search" class="search" placeholder="Language">
+                <ul class="languages">
+                    <li id="php" class="active"><a href="{{url}}/exercises/php">PHP</a></li>
+                    <li id="js"><a href="{{url}}/exercises/js">Javascript</a></li>
+                </ul>
+            </div>
+            <div class="browsing__exercises">
+
+                <div class="popular">
+                    <h2 class="title">Les plus populaires</h2>
+                    <div class="popular__list">
+                        <a href="#" class="exercise"><p>Nom</p></a>
+                        <a href="#" class="exercise"><p>Nom</p></a>
+                        <a href="#" class="exercise"><p>Nom</p></a>
+                        <a href="#" class="exercise"><p>Nom</p></a>
+                    </div>
+                </div>
+                <div class="searchbar">
+                    <input type="search" autofocus class="search" placeholder="Rechercher un tag">
+                    <p>Recherche avancée ></p>
+                </div>
+                <div class="exercises">
+                    {% for exercise in datas %}
+                        <a href="#" class="exercise">
+                            <p>{{ exercise.title }}</p>
+                        </a>
+                    {% endfor %}
+                </div>
+
+            </div>
+
+        </div>
+
+{% endblock %}
+
+{% block scripts %}
+ <script src='/js/menu_languages.js'>
+    
+ 
+ </script>
 {% endblock %}
