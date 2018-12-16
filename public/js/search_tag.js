@@ -2,6 +2,7 @@ function autocomplete(inp, arr) {
     /*the autocomplete function takes two arguments,
     the text field element and an array of possible autocompleted values:*/
     var currentFocus;
+    var tags = [];
     /*execute a function when someone writes in the text field:*/
 
     $(inp).on("input", function(e) {
@@ -28,12 +29,9 @@ function autocomplete(inp, arr) {
             /*insert a input field that will hold the current array item's value:*/
             b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
             /*execute a function when someone clicks on the item value (DIV element):*/
-                $(b).on("click", function(e) {
-                /*insert the value for the autocomplete text field:*/
-                inp.value = this.getElementsByTagName("input")[0].value;
-                /*close the list of autocompleted values,
-                (or any other open lists of autocompleted values:*/
-                closeAllLists();
+            $(b).on("click", function(e) {
+              generateTags($(b).text());
+              closeAllLists();
             });
             $(a).append(b);
           }
@@ -58,12 +56,37 @@ function autocomplete(inp, arr) {
         } else if (e.keyCode == 13) {
           /*If the ENTER key is pressed, prevent the form from being submitted,*/
           e.preventDefault();
+          
           if (currentFocus > -1) {
-            /*and simulate a click on the "active" item:*/
-            if (x) x[currentFocus].click();         
+            generateTags($(x[currentFocus]).text())
+            closeAllLists();
           }
         }
     });
+
+    
+
+    function generateTags(value){
+      tags.push(value)
+
+      var html = "";
+      tags.map(tag => {
+        html += `<span id='tag-${tag}' class='tag'>${tag}<i class="fas fa-times" data-delete='${tag}'></i></span>`
+      });
+      $(".autocomplete-tags").empty()
+      $(".autocomplete-tags").append(html)
+
+      $('.tag i').click(function(e){
+        var index = tags.indexOf($(e.target).data('delete'))
+        if (index > -1) {
+          console.log(tags);
+          tags.splice(index, 1);
+          console.log(tags);
+        }
+        $(`#tag-${e.target.getAttribute('data-delete')}`).remove()
+      })
+      $(inp).val('');
+    }
 
     function addActive(x) {
       /*a function to classify an item as "active":*/
@@ -96,7 +119,7 @@ function autocomplete(inp, arr) {
     $(document).on("click", function (e) {
         closeAllLists(e.target);
     });
-  }
+}
 
 
 $.get('/api/tags').then((tags) => {
