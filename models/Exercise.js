@@ -27,6 +27,10 @@ module.exports.byLanguage = function(language, callback){
 	Exercise.find(query, callback);
 }
 
+module.exports.byTags = function(tagsArray, lang, callback){
+	Exercise.find( { tags: { $all: tagsArray.split(',') }, language : lang }, callback )
+}
+
 module.exports.getAllValuesOf = function(value, callback){
 	Exercise.find().distinct(value, callback);
 }

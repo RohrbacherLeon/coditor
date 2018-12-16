@@ -1,10 +1,9 @@
 const Exercise = require('../models/Exercise')
+const express    = require('express');
+const app        = express();
 
 exports.getExoByLang = (req, res) => {
-    let data = [];
-
     Exercise.byLanguage(req.params.lang,function(err, exos){
-        data = exos;
-        res.render('BrowsingView', {datas : data});
+        res.render('BrowsingView', {datas : exos});
     })
 }

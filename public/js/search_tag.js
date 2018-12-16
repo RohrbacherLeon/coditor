@@ -1,8 +1,25 @@
+$.get(`/api/tags/filter?lang=${window.location.href.split('/').reverse()[0]}`).then(function(data){
+  let exercices = "";
+  data.forEach(exercice => {
+    exercices += `
+    <div class="exercise">
+        <h4>${exercice.title}</h4>
+        <p>${exercice.author}</p>
+    </div>
+    `
+  });
+
+  $('.exercises').empty();
+  $('.exercises').append(exercices);
+
+})
+
 function autocomplete(inp, arr) {
-    /*the autocomplete function takes two arguments,
-    the text field element and an array of possible autocompleted values:*/
-    var currentFocus;
-    var tags = [];
+  /*the autocomplete function takes two arguments,
+  the text field element and an array of possible autocompleted values:*/
+  var currentFocus;
+  var tags = [];
+    
     /*execute a function when someone writes in the text field:*/
 
     $(inp).on("input", function(e) {
@@ -64,6 +81,36 @@ function autocomplete(inp, arr) {
         }
     });
 
+    function deleteTag(){
+      $('.tag i').click(function(e){
+        var index = tags.indexOf($(e.target).data('delete'))
+        if (index > -1) 
+          tags.splice(index, 1);
+
+        $(`#tag-${e.target.getAttribute('data-delete')}`).remove()
+
+        if(tags.length == 0){
+          $.get(`/api/tags/filter?lang=${window.location.href.split('/').reverse()[0]}`).then(function(data){
+            var exercices = "";
+  
+            data.forEach(exercice => {
+              exercices += `
+              <div class="exercise">
+                  <h4>${exercice.title}</h4>
+                  <p>${exercice.author}</p>
+              </div>
+              `
+            });
+    
+            $('.exercises').empty();
+            $('.exercises').append(exercices);
+    
+          })
+        }
+        
+      })
+    }
+
     
 
     function generateTags(value){
@@ -76,16 +123,29 @@ function autocomplete(inp, arr) {
       $(".autocomplete-tags").empty()
       $(".autocomplete-tags").append(html)
 
-      $('.tag i').click(function(e){
-        var index = tags.indexOf($(e.target).data('delete'))
-        if (index > -1) {
-          console.log(tags);
-          tags.splice(index, 1);
-          console.log(tags);
-        }
-        $(`#tag-${e.target.getAttribute('data-delete')}`).remove()
-      })
+      deleteTag()
       $(inp).val('');
+      
+
+      var tagsList = tags.join(',');
+      var exercices = "";
+      $.get(`/api/tags/filter?tags=${tagsList}&lang=${window.location.href.split('/').reverse()[0]}`).then(function(data){
+        data.forEach(exercice => {
+          exercices += `
+          <div class="exercise">
+              <h4>${exercice.title}</h4>
+              <p>${exercice.author}</p>
+          </div>
+          `
+        });
+
+        $('.exercises').empty();
+        $('.exercises').append(exercices);
+
+      })
+
+      
+       
     }
 
     function addActive(x) {
