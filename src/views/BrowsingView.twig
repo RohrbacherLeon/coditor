@@ -5,10 +5,14 @@
 <div class="browsing">
 
             <div class="browsing__languages">
-                <input type="search" class="search" placeholder="Language">
+                
                 <ul class="languages">
-                    <li id="php" class="active"><a href="{{url}}/exercises/php">PHP</a></li>
-                    <li id="js"><a href="{{url}}/exercises/js">Javascript</a></li>
+                    <li class="head">Langues</li>
+                    {% for language in languages %}
+                            <li {{language == locale ? 'class="active"'}}>
+                                <a href="{{url}}/exercises/{{language}}">{{language}}</a>
+                            </li>
+                    {% endfor %}
                 </ul>
             </div>
             <div class="browsing__exercises">
@@ -22,6 +26,7 @@
                         <a href="#" class="exercise"><p>Nom</p></a>
                     </div>
                 </div>
+                
                 <div class="searchbar">
                     <div class="autocomplete">
                         <div class="autocomplete-tags"></div>
@@ -29,9 +34,8 @@
                     </div>
                     <p>Recherche avancée ></p>
                 </div>
-                <div class="exercises">
-                    
-                </div>
+
+                <div class="exercises"></div>
 
             </div>
 
@@ -40,9 +44,5 @@
 {% endblock %}
 
 {% block scripts %}
- <script src='/js/menu_languages.js'></script>
  <script src='/js/search_tag.js'></script>
-    
- 
- </script>
 {% endblock %}
