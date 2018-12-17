@@ -18,6 +18,9 @@ let ExerciseSchema = mongoose.Schema({
 	},
 	author: {
 		type: String,
+	},
+	description: {
+		type: String,
 	}
 });
 
@@ -25,6 +28,11 @@ let Exercise = module.exports = mongoose.model('Exercise', ExerciseSchema);
 
 module.exports.createExercise = function(data, callback){
 	Exercise.create(data)
+}
+
+module.exports.getExo = function(data, callback){
+	let query = {slug: data.slug, language : data.language}
+	Exercise.findOne(query, callback)
 }
 
 module.exports.byLanguage = function(language, callback){

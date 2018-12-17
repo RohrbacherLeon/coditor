@@ -29,7 +29,8 @@ router.post('/create-exercise', (req, res) =>{
             title : fields.title,
             slug,
             language : fields.language,
-            author : req.user.first_name
+            author : req.user.first_name,
+            description : fields.description
         }, function (err, exo) {
             if(err) console.log(err);
             
