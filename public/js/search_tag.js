@@ -2,10 +2,10 @@ $.get(`/api/tags/filter?lang=${window.location.href.split('/').reverse()[0]}`).t
   let exercices = "";
   data.forEach(exercice => {
     exercices += `
-    <div class="exercise">
+    <a href="/exercises/${exercice.language}/${exercice.slug}" class="exercise">
         <h4>${exercice.title}</h4>
         <p>${exercice.author}</p>
-    </div>
+    </a>
     `
   });
 
@@ -95,10 +95,10 @@ function autocomplete(inp, arr) {
   
             data.forEach(exercice => {
               exercices += `
-              <div class="exercise">
+              <a href="/exercises/${exercice.language}/${exercice.slug}" class="exercise">
                   <h4>${exercice.title}</h4>
                   <p>${exercice.author}</p>
-              </div>
+              </a>
               `
             });
     
@@ -132,10 +132,10 @@ function autocomplete(inp, arr) {
       $.get(`/api/tags/filter?tags=${tagsList}&lang=${window.location.href.split('/').reverse()[0]}`).then(function(data){
         data.forEach(exercice => {
           exercices += `
-          <div class="exercise">
+          <a href="/exercises/${exercice.language}/${exercice.slug}" class="exercise">
               <h4>${exercice.title}</h4>
               <p>${exercice.author}</p>
-          </div>
+          </a>
           `
         });
 
