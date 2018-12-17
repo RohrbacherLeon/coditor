@@ -13,7 +13,8 @@ let ExerciseSchema = mongoose.Schema({
 		type: String,
 	},
 	tags: {
-		type: Array
+		type: Array,
+		dafault: []
 	},
 	author: {
 		type: String,
@@ -21,6 +22,10 @@ let ExerciseSchema = mongoose.Schema({
 });
 
 let Exercise = module.exports = mongoose.model('Exercise', ExerciseSchema);
+
+module.exports.createExercise = function(data, callback){
+	Exercise.create(data)
+}
 
 module.exports.byLanguage = function(language, callback){
 	let query = {language: language};
