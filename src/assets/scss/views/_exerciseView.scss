@@ -42,7 +42,13 @@
 
         .feedback{
             li{
-                color: red;
+                &.success{
+                    color: green;
+                }
+
+                &.fail{
+                    color: red;
+                }
                 margin-bottom: 5px;
             }
         }

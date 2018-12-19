@@ -33,6 +33,14 @@ A basic account is available with this credentials :
     email : a@a.fr 
     password: a
 
+A teacher account is available with this credentials :
+    email : teacher@teacher.js 
+    password: teacher
+
+##URLs
+
+/profile/create-exercise => create exercise (should be login with teacher accoune)
+
 ## Auteurs
 * **CORDIER Florian**
 * **ROHRBACHER Léon**

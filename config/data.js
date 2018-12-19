@@ -1,25 +1,2 @@
-db.users.insert({"first_name" : "a", "last_name" : "a", "email" : "a@a.fr", "password" : "$2a$10$Mw8zrvQnG2AJGYTMPAQ4PO5puK0xn5gRvIR0Rhl4Dal/9BZ1yrOlS"});
-
-db.exercises.insert({
-    title:"first",
-    slug:"first",
-    language: "php",
-    tags : ["boucle", "for"],
-    author : "Anthony Zink"
-})
-
-db.exercises.insert({
-    title:"second exercise",
-    slug:"second-exercise",
-    language: "js",
-    tags : ["boucle","while"],
-    author : "Anthony Zink"
-})
-
-db.exercises.insert({
-    title:"third",
-    slug:"thirs",
-    language: "js",
-    tags : ["variable"],
-    author : "Anthony Zink"
-})
+db.users.insert({"type" : "teacher", "first_name" : "teacher", "last_name" : "teacher", "email" : "teacher@teacher.fr", "password" : "$2a$10$yYC5Trng9sjNr7mAo2cWuOwC7gE.Y0LGwXGgf4sxxItp7DsMgJQAC"});
+db.users.insert({"type" : "student", "first_name" : "a", "last_name" : "a", "email" : "a@a.fr", "password" : "$2a$10$KRe0Q.Dy7FJBm.r5gdt7OeEe7vppczmsPGHrHGPdztEKYmdC4uPPS"});

@@ -18,6 +18,10 @@ let UserSchema = mongoose.Schema({
 	},
 	name: {
 		type: String
+	},
+	type: {
+		type: String,
+		default : "student"
 	}
 });
 

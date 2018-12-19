@@ -13,18 +13,39 @@ let ExerciseSchema = mongoose.Schema({
 		type: String,
 	},
 	tags: {
-		type: Array
+		type: Array,
+		dafault: []
 	},
 	author: {
+		type: String,
+	},
+	description: {
 		type: String,
 	}
 });
 
 let Exercise = module.exports = mongoose.model('Exercise', ExerciseSchema);
 
+module.exports.createExercise = function(data, callback){
+	Exercise.create(data)
+}
+
+module.exports.getExo = function(data, callback){
+	let query = {slug: data.slug, language : data.language}
+	Exercise.findOne(query, callback)
+}
+
 module.exports.byLanguage = function(language, callback){
 	let query = {language: language};
 	Exercise.find(query, callback);
+}
+
+module.exports.byTags = function(tagsArray, lang, callback){
+	Exercise.find( { tags: { $all: tagsArray.split(',') }, language : lang }, callback )
+}
+
+module.exports.getAllValuesOf = function(value, callback){
+	Exercise.find().distinct(value, callback);
 }
 
 module.exports.getAll = function(callback){

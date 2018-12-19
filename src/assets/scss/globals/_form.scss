@@ -22,9 +22,12 @@
 }
 
 input[type=search]{
-    margin: 10px 10px;
-    border-radius: 10px;
-    border: none;
-    border: 1px solid black;
-    padding: 7px 9px;
+    border: 1px solid #e4e4e4;
+    background-color: #f1f1f1;
+    outline: none;
+    padding: 10px;  
+    font-size: 16px;
+
+    &:focus{
+    }
 }

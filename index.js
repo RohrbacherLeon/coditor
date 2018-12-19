@@ -72,11 +72,13 @@ app.use(function (req, res, next) {
   next();
 });
 /*******************/
+const {ensureAuthenticated} = require('./routes/middlewares/Authenticated');
 
 /***** Routes *****/
 app.use('/', require('./routes/UserRoutes'));
 app.use('/exercises', require('./routes/ExerciseRoutes'));
-app.use('/profile', require('./routes/ProfileRoutes'));
+app.use('/profile', ensureAuthenticated, require('./routes/ProfileRoutes'));
+app.use('/api', require('./routes/ApiRoutes'));
 /*******************/
 
 
