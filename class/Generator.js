@@ -10,11 +10,11 @@ module.exports = {
         
         //calculer le name : si tmp1 => tmp2 etc...
         let nameFile = "tmp"+ counter++ + ".js";
-        let a = fs.writeFileSync('/home/anthony/Bureau/coditor/tmp/' + nameFile, contentFile); 
+        let a = fs.writeFileSync(process.cwd() + '/tmp/' + nameFile, contentFile); 
         return nameFile;
     },
 
     remove : function(fileName){
-        fs.unlinkSync('/home/anthony/Bureau/coditor/tmp/' + fileName);
+        fs.unlinkSync(process.cwd() + '/tmp/' + fileName);
     }
 };

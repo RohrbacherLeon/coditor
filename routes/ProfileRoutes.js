@@ -48,8 +48,7 @@ router.post('/create-exercise', (req, res) =>{
                 file_name = old_path.substr(index),
                 
                 //le nom du fichier de test associé à l'exo est le slug de l'exo
-                new_path = path.join(process.env.PWD, '/tests/', slug + '.' + file_ext);
-
+                new_path = path.join(process.cwd(), '/tests/', slug + '.' + file_ext);
             fs.readFile(old_path, function(err, data) {
                 fs.writeFile(new_path, data, function(err) {
                     fs.unlink(old_path, function(err) {
