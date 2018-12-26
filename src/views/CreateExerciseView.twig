@@ -8,9 +8,20 @@
         <input type='text' name='title' placeholder="Titre de l'exo">
         <input type='text' name='language' placeholder="Langue">
         <input type='file' name='file'>
+        <input type='hidden' name='tags'>
+        <div class="searchbar">
+            <div class="autocomplete">
+                <div class="autocomplete-tags"></div>
+                <input id="searchByTag" type="search" autofocus class="search" placeholder="Ajouter un tag">
+            </div>
+        </div>
         <textarea name="description"></textarea>
         <button type="submit">Creer</button>
     </form>
 
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script src='/js/search_tag.js'></script>
 {% endblock %}

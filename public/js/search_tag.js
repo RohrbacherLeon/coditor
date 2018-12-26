@@ -117,9 +117,14 @@ function autocomplete(inp, arr) {
       tags.push(value)
 
       var html = "";
+      var listTags = "";
       tags.map(tag => {
+        if(listTags != "")
+          listTags+= ","
+        listTags += tag;
         html += `<span id='tag-${tag}' class='tag'>${tag}<i class="fas fa-times" data-delete='${tag}'></i></span>`
       });
+      $('[name="tags"]').val(listTags)
       $(".autocomplete-tags").empty()
       $(".autocomplete-tags").append(html)
 

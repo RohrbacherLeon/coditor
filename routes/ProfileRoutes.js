@@ -28,12 +28,12 @@ router.post('/create-exercise', (req, res) =>{
         Exercise.createExercise({
             title : fields.title,
             slug,
+            tags : fields.tags.split(','),
             language : fields.language,
             author : req.user.first_name,
             description : fields.description
         }, function (err, exo) {
             if(err) console.log(err);
-            
         })
         
         //penser a verifer l'extension du fichier de test
@@ -41,7 +41,7 @@ router.post('/create-exercise', (req, res) =>{
         
         //verification qu'il y est bien un fichier
         if(files.file.size > 0){
-            var old_path = files.file.path,
+            let old_path = files.file.path,
                 file_size = files.file.size,
                 file_ext = files.file.name.split('.').pop(),
                 index = old_path.lastIndexOf('/') + 1,
