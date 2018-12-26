@@ -9,10 +9,17 @@ const formidable = require('formidable'),
  
 
 router.get('/', (req, res) =>{
-    if(req.user.type == "student")
+    if(req.user.type == "student"){
         res.render('ProfileView');
-    else
-        res.render('ProfileTeacherView');
+    }
+    else{
+        Exercise.countDocuments({author:req.user.email}, (err,count) => {
+           res.render('ProfileTeacherView', {
+               count
+           });
+        })
+
+    }
 });
 
 router.get('/create-exercise', (req, res) =>{
@@ -30,7 +37,7 @@ router.post('/create-exercise', (req, res) =>{
             slug,
             tags : fields.tags.split(','),
             language : fields.language,
-            author : req.user.first_name,
+            author : req.user.email,
             description : fields.description
         }, function (err, exo) {
             if(err) console.log(err);

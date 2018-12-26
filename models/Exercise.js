@@ -4,50 +4,57 @@ const mongoose = require('mongoose');
 let ExerciseSchema = mongoose.Schema({
 	title: {
 		type: String,
+		required: true,
 		index: true
 	},
 	slug:{
 		type : String,
+		required: true
 	},
 	language: {
 		type: String,
+		required: true
 	},
 	tags: {
 		type: Array,
+		required: true,
 		dafault: []
 	},
 	author: {
 		type: String,
+		required: true
 	},
 	description: {
 		type: String,
 	}
 });
 
-let Exercise = module.exports = mongoose.model('Exercise', ExerciseSchema);
 
-module.exports.createExercise = function(data, callback){
+ExerciseSchema.statics.createExercise = function(data, callback){
 	Exercise.create(data)
 }
 
-module.exports.getExo = function(data, callback){
+ExerciseSchema.statics.getExo = function(data, callback){
 	let query = {slug: data.slug, language : data.language}
 	Exercise.findOne(query, callback)
 }
 
-module.exports.byLanguage = function(language, callback){
+ExerciseSchema.statics.byLanguage = function(language, callback){
 	let query = {language: language};
 	Exercise.find(query, callback);
 }
 
-module.exports.byTags = function(tagsArray, lang, callback){
+ExerciseSchema.statics.byTags = function(tagsArray, lang, callback){
 	Exercise.find( { tags: { $all: tagsArray.split(',') }, language : lang }, callback )
 }
 
-module.exports.getAllValuesOf = function(value, callback){
+ExerciseSchema.statics.getAllValuesOf = function(value, callback){
 	Exercise.find().distinct(value, callback);
 }
 
-module.exports.getAll = function(callback){
+ExerciseSchema.statics.getAll = function(callback){
 	Exercise.find({}, callback);
 }
+
+var Exercise = mongoose.model('Exercise', ExerciseSchema);
+module.exports = Exercise;
