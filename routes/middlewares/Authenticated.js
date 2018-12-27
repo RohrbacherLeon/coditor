@@ -7,4 +7,14 @@ function ensureAuthenticated (req, res, next){
 	}
 }   
 
-module.exports = {ensureAuthenticated};
+function isTeacher(req, res, next){
+	if(req.user.type == "teacher")
+		return next()
+	else
+		res.redirect('/profile')
+}
+
+module.exports = {
+	ensureAuthenticated,
+	isTeacher
+};

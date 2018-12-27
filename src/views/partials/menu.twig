@@ -1,7 +1,7 @@
 <nav class="nav">
-    <div class="nav__logo">
+    <a href="/" class="nav__logo">
         <img src='/images/logo.png' >
-    </div>
+    </a>
     <div class="nav__right">
     {% if user == null %}
        <a href="/login">Se connecter</a>
@@ -15,7 +15,7 @@
                     <i class="fas fa-chevron-down"></i>
                 </div>
                 <ul class="dropdown__list">
-                    <li><a href="#">Mon profile</a></li>
+                    <li><a href="/profile">Mon profile</a></li>
                     <li><a href="#">Series en cours</a></li>
                     <div class="separator"></div>
                     <li><a href="/logout">Deconnexion</a></li>   
