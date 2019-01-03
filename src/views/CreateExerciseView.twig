@@ -12,7 +12,11 @@
         <div class="searchbar">
             <div class="autocomplete">
                 <div class="autocomplete-tags"></div>
-                <input id="searchByTag" type="search" autofocus class="search" placeholder="Ajouter un tag">
+                <select class="createTag" multiple="multiple">
+                    {% for tag in tags %}
+                        <option value="{{tag}}">{{tag}}</option>
+                    {% endfor %}
+                </select>
             </div>
         </div>
         <textarea name="description"></textarea>
@@ -23,5 +27,5 @@
 {% endblock %}
 
 {% block scripts %}
-<script src='/js/search_tag.js'></script>
+<script src='/js/create_tag.js'></script>
 {% endblock %}

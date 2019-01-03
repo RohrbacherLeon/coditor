@@ -19,7 +19,9 @@ exports.getProfile = (req, res) =>{
 }
 
 exports.getCreateExercise = (req, res) =>{
-    res.render('CreateExerciseView');
+    Exercise.getAllValuesOf('tags', (err, tags) => {
+        res.render('CreateExerciseView', {tags});
+    })
 }
 
 exports.postCreateExercise = (req, res) =>{
@@ -27,6 +29,7 @@ exports.postCreateExercise = (req, res) =>{
 
     form.parse(req, function(err, fields, files) {
         let slug = slugify(fields.title);
+        
         Exercise.createExercise({
             title : fields.title,
             slug,
