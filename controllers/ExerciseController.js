@@ -6,8 +6,10 @@ var Generator = require('../class/Generator');
 
 exports.getExoByLang = (req, res) => {
     Exercise.getAllValuesOf('language',function(err, languages){
-        let locale = req.params.lang;
-        res.render('BrowsingView', {languages, locale});
+        Exercise.getAllValuesOf('tags', (err, tags) => {
+            let locale = req.params.lang;
+            res.render('BrowsingView', {languages, locale, tags});
+        })
     })
 }
 
