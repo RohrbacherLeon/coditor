@@ -1,39 +1,42 @@
 let urlStart = "localhost:3000";
 
-//Test if page is visitable
-it('Visits the Login page', function() {
-  cy.visit(urlStart+'/login');
-});
+describe('Test Login Local', function() {
 
-//Test wrong email
-it('Test wrong email', function() {
-  cy.get('input[name=email]').type("TestEmail@wrongEmail.com");
-  cy.get('input[name=password]').type("testpass");
+  //Test if page is visitable
+  it('Visits the Login page', function() {
+    cy.visit(urlStart+'/login');
+  });
 
-  //TESTING ERROR MESSAGE
-  cy.contains(".error", "L'adresse email ou le mot de passe est invalide.");
+  //Test wrong email
+  it('Test wrong email', function() {
+    cy.get('input[name=email]').type("TestEmail@wrongEmail.com");
+    cy.get('input[name=password]').type("testpass");
 
-  cy.url().should('include', '/login');
-  cy.wait(500);
-});
+    //TESTING ERROR MESSAGE
+    cy.contains(".error", "L'adresse email ou le mot de passe est invalide.");
 
-//Test wrong password
-it('Test wrong password', function() {
-  cy.get('input[name=email]').type("TestEmail@coditor.fr");
-  cy.get('input[name=password]').type("testpassWRONG");
+    cy.url().should('include', '/login');
+    cy.wait(500);
+  });
 
-  //TESTING ERROR MESSAGE
-  cy.contains(".error", "L'adresse email ou le mot de passe est invalide.");
+  //Test wrong password
+  it('Test wrong password', function() {
+    cy.get('input[name=email]').type("email@coditor.fr");
+    cy.get('input[name=password]').type("testpassWRONG");
 
-  cy.url().should('include', '/login');
-  cy.wait(500);
-});
+    //TESTING ERROR MESSAGE
+    cy.contains(".error", "L'adresse email ou le mot de passe est invalide.");
 
-//Success login
-it('Test success login', function() {
-  cy.get('input[name=email]').type("TestEmail@coditor.fr");
-  cy.get('input[name=password]').type("testpass");
+    cy.url().should('include', '/login');
+    cy.wait(500);
+  });
 
-  cy.get(".button.button--green").click();
-  cy.url().should(urlStart);
+  //Success login
+  it('Test success login', function() {
+    cy.get('input[name=email]').type("email@coditor.fr");
+    cy.get('input[name=password]').type("testpass");
+
+    cy.get(".button.button--green").click();
+    cy.url().should(urlStart);
+  });
 });

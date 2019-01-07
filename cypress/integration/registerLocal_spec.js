@@ -20,14 +20,16 @@ describe('Test Register Local', function() {
   it('Error password to register', function(){
     cy.get('input[name=last_name]').type("TestName");
     cy.get('input[name=first_name]').type("TestFirstname");
-    cy.get('input[name=email]').type("TestEmail@coditor.fr");
+    cy.get('input[name=email]').type("email@coditor.fr");
     cy.get('input[name=password]').type("testpass");
+
     //Wrong confirm password
     cy.get('input[name=confirm_password]').type("testpass2");
     cy.get(".button.button--green").click();
 
     //TESTING ERROR MESSAGE
     cy.contains(".error", 'Les mots de passe ne correspondent pas.');
+
     //Type correct password
     cy.get('input[name=confirm_password]').type("testpass");
   });
@@ -42,10 +44,21 @@ describe('Test Register Local', function() {
     cy.contains(".error", "L'adresse email est invalide.");
   });
 
+  //Test an inscription with email already exist
+  it('Error password to register', function(){
+    //Wrong email
+    cy.get('input[name=email]').type("a@a.fr");
+    cy.get(".button.button--green").click();
+
+    //TESTING ERROR MESSAGE
+    cy.contains(".error", "L'adresse email existe déjà.");
+  });
+
   // Test if register work
   it('Register work', function(){
     //Type correct email
-    cy.get('input[name=email]').type("TestEmail@coditor.fr");
+    cy.get('input[name=email]').type("email@coditor.fr");
+
     cy.wait(500);
     cy.get(".button.button--green").click();
 
