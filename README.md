@@ -29,13 +29,13 @@ make run
 
 ## Comptes utilisateurs
 
-Un compte étudiant est disponible avec les informations suivantes :
-    email : a@a.fr 
-    password: a
+Un compte étudiant est disponible avec les informations suivantes :  
+    email : a@a.fr  
+    password: a  
 
-Un compte professeur est disponible avec les informations suivantes :
-    email : teacher@teacher.fr
-    password: teacher
+Un compte professeur est disponible avec les informations suivantes :  
+    email : teacher@teacher.fr  
+    password: teacher  
 
 ## URLs
 
