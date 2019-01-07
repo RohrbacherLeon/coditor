@@ -4,7 +4,7 @@ Cette application permettra à des étudiants de réaliser des exercices propos�
 
 ## Installation
 
-First you had to rename example.env into .env for the application use the correct mongodb variable.
+Pour une installation locale de développement, créer un fichier ".env" et y insérer "DB_HOST=localhost".
 
 ```sh
 npm install
@@ -18,7 +18,7 @@ npm run sass
 npm start
 ```
 
-## Installation with docker
+## Installation avec docker
 ```sh
 make install 
 ```
@@ -27,17 +27,17 @@ make install
 make run 
 ```
 
-## Account
+## Comptes utilisateurs
 
-A basic account is available with this credentials :
+Un compte étudiant est disponible avec les informations suivantes :
     email : a@a.fr 
     password: a
 
-A teacher account is available with this credentials :
-    email : teacher@teacher.js 
+Un compte professeur est disponible avec les informations suivantes :
+    email : teacher@teacher.fr
     password: teacher
 
-##URLs
+## URLs
 
 /profile/create-exercise => create exercise (should be login with teacher accoune)
 
