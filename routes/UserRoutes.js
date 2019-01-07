@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/login', UserController.login_get);
-router.post('/login', passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login', failureFlash: true }), UserController.login_post);
+router.post('/login', passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login', failureFlash: true, failureFlash: 'Adresse email ou mot de passe incorrecte.', successFlash: 'Vous êtes maintenant connecté.' }));
 
 router.get('/register', UserController.register_get);
 router.post('/register', UserController.register_post);
