@@ -2,7 +2,7 @@
 
 Cette application permettra à des étudiants de réaliser des exercices proposés par des enseignants, de façon à s’améliorer en programmation mais également à s’auto-évaluer grâce à un retour automatique et rapide de leur travail.
 
-Vous pouvez trouver ci-dessous notre site de présentation du projet :
+Vous pouvez trouver ci-dessous notre site de présentation du projet :  
 https://webetu.iutnc.univ-lorraine.fr/~rohrbac12u/coditor_presentation/wordpress/
 
 ## Installation
