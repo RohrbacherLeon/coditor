@@ -4,42 +4,45 @@
         
 <div class="browsing">
 
-            <div class="browsing__languages">
-                
-                <ul class="languages">
-                    <li class="head">Langues</li>
-                    {% for language in languages %}
-                            <li {{language == locale ? 'class="active"'}}>
-                                <a href="{{url}}/exercises/{{language}}">{{language}}</a>
-                            </li>
-                    {% endfor %}
-                </ul>
+    <div class="browsing__languages">
+        
+        <ul class="languages">
+            <li class="head">Langues</li>
+            {% for language in languages %}
+                    <li {{language == locale ? 'class="active"'}}>
+                        <a href="{{url}}/exercises/{{language}}">{{language}}</a>
+                    </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="browsing__exercises">
+
+        <div class="popular">
+            <h2 class="title">Les plus populaires</h2>
+            <div class="popular__list">
+                <a href="#" class="exercise"><p>Nom</p></a>
+                <a href="#" class="exercise"><p>Nom</p></a>
+                <a href="#" class="exercise"><p>Nom</p></a>
+                <a href="#" class="exercise"><p>Nom</p></a>
             </div>
-            <div class="browsing__exercises">
-
-                <div class="popular">
-                    <h2 class="title">Les plus populaires</h2>
-                    <div class="popular__list">
-                        <a href="#" class="exercise"><p>Nom</p></a>
-                        <a href="#" class="exercise"><p>Nom</p></a>
-                        <a href="#" class="exercise"><p>Nom</p></a>
-                        <a href="#" class="exercise"><p>Nom</p></a>
-                    </div>
-                </div>
-                
-                <div class="searchbar">
-                    <div class="autocomplete">
-                        <div class="autocomplete-tags"></div>
-                        <input id="searchByTag" type="search" autofocus class="search" placeholder="Rechercher un tag">
-                    </div>
-                    <p>Recherche avancée ></p>
-                </div>
-
-                <div class="exercises"></div>
-
-            </div>
-
         </div>
+        
+        <div class="searchbar">
+            <div class="autocomplete">
+                <select id="searchByTag" class="searchByTag" name="states[]" multiple="multiple">
+                {% for tag in tags %}
+                    <option value="{{tags}}">{{tag}}</option>
+                {% endfor %}
+                </select>
+            </div>
+            <p>Recherche avancée ></p>
+        </div>
+
+        <div class="exercises"></div>
+
+    </div>
+
+</div>
 
 {% endblock %}
 

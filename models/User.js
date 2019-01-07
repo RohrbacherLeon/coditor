@@ -5,29 +5,30 @@ const bcrypt = require('bcryptjs');
 let UserSchema = mongoose.Schema({
 	first_name: {
 		type: String,
+		required: true
 	},
 	last_name: {
 		type: String,
+		required: true
 	},
 	password: {
-		type: String
+		type: String,
+		required: true
 	},
 	email: {
 		type: String,
+		required: true,
 		index:true
-	},
-	name: {
-		type: String
 	},
 	type: {
 		type: String,
+		required: true,
 		default : "student"
 	}
 });
 
-let User = module.exports = mongoose.model('User', UserSchema);
 
-module.exports.createUser = function(data, callback){
+UserSchema.statics.createUser = function(data, callback){
 	
 	let newUser = new this;
 
@@ -44,18 +45,21 @@ module.exports.createUser = function(data, callback){
 	});
 }
 
-module.exports.getUserByEmail = function(email, callback){
+UserSchema.statics.getUserByEmail = function(email, callback){
 	let query = {email: email};
 	User.findOne(query, callback);
 }
 
-module.exports.getUserById = function(id, callback){
+UserSchema.statics.getUserById = function(id, callback){
 	User.findById(id, callback);
 }
 
-module.exports.comparePassword = function(candidatePassword, hash, callback){
+UserSchema.statics.comparePassword = function(candidatePassword, hash, callback){
 	bcrypt.compare(candidatePassword, hash, function(err, isMatch) {
     	if(err) throw err;
     	callback(null, isMatch);
 	});
 }
+var User = mongoose.model('User', UserSchema);
+
+module.exports = User;

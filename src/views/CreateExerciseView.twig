@@ -8,9 +8,24 @@
         <input type='text' name='title' placeholder="Titre de l'exo">
         <input type='text' name='language' placeholder="Langue">
         <input type='file' name='file'>
+        <input type='hidden' name='tags'>
+        <div class="searchbar">
+            <div class="autocomplete">
+                <div class="autocomplete-tags"></div>
+                <select class="createTag" multiple="multiple">
+                    {% for tag in tags %}
+                        <option value="{{tag}}">{{tag}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
         <textarea name="description"></textarea>
         <button type="submit">Creer</button>
     </form>
 
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script src='/js/create_tag.js'></script>
 {% endblock %}
