@@ -4,11 +4,7 @@ const UserController = require('../controllers/UserController')
 const passport = require('./middlewares/LocalConnection');
 
 router.get('/', (req, res) => {
-    if (res.locals.user) {
-        res.redirect('/exercises');
-    } else {
-        res.render('HomeView');
-    }
+    res.render('HomeView');
 });
 
 router.get('/login', (req, res) => {

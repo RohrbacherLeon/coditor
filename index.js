@@ -1,9 +1,9 @@
-const config     = require('./config/config');
-const express    = require('express');
-const app        = express();
+const config = require('./config/config');
+const express = require('express');
+const app = express();
 const bodyParser = require('body-parser');
-const server     = require('http').createServer(app);
-const mongoose   = require('mongoose');
+const server = require('http').createServer(app);
+const mongoose = require('mongoose');
 const expressValidator = require('express-validator');
 
 const flash = require('connect-flash');
@@ -45,18 +45,18 @@ app.use(passport.session());
 //Express validator
 app.use(expressValidator({
     errorFormatter: function(param, msg, value) {
-        let namespace = param.split('.')
-        , root    = namespace.shift()
-        , formParam = root;
-  
-      while(namespace.length) {
-        formParam += '[' + namespace.shift() + ']';
-      }
-      return {
-        param : formParam,
-        msg   : msg,
-        value : value
-      };
+        let namespace = param.split('.'),
+            root = namespace.shift(),
+            formParam = root;
+
+        while (namespace.length) {
+            formParam += '[' + namespace.shift() + ']';
+        }
+        return {
+            param: formParam,
+            msg: msg,
+            value: value
+        };
     }
 }));
 
@@ -64,17 +64,17 @@ app.use(expressValidator({
 app.use(flash());
 
 // Global Vars
-app.use(function (req, res, next) {
-  res.locals.success_msg = req.flash('success_msg');
-  res.locals.error_msg = req.flash('error_msg');
-  res.locals.error = req.flash('error');
-  res.locals.success = req.flash('success');
-  res.locals.form = req.flash('form');
-  res.locals.user = req.user || null;
-  next();
+app.use(function(req, res, next) {
+    res.locals.success_msg = req.flash('success_msg');
+    res.locals.error_msg = req.flash('error_msg');
+    res.locals.error = req.flash('error');
+    res.locals.success = req.flash('success');
+    res.locals.form = req.flash('form');
+    res.locals.user = req.user || null;
+    next();
 });
 /*******************/
-const {ensureAuthenticated} = require('./routes/middlewares/Authenticated');
+const { ensureAuthenticated } = require('./routes/middlewares/Authenticated');
 
 /***** Routes *****/
 app.use('/', require('./routes/UserRoutes'));
@@ -82,9 +82,6 @@ app.use('/exercises', require('./routes/ExerciseRoutes'));
 app.use('/profile', ensureAuthenticated, require('./routes/ProfileRoutes'));
 app.use('/api', require('./routes/ApiRoutes'));
 /*******************/
-
-
-
 
 server.listen(config.app.port, () => {
     console.log(`Server running on port ${config.app.port}`);
