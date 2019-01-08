@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class='register'>
-    <h2 class="title">Inscription</h2>
+    <h2 class="title">Effectuer une demande d'inscription</h2>
     <form method="POST">
         <div class="form-group">
             <label for="last_name">Nom</label>
@@ -28,17 +28,8 @@
             <div class="form-links">
                 <a class='text--small' href="/login">Déjà un compte ? Connectez vous !</a>
             </div>
-            <button class="button button--green" type="submit">Inscription</button>
+            <button class="button button--green" type="submit">Envoyer la demande</button>
         </div>
     </form>
-    <p class='socials'>Ou se connecter avec :</p>
-    <div class='register__socials'>
-        <a class='box'>
-            <img class='icon' src='/images/google.svg'>
-        </a>
-        <a class='box'>
-            <img class='icon' src='/images/github-logo.svg'>
-        </a>
-    </div>   
 </div>
 {% endblock %}
