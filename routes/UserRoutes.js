@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
 const UserController = require('../controllers/UserController')
-
 const passport = require('./middlewares/LocalConnection');
 const googlePassport = require('./middlewares/GoogleConnection');
 const githubPassport = require('./middlewares/GithubConnection');
@@ -11,10 +9,14 @@ router.get('/', (req, res) => {
     res.render('HomeView');
 });
 
-router.get('/login', UserController.login_get);
-router.post('/login', passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login', failureFlash: true, failureFlash: 'Adresse email ou mot de passe incorrecte.', successFlash: 'Vous êtes maintenant connecté.' }));
+router.get('/login', (req, res) => {
+    res.render('LoginView');
+});
+router.post('/login', passport.authenticate('local', { successRedirect: '/exercises/', failureRedirect: '/login', failureFlash: true, failureFlash: 'Adresse email ou mot de passe incorrecte.', successFlash: 'Vous êtes maintenant connecté.' }));
 
-router.get('/register', UserController.register_get);
+router.get('/register', (req, res) => {
+    res.render('RegisterView');
+});
 router.post('/register', UserController.register_post);
 
 //Google auth
@@ -34,6 +36,11 @@ router.get('/auth/github/callback', githubPassport.authenticate('github', {
     successRedirect : '/profile',
     failureRedirect : '/register'   
 }));
+
+router.get('/register_teacher', (req, res) => {
+    res.render('RegisterTeacherView');
+});
+
 
 router.get('/forgot_password', (req, res) => {
     res.render('ForgotPasswordView');

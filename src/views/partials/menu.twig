@@ -1,10 +1,8 @@
 <nav class="nav">
-    <a href="/" class="nav__logo">
-        <img src='/images/logo.png' >
-    </a>
+    <a href="/" class="nav__logo"><img src='/images/logo.png'></a>
     <div class="nav__right">
     {% if user == null %}
-       <a href="/login">Se connecter</a>
+        <a href="/login">Se connecter</a>
     {% else %}
         <div class="nav__right__connected">
             <p>{{user.last_name}}</p>
@@ -22,6 +20,6 @@
                 </ul>
             </div>
         </div>
-    </div>
     {% endif %}
+    </div>
 </nav>
