@@ -2,7 +2,7 @@ $(document).ready(function() {
   $('#searchByTag').select2({ width: '100%' });
 });
 
-$.get(`/api/exercises/${window.location.href.split('/').reverse()[0]}`).then(function(data){  
+$.get(`/api/exercises`).then(function(data){ 
   generateExercises(data);
 })
 
@@ -14,7 +14,7 @@ $('#searchByTag').on('select2:select', function (e) {
      tags.push(tag.text);
    });
 
-  $.get(`/api/tags/filter?lang=${window.location.href.split('/').reverse()[0]}&tags=${tags.join(',')}`).then(function(data){
+  $.get(`/api/tags/filter?tags=${tags.join(',')}`).then(function(data){
     generateExercises(data)
   })
 });
@@ -25,7 +25,7 @@ $('#searchByTag').on('select2:unselect', function (e) {
     tags.push(tag.text);
   });  
 
-  $.get(`/api/tags/filter?lang=${window.location.href.split('/').reverse()[0]}&tags=${tags.join(',')}`).then(function(data){    
+  $.get(`/api/tags/filter?tags=${tags.join(',')}`).then(function(data){    
     generateExercises(data)
   })
 });

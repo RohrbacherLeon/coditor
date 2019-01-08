@@ -27,18 +27,7 @@
             </div>
         </div>
         
-        <div class="searchbar">
-            <div class="autocomplete">
-                <select id="searchByTag" class="searchByTag" name="states[]" multiple="multiple">
-                {% for tag in tags %}
-                    <option value="{{tags}}">{{tag}}</option>
-                {% endfor %}
-                </select>
-            </div>
-            <p>Recherche avancée ></p>
-        </div>
-
-        <div class="exercises"></div>
+        {% include "partials/browser.twig" with tags %}
 
     </div>
 

@@ -68,6 +68,11 @@ exports.postCreateExercise = (req, res) =>{
         }else{
             res.render('CreateExerciseView', {message : "Aucun fichier mis"});
         }
-    });
+    });    
+}
 
+exports.getCreateExercisesSet = (req, res) =>{
+    Exercise.getAllValuesOf('tags', (err, tags) => {
+        res.render('CreateExercisesSetView', {tags});
+    })
 }

@@ -10,6 +10,24 @@ router.get('/tags', (req, res) => {
     })
 });
 
+router.get('/exercises', (req, res) => {
+    Exercise.find({}, (err, exercises) => {
+        res.setHeader('Content-Type', 'application/json');
+        res.send(JSON.stringify(exercises));
+    })
+});
+
+router.get('/exercises/:lang', (req, res) => {
+    let lang = req.params.lang;
+    
+    Exercise.byLanguage(lang, (err, exercices) => {
+        res.setHeader('Content-Type', 'application/json');
+        res.send(JSON.stringify(exercices));
+    })
+    
+});
+
+
 router.get('/tags/filter', (req, res) => {
     let lang = req.query.lang;
     
