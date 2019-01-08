@@ -27,6 +27,12 @@ let UserSchema = mongoose.Schema({
 		first_name: String,
 		last_name: String,
 		urlImage: String
+	},
+	github: {
+		id: String,
+		username: String,
+		email: String,
+		urlImage: String
 	}
 });
 
