@@ -1,0 +1,53 @@
+{% extends "layouts/master.twig" %}
+
+{% block content %}
+<div class="createExoSet">
+    {{message}}
+    <h1 class="title">Create</h1>
+    <form method='POST' class='createExo__form' enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="title">Nom de la série d'exercices</label>
+            <input type='text' name='title' id="title" placeholder="Titre de la serie">
+        </div>
+
+        <div class="form-group">
+            <label for="language">Langage</label>
+            <input type='text' name='language' id="language" placeholder="Langue">
+        </div>
+
+        <div class="form-group">
+            <label for="file">Fichier de test</label>
+            <input type='file' id="label" name='file'>
+        </div>
+
+        <div class="form-group">
+            <label>Tags de l'exercices</label>
+            <input type='hidden' name='tags'>
+            <div class="searchbar">
+                <div class="autocomplete">
+                    <div class="autocomplete-tags"></div>
+                    <select class="createTag" multiple="multiple">
+                        {% for tag in tags %}
+                            <option value="{{tag}}">{{tag}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Description de l'exercices</label>
+            <textarea name="description"></textarea>
+        </div>
+
+        <div class="button_layout button_layout--right">
+            <button class="button button--green" type="submit">Créer l'exercice</button>
+        </div>
+    </form>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src='/js/create_tag.js'></script>
+{% endblock %}
