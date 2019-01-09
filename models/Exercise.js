@@ -43,7 +43,10 @@ ExerciseSchema.statics.byLanguage = function(language, callback){
 	let query = {}
 
 	if(language)
-		query.language = language;
+		if(language == 'all')
+			query = {};
+		else
+			query.language = language;
 		
 	Exercise.find(query, callback);
 }
