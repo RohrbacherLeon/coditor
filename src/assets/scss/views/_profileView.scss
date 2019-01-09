@@ -32,7 +32,11 @@
             .image{
                 height: 200px;
                 width: 200px;
-                background-color: firebrick;
+                border-radius: 50%;
+                .logoAccount{
+                    height: 200px;
+                    width: 200px;
+                }
             }
 
             .infos{

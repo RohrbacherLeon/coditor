@@ -24,7 +24,7 @@ passport.use(new GitHubStrategy({
         newUser.github.id = profile.id;
         newUser.github.username = profile.username;
         newUser.github.email = profile._json.email;
-        newUser.github.urlImage = profile.photos[0].value;
+        newUser.urlImage = profile.photos[0].value;
 
         newUser.save(function(err){
           if(err)
