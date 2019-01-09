@@ -6,7 +6,6 @@ const User = require('../../models/User');
 let url = "http://localhost:3000";
 
 passport.use(new GoogleStrategy({
-  //A remplacer par un compte de l'app
     clientID: "390419281548-9a2agfhgeses62tmouj64jlr5jidi2ug.apps.googleusercontent.com",
     clientSecret: "8e33V8Vyjwl7CrNJ4mqwnW7v",
     callbackURL: url+"/auth/google/callback"

@@ -4,7 +4,6 @@ const GitHubStrategy = require('passport-github').Strategy;
 const User = require('../../models/User');
 
 passport.use(new GitHubStrategy({
-  //A remplacer par un compte de l'app
     clientID: "9b023438a6ce2b64d9be",
     clientSecret: "23e8f7043619d39fe79c0f1cf4d5e6830512664f",
     callbackURL: "http://localhost:3000/auth/github/callback"
