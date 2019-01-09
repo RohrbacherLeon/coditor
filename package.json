@@ -33,7 +33,8 @@
   "scripts": {
     "start": "node index.js",
     "watch": "sass src/assets/scss/style.scss:public/css/style.css --watch",
-    "sass": "sass src/assets/scss/style.scss:public/css/style.css"
+    "sass": "sass src/assets/scss/style.scss:public/css/style.css",
+    "test": "mocha mocha/tests/*"
   },
   "author": {
     "name": "Rohrbacher Léon",
@@ -44,5 +45,8 @@
     "Ralli Alexandre (https://github.com/alexdukeb)",
     "Zink Anthony (https://github.com/AnthonyZink)"
   ],
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "chai": "^4.2.0"
+  }
 }
