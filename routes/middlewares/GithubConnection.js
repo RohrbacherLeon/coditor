@@ -8,24 +8,38 @@ passport.use(new GitHubStrategy({
     clientSecret: "23e8f7043619d39fe79c0f1cf4d5e6830512664f",
     callbackURL: "http://localhost:3000/auth/github/callback"
   },
-  function(accessToken, refreshToken, profile, done) {
+  function(accessToken, refreshToken, profileGithub, done) {
 
-    User.findOne({'github.id':profile.id}, function(err, user){
+    User.findOne({'remote_id':profileGithub.id}, function(err, user){
       //If error
       if(err)
         return done(err);
       //If user already exist, use it
-      if(user)
+      if(user){
+
+        user.profile = {
+          username : profileGithub.username,
+          email : profileGithub._json.email,
+        }
+
+        user.urlImage = profileGithub.photos[0].value;
+        user.save();
+        
         return done(null, user);
+      }
       //Else create one
       else
       {
         let newUser = new User();
-        newUser.github.id = profile.id;
-        newUser.github.username = profile.username;
-        newUser.github.email = profile._json.email;
-        newUser.urlImage = profile.photos[0].value;
+        newUser.account = 'github';
+        newUser.remote_id = profileGithub.id;
+        newUser.profile = {
+          username : profileGithub.username,
+          email : profileGithub._json.email,
+        }
 
+        newUser.urlImage = profileGithub.photos[0].value;
+      
         newUser.save(function(err){
           if(err)
             throw err;

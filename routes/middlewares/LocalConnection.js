@@ -10,7 +10,7 @@ passport.use(new LocalStrategy({usernameField: 'email'},
 			if (!user) {
 				return done(null, false, { message: 'Unknown User' });
 			}
-			User.comparePassword(password, user.local.password, function (err, isMatch) {
+			User.comparePassword(password, user.profile.password, function (err, isMatch) {
 				if (err) throw err;
 				if (isMatch) {
 					return done(null, user);

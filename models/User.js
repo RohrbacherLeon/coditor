@@ -3,61 +3,41 @@ const bcrypt = require('bcryptjs');
 
 // User Schema
 let UserSchema = mongoose.Schema({
-	local: {
-		first_name: String,
-		last_name: String,
-		password: String,
-		email: {
-			type: String,
-			index:true
-		}
-	},
-	google: {
-		id: String,
-		email: {
-			type: String,
-			index:true
-		},
-		first_name: String,
-		last_name: String
-	},
-	github: {
-		id: String,
-		username: String,
-		email: {
-			type: String,
-			index:true
-		}
-	},
+	account: String, 
 	type: {
 		type: String,
 		required: true,
 		default: "student"
+	},
+	remote_id: Number,
+	profile : {
+		type: Object
 	},
 	urlImage: String
 });
 
 
 UserSchema.statics.createUser = function(data, callback){
-	
-	let newUser = new this;
 
-	newUser.local.first_name = data.first_name;
-    newUser.local.last_name  = data.last_name;
-	newUser.local.email      = data.email;
-	newUser.local.password   = data.password;
-	newUser.urlImage		 = "../images/iconLocal.png";
-
-	bcrypt.genSalt(10, function(err, salt) {
-	    bcrypt.hash(newUser.local.password, salt, function(err, hash) {
-	        newUser.local.password = hash;
+	bcrypt.genSalt(10, (err, salt) => {
+		bcrypt.hash(data.password, salt, (err, hash) => {
+			let newUser = new this;
+			newUser.account = "local"
+			newUser.profile = {
+				password: hash,	
+				first_name : data.first_name,
+				last_name : data.last_name,
+				email : data.email,
+			}
+			newUser.urlImage   = "../images/iconLocal.png";
+			
 	        newUser.save(callback);
 	    });
 	});
 }
 
 UserSchema.statics.getUserByEmail = function(email, callback){
-	User.findOne({"local.email": email}, callback);
+	User.findOne({"profile.email": email}, callback);
 }
 
 UserSchema.statics.comparePassword = function(candidatePassword, hash, callback){
