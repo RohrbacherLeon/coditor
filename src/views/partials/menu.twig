@@ -1,17 +1,17 @@
 <nav class="nav">
-    <a href="/" class="nav__logo">
-        <img src='/images/logo.png' >
-    </a>
+    <a href="/" class="nav__logo"><img src='/images/logo.png'></a>
     <div class="nav__right">
     {% if user == null %}
-       <a href="/login">Se connecter</a>
+        <a href="/login">Se connecter</a>
     {% else %}
         <div class="nav__right__connected">
             <p>{{user.last_name}}</p>
             <p>{{user.first_name}}</p>
             <div class="dropdown" id="js-dropdown">
                 <div class="dropdown__head" id="js-dropdown-head">
-                    <div class="img"></div>
+                    <div class="img">
+                        <img class="logoAccount" src={{user.urlImage}}>
+                    </div>
                     <i class="fas fa-chevron-down"></i>
                 </div>
                 <ul class="dropdown__list">
@@ -22,6 +22,6 @@
                 </ul>
             </div>
         </div>
-    </div>
     {% endif %}
+    </div>
 </nav>
