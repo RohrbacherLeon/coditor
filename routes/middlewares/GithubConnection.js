@@ -5,8 +5,8 @@ const User = require('../../models/User');
 
 passport.use(new GitHubStrategy({
   //A remplacer par un compte de l'app
-    clientID: "ca205df9738e479d4121",
-    clientSecret: "275fbe7802d5dff4287a1fb905520fff4262e4f9",
+    clientID: "9b023438a6ce2b64d9be",
+    clientSecret: "23e8f7043619d39fe79c0f1cf4d5e6830512664f",
     callbackURL: "http://localhost:3000/auth/github/callback"
   },
   function(accessToken, refreshToken, profile, done) {
@@ -32,7 +32,6 @@ passport.use(new GitHubStrategy({
             throw err;
           return done(null, newUser);
         });
-        // console.log(newUser);
       }
     });
   }
