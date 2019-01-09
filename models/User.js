@@ -3,37 +3,38 @@ const bcrypt = require('bcryptjs');
 
 // User Schema
 let UserSchema = mongoose.Schema({
-	first_name: {
-		type: String,
+	local: {
+		first_name: String,
+		last_name: String,
+		password: String,
+		email: {
+			type: String,
+			index:true
+		}
 	},
-	last_name: {
-		type: String,
+	google: {
+		id: String,
+		email: {
+			type: String,
+			index:true
+		},
+		first_name: String,
+		last_name: String
 	},
-	password: {
-		type: String,
-	},
-	email: {
-		type: String,
-		index:true
+	github: {
+		id: String,
+		username: String,
+		email: {
+			type: String,
+			index:true
+		}
 	},
 	type: {
 		type: String,
 		required: true,
 		default: "student"
 	},
-	google: {
-		id: String,
-		email: String,
-		first_name: String,
-		last_name: String,
-		urlImage: String
-	},
-	github: {
-		id: String,
-		username: String,
-		email: String,
-		urlImage: String
-	}
+	urlImage: String
 });
 
 
@@ -41,21 +42,22 @@ UserSchema.statics.createUser = function(data, callback){
 	
 	let newUser = new this;
 
-	newUser.first_name = data.first_name;
-    newUser.last_name  = data.last_name;
-	newUser.email      = data.email;
-	newUser.password   = data.password;
+	newUser.local.first_name = data.first_name;
+    newUser.local.last_name  = data.last_name;
+	newUser.local.email      = data.email;
+	newUser.local.password   = data.password;
+	newUser.urlImage		 = "../images/iconLocal.png";
 
 	bcrypt.genSalt(10, function(err, salt) {
-	    bcrypt.hash(newUser.password, salt, function(err, hash) {
-	        newUser.password = hash;
+	    bcrypt.hash(newUser.local.password, salt, function(err, hash) {
+	        newUser.local.password = hash;
 	        newUser.save(callback);
 	    });
 	});
 }
 
 UserSchema.statics.getUserByEmail = function(email, callback){
-	let query = {email: email};
+	let query = {"local.email": email};
 	User.findOne(query, callback);
 }
 
