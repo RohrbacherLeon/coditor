@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
 router.get('/login', (req, res) => {
     res.render('LoginView');
 });
-router.post('/login', passport.authenticate('local', { successRedirect: '/exercises/', failureRedirect: '/login', failureFlash: true, failureFlash: 'Adresse email ou mot de passe incorrecte.', successFlash: 'Vous êtes maintenant connecté.' }));
+router.post('/login', passport.authenticate('local', { successRedirect: '/profile/', failureRedirect: '/login', failureFlash: true, failureFlash: 'Adresse email ou mot de passe incorrecte.', successFlash: 'Vous êtes maintenant connecté.' }));
 
 router.get('/register', (req, res) => {
     res.render('RegisterView');
