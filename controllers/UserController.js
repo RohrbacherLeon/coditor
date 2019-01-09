@@ -15,7 +15,7 @@ exports.register_post = (req, res) => {
     req.checkBody('email', 'L\'email est requis.').notEmpty();
     req.checkBody('email', 'L\'email n\'est pas valide.').isEmail();
     req.checkBody('password', 'Un mot de passe est requis.').notEmpty();
-    req.checkBody('password', 'Le mot de passe doit contenir au minimum 8 caractères.').isLength({ min: 8 });
+    req.checkBody('password', 'Le mot de passe doit contenir au minimum 8 caractères.').isLength({ min: 2 });
     req.checkBody('confirm_password', 'Les mots de passes ne correspondent pas.').equals(req.body.password);
 
     if (req.validationErrors()) {
