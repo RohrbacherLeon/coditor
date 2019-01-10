@@ -12,11 +12,10 @@
             </div>
         </div>
 
-        <div id="workbench"></div>
-
-        {% include "partials/browser.twig" with tags %}
-
-        
+        <div id="workbench">
+            <div id="drop_zone"></div>
+            {% include "partials/browser.twig" with tags %}
+        </div>
     </form>
 
 </div>
@@ -24,6 +23,6 @@
 
 {% block scripts %}
  <script src='/js/search_tag.js'></script>
- <script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
+ <script src='https://code.jquery.com/ui/1.12.1/jquery-ui.js'></script>
  <script src='/js/drag_and_drop.js'></script>
 {% endblock %}

@@ -34,7 +34,7 @@ function generateExercises(data){
   let exercices = "";
    data.forEach(exercice => {
      exercices += `
-     <a href="/exercises/${exercice.language}/${exercice.slug}" class="exercise ${exercice.language}">
+     <a href="/exercises/${exercice.language}/${exercice.slug}" class="exercise ${exercice.language} draggable">
          <h4>${exercice.title}</h4>
          <p>${exercice.author}</p>
      </a>
