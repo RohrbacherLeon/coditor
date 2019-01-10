@@ -1,0 +1,23 @@
+let base_url = "http://localhost:3000/";
+let slot = $('.exercises');
+
+printExercisesForLanguage = (lang) => {
+    axios.get(base_url + `api/languages/${lang}`).then(function(response){
+        let html = "";
+        response.data.forEach(exercise => {
+            html += `<div class="exercise">
+                <h4>${exercise.title}</h4>
+                <p>${exercise.description}</p>
+            </div>`;
+        });
+        slot.empty();
+        slot.append(html);
+        console.log(response.data);
+    }).catch(function(error){
+        if(error)
+            throw error;
+    });
+}
+
+$('#lang_js').click(() => { printExercisesForLanguage('js') });
+$('#lang_php').click(() => { printExercisesForLanguage('php') });

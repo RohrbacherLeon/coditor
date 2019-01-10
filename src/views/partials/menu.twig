@@ -3,11 +3,11 @@
     <div class="nav__middle">
         <ul class="nav__middle__list">
             <li><a href="/" class="{{ menu == 'accueil' ? 'active' }}">Accueil</a></li>
-            <li><a href="/exercises" class="{{ menu == 'exercises' ? 'active' }}">Les exercices</a></li>
-            <li><a href="/profile">Series en cours</a></li>
+            <li><a href="/exercises" class="{{ menu == 'exercises' ? 'active' }}">Exercices</a></li>
+            <li><a href="/profile">Séries en cours</a></li>
 
             {% if user %}
-                <li><a href="/logout">Deconnexion</a></li>   
+                <li><a href="/logout">Déconnexion</a></li>   
             {% endif %}
             
         </ul>
