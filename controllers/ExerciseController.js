@@ -1,14 +1,14 @@
 const Exercise = require('../models/Exercise');
-var Mocha = require('mocha');
-var mocha = new Mocha({});
-var fs = require('fs');
-var Generator = require('../class/Generator');    
+const Mocha = require('mocha');
+const mocha = new Mocha({});
+const fs = require('fs');
+const Generator = require('../class/Generator');    
 
 exports.getExoByLang = (req, res) => {
     Exercise.getAllValuesOf('language',function(err, languages){
         Exercise.getAllValuesOf('tags', (err, tags) => {
             let locale = req.params.lang;
-            res.render('BrowsingView', {languages, locale, tags});
+            res.render('BrowsingView', {languages, locale, tags, menu:"exercises"});
         })
     })
 }
@@ -20,7 +20,7 @@ exports.getExercise = (req, res) => {
     };
 
     Exercise.getExo(query,function(err, exercise){
-        res.render('ExerciseView', {exercise});
+        res.render('ExerciseView', {exercise, menu:"exercises"});
     })
 }
 

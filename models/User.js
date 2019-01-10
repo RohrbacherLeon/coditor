@@ -37,7 +37,7 @@ UserSchema.statics.createUser = function(data, callback){
 }
 
 UserSchema.statics.getUserByEmail = function(email, callback){
-	User.findOne({"profile.email": email}, callback);
+	User.findOne({"profile.email": email, account:"local"}, callback);
 }
 
 UserSchema.statics.comparePassword = function(candidatePassword, hash, callback){
