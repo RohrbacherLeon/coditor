@@ -5,16 +5,12 @@ const formidable = require('formidable'),
     slugify = require('slugify')
 
 exports.getProfile = (req, res) =>{
-    if(req.user.type == "student"){
-        res.render('ProfileView');
-    }
-    else{
-        Exercise.countDocuments({author:req.user.email}, (err,count) => {
-           res.render('ProfileTeacherView', {
-               count
-           });
+    if(req.user.type == "teacher"){
+        Exercise.countDocuments({author:req.user.profile.email}, function (err, count) {
+            res.render('ProfileView', {count, menu : "profile"});
         })
-
+    }else{
+        res.render('ProfileView', {count: "xx", menu : "profile"});
     }
 }
 

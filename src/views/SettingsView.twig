@@ -1,0 +1,70 @@
+{% extends 'layouts/master.twig' %}
+
+{% block content %}
+
+<div class="settings">
+
+    <div class="settings__list">
+        <form method="post" action="/profile/settings/global" class="settings__list__item">
+            <div class="settings__list__item__header title title--small">Informations générales</div>
+            <div class="settings__list__item__content">
+                <div class="form-group">
+                    <label for="first_name">Prénom</label>
+                    <input type="text" name="first_name" id="first_name" value="{{user.first_name}}">
+                </div>
+                <div class="form-group">
+                    <label for="last_name">Nom</label>
+                    <input type="text" name="last_name" id="last_name" value="{{user.last_name}}">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" value="{{user.email}}">
+                </div>
+
+                <div class="form-group">
+                    <label for="file">Photo de profile</label>
+                    <input type="file" name="file" id="file">
+                </div>
+                <div class="button_layout button_layout--right">
+                    <button class="button button--green" type="submit">Sauvegarder</button>
+                </div>
+            </div>
+
+        </form>
+
+        <form method="post" class="settings__list__item">
+            <div class="settings__list__item__header title title--small">Mot de passe</div>
+            <div class="settings__list__item__content">
+                <div class="form-group">
+                    <label for="password">Mot de passe actuel</label>
+                    <input type="password" id="password" placeholder="Votre mot de passe actuel">
+                </div>
+
+                <div class="form-group">
+                    <label for="new_password">Nouveau mot de passe</label>
+                    <input type="new_password" id="new_password" placeholder="Votre nouveau mot de passe">
+                </div>
+                
+                <div class="button_layout button_layout--right">
+                    <button class="button button--green" type="submit">Sauvegarder</button>
+                </div>
+            </div>
+        </form>
+
+
+        {# <div class="settings__list__item">
+            <div class="settings__list__item__header title title--small">Compte</div>
+            <div class="settings__list__item__content">
+                <div class="form-group">
+                    <label for="password">Mot de passe actuel</label>
+                    <input type="password" id="password" placeholder="Votre mot de passe actuel">
+                </div>
+            </div>
+        </div> #}
+
+    <div>
+
+</div>
+
+{% endblock %}

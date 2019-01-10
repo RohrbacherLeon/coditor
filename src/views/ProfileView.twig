@@ -2,78 +2,56 @@
 
 {% block content %}
 <div class="profile">
-
-    <div class="profile__nav">
-        <ul class="profile__nav__list">
-            <li class="profile__nav__list__item header">Profile</li>
-            <li class="profile__nav__list__item">Mon profile</li>
-            <li class="profile__nav__list__item">Historique</li>
-        </ul>
-
-        <ul class="profile__nav__list">
-            <li class="profile__nav__list__item header">Paramètres</li>
-            <li class="profile__nav__list__item">Informations</li>
-            <li class="profile__nav__list__item">Mot de passe</li>
-            <li class="profile__nav__list__item">Compte</li>
-        </ul>
-    </div>
-
-    <div class="profile__content">
-        <div class="profile__content__head">
-            <div class="image"></div>
-            <div class="infos">
-                <div class="infos__user">
-                    <div class="infos__user__id">
-                        <p>{{ user.last_name }}</p>
-                        <p>{{ user.first_name }}</p>
-                    </div>
-                    <p class="email">{{ user.email }}</p>
-                    <p class="exos">Exercices terminés : 5</p>
+    <div class="profile__head">
+        <div class="image">
+            <img class="logoAccount" src={{user.urlImage}}>
+        </div>
+        <div class="infos">
+            <div class="infos__user">
+                <div class="infos__user__id">
+                {% if user.profile.username %}                
+                    <p>{{user.profile.username}}</p>
+                {% else %}
+                    <p>{{ user.profile.last_name }}</p>
+                    <p>{{ user.profile.first_name }}</p>
+                {% endif %}
                 </div>
-                <div class="infos__socials">
-                    <a href="#" class="icon">
-                        <img src="/images/github-logo.svg">
-                    </a>   
 
-                    <a href="#" class="icon">
-                        <img src="/images/codepen.svg">
-                    </a>
-
-                    <a href="#" class="icon">
-                        <img src="/images/stack-overflow.svg">
-                    </a>
-                </div>
+                {% if user.profile.email %}
+                    <p class="email">{{ user.profile.email }}</p>
+                {% endif %}
+                <p class="exos">Exercices {{ user.type == "student" ? "résolues" : "créés" }} : {{count}}</p>                        
             </div>
         </div>
+    </div>
 
-        <div class="profile__content__bottom">
-            <h2 class="title">Mes séries en cours</h2>
+    <div class="profile__series">
+        <h2 class="title">Mes séries en cours</h2>
 
-            <div class="series">
-                <a href='#' class="serie">
-                    <p class="title--small">Nom de la série</p>
-                    <p class="subtitle">auteur</p>
-                    <div class="button_layout button_layout--center">
-                        <div class="button button--green">Reprendre</div>
-                    </div>
-                </a>
+        <div class="series">
+            <a href='#' class="serie">
+                <p class="title--small">Nom de la série</p>
+                <p class="subtitle">auteur</p>
+                <div class="button_layout button_layout--center">
+                    <div class="button button--green">Reprendre</div>
+                </div>
+            </a>
 
-                <a href='#' class="serie">
-                    <p class="title--small">Nom de la série</p>
-                    <p class="subtitle">auteur</p>
-                    <div class="button_layout button_layout--center">
-                        <div class="button button--green">Reprendre</div>
-                    </div>
-                </a>
+            <a href='#' class="serie">
+                <p class="title--small">Nom de la série</p>
+                <p class="subtitle">auteur</p>
+                <div class="button_layout button_layout--center">
+                    <div class="button button--green">Reprendre</div>
+                </div>
+            </a>
 
-                <a href='#' class="serie">
-                    <p class="title--small">Nom de la série</p>
-                    <p class="subtitle">auteur</p>
-                    <div class="button_layout button_layout--center">
-                        <div class="button button--green">Reprendre</div>
-                    </div>
-                </a>
-            </div>
+            <a href='#' class="serie">
+                <p class="title--small">Nom de la série</p>
+                <p class="subtitle">auteur</p>
+                <div class="button_layout button_layout--center">
+                    <div class="button button--green">Reprendre</div>
+                </div>
+            </a>
         </div>
     </div>
 

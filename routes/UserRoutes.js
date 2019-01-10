@@ -6,13 +6,13 @@ const googlePassport = require('./middlewares/GoogleConnection');
 const githubPassport = require('./middlewares/GithubConnection');
 
 router.get('/', (req, res) => {
-    res.render('HomeView');
+    res.render('HomeView', {menu:"accueil"});
 });
 
 router.get('/login', (req, res) => {
-    res.render('LoginView');
+    res.render('LoginView', {menu:"login"});
 });
-router.post('/login', passport.authenticate('local', { successRedirect: '/exercises/', failureRedirect: '/login', failureFlash: true, failureFlash: 'Adresse email ou mot de passe incorrecte.', successFlash: 'Vous êtes maintenant connecté.' }));
+router.post('/login', passport.authenticate('local', { successRedirect: '/profile/', failureRedirect: '/login', failureFlash: true, failureFlash: 'Adresse email ou mot de passe incorrecte.' }));
 
 router.get('/register', (req, res) => {
     res.render('RegisterView');
