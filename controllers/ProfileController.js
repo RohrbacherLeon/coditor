@@ -27,16 +27,17 @@ exports.postCreateExercise = (req, res) =>{
             slug,
             tags : fields.tags.split(','),
             language : fields.language,
-            author : req.user.email,
+            author : req.user.profile.email,
             description : fields.description
         }, function (err, exo) {
             if(err) console.log(err);
         })
-        
+
+        console.log(files);
         //penser a verifer l'extension du fichier de test
         //trier les fichiers de test dans un dossier nommer par l'email de l'auteur ?
         
-        //verification qu'il y est bien un fichier
+        //verification qu'il y est bien un fichier de test
         if(files.file.size > 0){
             let old_path = files.file.path,
                 file_size = files.file.size,
@@ -49,16 +50,39 @@ exports.postCreateExercise = (req, res) =>{
             fs.readFile(old_path, function(err, data) {
                 fs.writeFile(new_path, data, function(err) {
                     fs.unlink(old_path, function(err) {
-                        if (err) {
-                            res.render('CreateExerciseView', {message : 'erreur'});
-                        } else {
-                            res.render('CreateExerciseView', {message : 'exo créé'});
+                        //test if correction
+                        if(files.file_correction.size > 0){
+                            old_path = files.file_correction.path,
+                                file_size = files.file_correction.size,
+                                file_ext = files.file_correction.name.split('.').pop(),
+                                index = old_path.lastIndexOf('/') + 1,
+                                file_name = old_path.substr(index),
+                                new_path = path.join(process.cwd(), '/tests/', slug + '.' + file_ext);
+                            fs.readFile(old_path, function(err, data) {
+                                fs.writeFile(new_path, data, function(err) {
+                                    fs.unlink(old_path, function(err) {
+                                        if (err) {
+                                            res.render('CreateExerciseView', {message : "Erreur lors de la création de l'exercice."});
+                                        } else {
+                                            res.render('CreateExerciseView', {message : "Exercice créé avec une correction."});
+                                        }
+                                    });
+                                });
+                            });
+                        }
+                        //If no correction, render
+                        else{
+                            if (err) {
+                                res.render('CreateExerciseView', {message : "Erreur lors de la création de l'exercice."});
+                            } else {
+                                res.render('CreateExerciseView', {message : "Exercice créé."});
+                            }
                         }
                     });
                 });
             });
         }else{
-            res.render('CreateExerciseView', {message : "Aucun fichier mis"});
+            res.render('CreateExerciseView', {message : "Aucun fichier de test donné."});
         }
     });
 

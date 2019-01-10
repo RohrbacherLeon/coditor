@@ -25,7 +25,6 @@ exports.getExercise = (req, res) => {
 }
 
 exports.postExercise = (req, res) => {
-
     //temporaire car mocha garde en cache les fichiers chargés
     mocha = new Mocha({});
 
