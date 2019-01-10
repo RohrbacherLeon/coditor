@@ -5,8 +5,12 @@
         <a href="/login">Se connecter</a>
     {% else %}
         <div class="nav__right__connected">
-            <p>{{user.last_name}}</p>
-            <p>{{user.first_name}}</p>
+            {% if user.profile.username %}                
+                <p>{{user.profile.username}}</p>
+            {% else %}
+                <p>{{user.profile.last_name}}</p>
+                <p>{{user.profile.first_name}}</p>
+            {% endif %}
             <div class="dropdown" id="js-dropdown">
                 <div class="dropdown__head" id="js-dropdown-head">
                     <div class="img">
