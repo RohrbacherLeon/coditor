@@ -1,4 +1,4 @@
-describe('Test Login Local', function() {
+describe('Testing login', function() {
 
     //Test if page is visitable
     it('Visits the Login page', function() {
@@ -39,7 +39,6 @@ describe('Test Login Local', function() {
         cy.get('input[name=password]').type("testpass");
 
         cy.get(".button.button--green").click();
-        cy.url().should('contain', urlStart);
-        cy.contains(".alert.alert-success", 'Vous êtes maintenant connecté.');
+        cy.url().should('equal', Cypress.env('baseUrl') + "/");
     });
 });
