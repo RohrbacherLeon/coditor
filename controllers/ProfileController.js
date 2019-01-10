@@ -33,7 +33,6 @@ exports.postCreateExercise = (req, res) =>{
             if(err) console.log(err);
         })
 
-        console.log(files);
         //penser a verifer l'extension du fichier de test
         //trier les fichiers de test dans un dossier nommer par l'email de l'auteur ?
         

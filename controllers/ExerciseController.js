@@ -20,7 +20,8 @@ exports.getExercise = (req, res) => {
     };
 
     Exercise.getExo(query,function(err, exercise){
-        res.render('ExerciseView', {exercise});
+        let correctionText = "function addition(a,b){return a+b}";
+        res.render('ExerciseView', {exercise, correctionText});
     })
 }
 
@@ -72,7 +73,9 @@ exports.postExercise = (req, res) => {
                         language : req.params.lang
                     };
                     Exercise.getExo(query,function(err, exercise){
-                        res.render('ExerciseView', {exercise, results});
+                        // Remplacer par vraie correction
+                        let correctionText = "function addition(a,b){return a+b}";
+                        res.render('ExerciseView', {exercise, results, correctionText});
                     })
                 });
             }
