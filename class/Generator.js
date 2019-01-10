@@ -1,4 +1,4 @@
-var fs = require('fs');
+const fs = require('fs');
 let counter = 1;
 module.exports = {
     generate : function(testFile, fct){

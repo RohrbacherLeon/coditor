@@ -9,28 +9,18 @@
         <div class="infos">
             <div class="infos__user">
                 <div class="infos__user__id">
-                    <p>{{ user.last_name }}</p>
-                    <p>{{ user.first_name }}</p>
-                </div>
-                <p class="email">{{ user.email }}</p>
-                {% if user.locale.type == "student" %}
-                    <p class="exos">Exercices terminés : 5</p>
+                {% if user.profile.username %}                
+                    <p>{{user.profile.username}}</p>
                 {% else %}
-                    <p class="exos">Exercices créés : 23</p>                        
+                    <p>{{ user.profile.last_name }}</p>
+                    <p>{{ user.profile.first_name }}</p>
                 {% endif %}
-            </div>
-            <div class="infos__socials">
-                <a href="#" class="icon">
-                    <img src="/images/github-logo.svg">
-                </a>   
+                </div>
 
-                <a href="#" class="icon">
-                    <img src="/images/codepen.svg">
-                </a>
-
-                <a href="#" class="icon">
-                    <img src="/images/stack-overflow.svg">
-                </a>
+                {% if user.profile.email %}
+                    <p class="email">{{ user.profile.email }}</p>
+                {% endif %}
+                <p class="exos">Exercices {{ user.type == "student" ? "résolues" : "créés" }} : {{count}}</p>                        
             </div>
         </div>
     </div>
