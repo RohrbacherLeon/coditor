@@ -1,12 +1,14 @@
-<div class="searchbar">
-    <div class="autocomplete">
-        <select id="searchByTag" class="searchByTag" name="states[]" multiple="multiple">
-        {% for tag in tags %}
-            <option value="{{tag}}">{{tag}}</option>
-        {% endfor %}
-        </select>
+<div class="browser">
+    <div class="searchbar">
+        <div class="autocomplete">
+            <select id="searchByTag" class="searchByTag" name="states[]" multiple="multiple">
+            {% for tag in tags %}
+                <option value="{{tag}}">{{tag}}</option>
+            {% endfor %}
+            </select>
+        </div>
+        <p>Recherche avancée ></p>
     </div>
-    <p>Recherche avancée ></p>
-</div>
 
-<div class="exercises"></div>
+    <div class="exercises"></div>
+</div>

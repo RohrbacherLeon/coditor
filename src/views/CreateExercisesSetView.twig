@@ -3,18 +3,20 @@
 {% block content %}
 <div class="createExoSet">
     {{message}}
-    <h1 class="title">Créer une nouvelle série d'exercices</h1>
     <form method='POST' class='createExoSet__form' enctype="multipart/form-data">
         <div class="form-group">
-            <label for="title">Nom de la série d'exercices</label>
+            <h1 class="title">Créer une nouvelle série d'exercices</h1>
             <input type='text' name='title' id="title" placeholder="Titre de la série">
+            <div class="button_layout button_layout--right">
+                <button class="button button--green" type="submit">Créer la série d'exercice</button>
+            </div>
         </div>
+
+        <div id="workbench"></div>
 
         {% include "partials/browser.twig" with tags %}
 
-        <div class="button_layout button_layout--right">
-            <button class="button button--green" type="submit">Créer l'exercice</button>
-        </div>
+        
     </form>
 
 </div>
