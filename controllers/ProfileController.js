@@ -44,7 +44,7 @@ exports.postCreateExercise = (req, res) =>{
                 index = old_path.lastIndexOf('/') + 1,
                 file_name = old_path.substr(index),
                 
-                //le nom du fichier de test associé à l'exo est le slug de l'exo
+                //Save test file to the folder tests
                 new_path = path.join(process.cwd(), '/tests/', slug + '.' + file_ext);
             fs.readFile(old_path, function(err, data) {
                 fs.writeFile(new_path, data, function(err) {
@@ -56,7 +56,9 @@ exports.postCreateExercise = (req, res) =>{
                                 file_ext = files.file_correction.name.split('.').pop(),
                                 index = old_path.lastIndexOf('/') + 1,
                                 file_name = old_path.substr(index),
-                                new_path = path.join(process.cwd(), '/tests/', slug + '.' + file_ext);
+
+                                //Save correction file to the folder corrections
+                                new_path = path.join(process.cwd(), '/corrections/', slug + '.' + file_ext);
                             fs.readFile(old_path, function(err, data) {
                                 fs.writeFile(new_path, data, function(err) {
                                     fs.unlink(old_path, function(err) {

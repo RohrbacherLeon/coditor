@@ -20,8 +20,14 @@ exports.getExercise = (req, res) => {
     };
 
     Exercise.getExo(query,function(err, exercise){
-        let correctionText = "function addition(a,b){return a+b}";
-        res.render('ExerciseView', {exercise, correctionText});
+        fs.readFile(process.cwd() + `/corrections/${req.params.slug}.js`, "utf-8", function(err, data){
+            if(data != null){
+                let correctionText = data;
+                res.render('ExerciseView', {exercise, correctionText});
+            }else{
+                res.render('ExerciseView', {exercise});
+            }
+        });
     })
 }
 
@@ -73,9 +79,14 @@ exports.postExercise = (req, res) => {
                         language : req.params.lang
                     };
                     Exercise.getExo(query,function(err, exercise){
-                        // Remplacer par vraie correction
-                        let correctionText = "function addition(a,b){return a+b}";
-                        res.render('ExerciseView', {exercise, results, correctionText});
+                        fs.readFile(process.cwd() + `/corrections/${req.params.slug}.js`, "utf-8", function(err, data){
+                            if(data != null){
+                                let correctionText = data;
+                                res.render('ExerciseView', {exercise, correctionText});
+                            }else{
+                                res.render('ExerciseView', {exercise});
+                            }
+                        });
                     })
                 });
             }
