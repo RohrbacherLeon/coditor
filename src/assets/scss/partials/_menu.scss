@@ -5,79 +5,64 @@
     justify-content: space-between;
     padding: 10px 0;
 
+    a:not(.nav__right__connected){
+        padding: 10px 14px;
+
+        &:hover{
+            border-bottom: 2px solid red;
+        }
+
+        &.active{
+            border-bottom: 2px solid red;
+        }
+    }
+
     &__logo{
         img{
             height: 80px;
         }
     }
 
-    &__right{
-        a{
-            color: #333;
-        }
+    &__middle{
+        flex-grow: 1;
+        margin-left: 50px;
 
+        &__list{
+            display: flex;
+
+            li{
+                margin-right: 10px;
+            }
+        }
+    }
+
+    &__right{
         &__connected{
             display: flex;
             align-items: center;
+            cursor: pointer;
+            transition: 0.4s;
+            padding: 10px;
+
+            &.active{
+                background-color: rgb(228, 228, 228);
+                border-radius: 100px;            
+            }
+            
+            &:hover{
+                background-color: rgb(228, 228, 228);
+                border-radius: 100px;
+            }
 
             p{
                 margin-right: 15px;
             }
 
-            .dropdown{
-                display: flex;
-                flex-direction: column;
-                cursor: pointer;
-                position: relative;
-                &__head{
-                    display: flex;
-                    align-items: center;
-                    .img{
-                        height: 40px;
-                        width: 40px;
-                        border-radius: 50%;
-                        margin-right: 7px;
-                        .logoAccount{
-                            height: 40px;
-                            width: 40px;
-                            border-radius: 50%;
-                            margin-right: 7px;
-                        }
-                    }
-                }
-
-                .separator{
-                    height: 1px;
-                    width: 100%;
-                    background-color: #333;
-                }
-
-                &__list{
-                    display: none;
-                    position: absolute;
-                    top: 100%;
-                    right: 0;
-                    border: 1px solid #333;
-                    background-color: white;
-                    margin-top: 4px;
-                    min-width: 130px;
-                    z-index: 100;
-
-
-                    li a{
-                        display: block;
-                        padding: 10px;
-                    }
-                }
-
-                &.open{
-                    .dropdown__list{
-                        display: block;
-                    }
-                }
+            img{
+                height: 45px;
+                width: 45px;
+                border-radius: 50%;
             }
         }
     }
-
-
 }

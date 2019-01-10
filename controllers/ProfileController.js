@@ -7,10 +7,10 @@ const formidable = require('formidable'),
 exports.getProfile = (req, res) =>{
     if(req.user.type == "teacher"){
         Exercise.countDocuments({author:req.user.profile.email}, function (err, count) {
-            res.render('ProfileView', {count});
+            res.render('ProfileView', {count, menu : "profile"});
         })
     }else{
-        res.render('ProfileView', {count: "xx"});
+        res.render('ProfileView', {count: "xx", menu : "profile"});
     }
 }
 
