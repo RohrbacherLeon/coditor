@@ -2,10 +2,9 @@ $(document).ready(function() {
   $('#searchByTag').select2({ width: '100%' });
 });
 
-$.get(`/api/exercises/${window.location.href.split('/').reverse()[0]}`).then(function(data){  
+$.get(`/api/exercises`).then(function(data){  
   generateExercises(data);
 })
-
 
 $('#searchByTag').on('select2:select', function (e) {
    let tags = [];
@@ -14,8 +13,8 @@ $('#searchByTag').on('select2:select', function (e) {
      tags.push(tag.text);
    });
 
-  $.get(`/api/tags/filter?lang=${window.location.href.split('/').reverse()[0]}&tags=${tags.join(',')}`).then(function(data){
-    console.log(`/api/tags/filter?lang=${window.location.href.split('/').reverse()[0]}&tags=${tags.join(',')}`);
+  $.get(`/api/exercises?lang=${window.location.href.split('/').reverse()[0]}&tags=${tags.join(',')}`).then(function(data){
+    console.log(data);
     generateExercises(data)
   })
 });
@@ -41,7 +40,6 @@ function generateExercises(data){
      </a>
      `
    });
-   console.log(exercices)
    $('.exercises').empty();
    $('.exercises').append(exercices);
 }

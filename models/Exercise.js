@@ -56,7 +56,7 @@ ExerciseSchema.statics.byTags = function(tagsArray, lang, callback){
 		tags: { $all: tagsArray.split(',') }
 	}
 
-	if(lang){
+	if(lang && lang != 'all'){
 		obj.language = lang
 	}
 
