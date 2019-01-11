@@ -23,10 +23,10 @@
     </div>
     <div class="exercise__bottom">
         <ul class="feedback">
-            {% for success in results.success %}
+            {% for success in results.passes %}
                 <li class='success'>{{success.title}}</li>
             {% endfor %}
-            {% for fail in results.fails %}
+            {% for fail in results.failures %}
                 <li class='fail'>{{fail.title}} {{fail.error.operator}} {{fail.error.actual}}</li>
             {% endfor %}
         </ul>

@@ -17,7 +17,7 @@
         {% if user == null %}
             <a href="/login" class="{{ menu == 'login' ? 'active' }}">Se connecter</a>
         {% else %}
-            <a href="/profile" class="nav__right__connected {{ menu == 'profile' ? 'active' }}">
+            <a href="/profile" class="nav__right__connected {{ menu == 'profile' ? 'activ' }}">
                 {% if user.profile.username %}                
                     <p>{{user.profile.username}}</p>
                 {% else %}
