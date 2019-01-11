@@ -40,12 +40,27 @@ ExerciseSchema.statics.getExo = function(data, callback){
 }
 
 ExerciseSchema.statics.byLanguage = function(language, callback){
-	let query = {language: language};
+	let query = {}
+
+	if(language)
+		if(language == 'all')
+			query = {};
+		else
+			query.language = language;
+		
 	Exercise.find(query, callback);
 }
 
 ExerciseSchema.statics.byTags = function(tagsArray, lang, callback){
-	Exercise.find( { tags: { $all: tagsArray.split(',') }, language : lang }, callback )
+	let obj = {
+		tags: { $all: tagsArray.split(',') }
+	}
+
+	if(lang && lang != 'all'){
+		obj.language = lang
+	}
+
+	Exercise.find( obj, callback )
 }
 
 ExerciseSchema.statics.getAllValuesOf = function(value, callback){

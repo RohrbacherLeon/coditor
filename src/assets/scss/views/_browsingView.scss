@@ -1,5 +1,3 @@
-$blue : blue;
-
 .browsing{
     display: flex;
     flex-grow: 1;
@@ -43,34 +41,6 @@ $blue : blue;
                 grid-gap: 20px;
             }
         }
-        .searchbar{
-            margin-top: 30px;
-            position: relative;
-            display: grid;
-            grid-template-columns: repeat(2,1fr);
-
-            
-
-
-            p{
-                margin-left: 10px;
-                flex-grow: 1;
-            }
-        }
-
-        .exercises{
-            display: grid;
-            grid-template-columns: repeat(4,1fr);
-            grid-gap: 20px;
-            margin-top: 30px;
-        }
-
-        .exercise{
-            display: block;
-            border: 1px solid $blue;
-            border-radius: 4px;
-            min-height: 100px;
-            padding: 5px;
-        }
+        
     }
 }

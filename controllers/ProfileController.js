@@ -89,6 +89,11 @@ exports.postCreateExercise = (req, res) =>{
         }else{
             res.render('CreateExerciseView', {message : "Aucun fichier de test donné."});
         }
-    });
+    });    
+}
 
+exports.getCreateExercisesSet = (req, res) =>{
+    Exercise.getAllValuesOf('tags', (err, tags) => {
+        res.render('CreateExercisesSetView', {tags});
+    })
 }
