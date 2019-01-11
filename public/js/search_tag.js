@@ -15,6 +15,7 @@ $('#searchByTag').on('select2:select', function (e) {
    });
 
   $.get(`/api/tags/filter?lang=${window.location.href.split('/').reverse()[0]}&tags=${tags.join(',')}`).then(function(data){
+    console.log(`/api/tags/filter?lang=${window.location.href.split('/').reverse()[0]}&tags=${tags.join(',')}`);
     generateExercises(data)
   })
 });
@@ -40,7 +41,7 @@ function generateExercises(data){
      </a>
      `
    });
- 
+   console.log(exercices)
    $('.exercises').empty();
    $('.exercises').append(exercices);
 }
