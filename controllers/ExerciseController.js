@@ -20,14 +20,37 @@ exports.getExercise = (req, res) => {
     };
 
     Exercise.getExo(query,function(err, exercise){
-        fs.readFile(process.cwd() + `/corrections/${req.params.slug}.js`, "utf-8", function(err, data){
-            if(data != null){
-                let correctionText = data;
-                res.render('ExerciseView', {exercise, menu:"exercises", correctionText});
-            }else{
-                res.render('ExerciseView', {exercise, menu:"exercises"});
-            }
-        });
+        let correctionText;
+        let skeletonText;
+
+        if(fs.existsSync(process.cwd() + `/corrections/${req.params.slug}.js`)){
+            correctionText = fs.readFileSync(process.cwd() + `/corrections/${req.params.slug}.js`, "utf-8");
+        }else{
+            correctionText = null;
+        }
+        
+        if(fs.existsSync(process.cwd() + `/skeletons/${req.params.slug}.js`)){
+            skeletonText = fs.readFileSync(process.cwd() + `/skeletons/${req.params.slug}.js`, "utf-8");
+        }else{
+            skeletonText = null;
+        }
+
+        //If correction + skeleton
+        if(correctionText != null && skeletonText != null){
+            res.render('ExerciseView', {exercise, menu:"exercises", correctionText, skeletonText});
+        }
+        //If only correction
+        if(correctionText != null && skeletonText == null){
+            res.render('ExerciseView', {exercise, menu:"exercises", correctionText});
+        }
+        //If only skeleton
+        if(correctionText == null && skeletonText != null){
+            res.render('ExerciseView', {exercise, menu:"exercises", skeletonText});
+        }
+        //If no one
+        if(correctionText == null && skeletonText == null){
+            res.render('ExerciseView', {exercise, menu:"exercises"});
+        }
     })
 }
 
