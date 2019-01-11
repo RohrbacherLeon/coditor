@@ -1,5 +1,20 @@
 {% extends "layouts/master.twig" %}
 
+{% block assets %}
+    <link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="/js/codemirror/lib/codemirror.css">
+    <link rel="stylesheet" href="/js/codemirror/addon/hint/show-hint.css">
+    <link rel="stylesheet" href="/js/codemirror/theme/ambiance.css">
+
+    <script src="/js/codemirror/lib/codemirror.js"></script>
+    <script src="/js/codemirror/mode/javascript/javascript.js"></script>
+
+    <script src="/js/codemirror/addon/hint/show-hint.js"></script>
+    <script src="/js/codemirror/addon/hint/javascript-hint.js"></script>
+
+{% endblock %}
+
 {% block content %}
 
 {% include './partials/popup_correction.twig' %}
@@ -17,11 +32,11 @@
     </div>
     <div class="exercise__bottom">
         <ul class="feedback">
-            {% for success in results.success %}
-                <li class='success'>{{ success.title }}</li>
+            {% for success in results.passes %}
+                <li class='success'>{{success.title}}</li>
             {% endfor %}
-            {% for fail in results.fails %}
-                <li class='fail'>{{ fail.title }} {{ fail.error.operator }} {{ fail.error.actual }}</li>
+            {% for fail in results.failures %}
+                <li class='fail'>{{fail.title}} {{fail.error.operator}} {{fail.error.actual}}</li>
             {% endfor %}
         </ul>
         <div id="openCorrection" class="button button--green">Afficher la correction</div>
@@ -39,7 +54,8 @@
         let editor = CodeMirror.fromTextArea(document.getElementById('js-textarea'), {
             lineNumbers: true,
             mode:  "javascript",
-            theme: 'ambiance'
+            theme: 'ambiance',
+            extraKeys: {"Ctrl-Space": "autocomplete"}
         });
     </script>
 

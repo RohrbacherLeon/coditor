@@ -41,6 +41,7 @@
 		"watch": "sass src/assets/scss/style.scss:public/css/style.css --watch",
 		"sass": "sass src/assets/scss/style.scss:public/css/style.css",
 		"test": "mocha --reporter list mocha/tests/*",
+		"mocha": "mocha --reporter json tmp/$1",
 		"cypress": "./node_modules/.bin/cypress open"
 	},
 	"author": {

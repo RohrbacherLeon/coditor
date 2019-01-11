@@ -5,12 +5,16 @@
     justify-content: space-between;
     padding: 10px 0;
 
-    a:not(.nav__right__connected){
+    a{
         padding: 10px 14px;
 
-        &:hover{
+        
+
+        &:not(.nav__logo, .nav__right__connected):hover{
             border-bottom: 2px solid red;
         }
+
+        
 
         &.active{
             border-bottom: 2px solid red;
@@ -44,7 +48,7 @@
             transition: 0.4s;
             padding: 10px;
 
-            &.active{
+            &.activ{
                 background-color: rgb(228, 228, 228);
                 border-radius: 100px;            
             }

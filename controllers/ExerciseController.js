@@ -1,8 +1,9 @@
 const Exercise = require('../models/Exercise');
 const Mocha = require('mocha');
-const mocha = new Mocha({});
+var mocha = new Mocha({});
 const fs = require('fs');
 const Generator = require('../class/Generator');    
+const { exec } = require('child_process');
 
 exports.getExoByLang = (req, res) => {
     Exercise.getAllValuesOf('language',function(err, languages){
@@ -45,50 +46,34 @@ exports.postExercise = (req, res) => {
         //Lecture du fichier du prof pour vérifier la fonction de l'etudiant
         fs.readFile(process.cwd() + `/tests/${req.params.slug}.js`, "utf-8", function(err, data){
             //Génére un fichier nameFile de test (ajoute la fonction étudiante dans le fichier test du prof)
-            let nameFile = Generator.generate(data, fct);
+            let nameFile = Generator.generate(data, fct, req.params.slug);
             if(nameFile){
-                //si nameFile, c'est que le fichier bien généré
-                //lancer mocha sur docker avec le namefile
-                //exec(mocha ....../tmp/nameFile) sur le docker
-                //ici c'est pour tester l'execution de mocha sans docker
-                mocha.addFile(process.cwd() +'/tmp/' + nameFile);
-                let results = {
-                    fails   : [],
-                    success : []
-                }
-    
-                mocha.run(function(failures){
-                    Generator.remove(nameFile);
-                }).on('pass', function(test) {
-                    results.success.push({
-                        title : test.title,
-                        speed : test.speed
-                    })
-                }).on('fail', function(test, err) {
-                    results.fails.push({
-                        title : test.title,
-                        error : {
-                            actual   : test.err.actual, 
-                            expected : test.err.expected,
-                            operator : test.err.operator
-                        }
-                    })
-                }).on('end', function() {
+                //execute le test dans un container docker
+                exec(`docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp node:8 node nodescript.js ${nameFile}`, (error, stdout, stderr) => {
+                    if (error) {
+                        console.error(`exec error: ${error}`);
+                        return;
+                    }
+                    
                     let query = {
-                        slug :req.params.slug, 
+                        slug     : req.params.slug, 
                         language : req.params.lang
                     };
+
+                    Generator.remove(nameFile);
                     Exercise.getExo(query,function(err, exercise){
                         fs.readFile(process.cwd() + `/corrections/${req.params.slug}.js`, "utf-8", function(err, data){
                             if(data != null){
                                 let correctionText = data;
-                                res.render('ExerciseView', {exercise, correctionText});
+                                res.render('ExerciseView', {exercise, correctionText, results : JSON.parse(stdout)});
                             }else{
-                                res.render('ExerciseView', {exercise});
+                                res.render('ExerciseView', {exercise, results : JSON.parse(stdout)});
                             }
                         });
                     })
+                    
                 });
+    
             }
         });
     }
