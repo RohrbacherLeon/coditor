@@ -45,4 +45,11 @@ router.get('/tags/filter', (req, res) => {
     }
 });
 
+router.get('/languages/:lang', (req, res) => {
+    Exercise.byLanguage(req.params.lang, (err, exercises) => {
+        res.setHeader('Content-Type', 'application/json');
+        res.send(exercises);
+    });
+});
+
 module.exports = router;
