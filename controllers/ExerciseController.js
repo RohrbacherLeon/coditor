@@ -13,12 +13,13 @@ exports.getExoByLang = (req, res) => {
     })
 }
 
-exports.getExercise = (req, res) => {
-    let query = {
-        slug :req.params.slug, 
-        language : req.params.lang
-    };
-
+/**
+ * Function used to get the exercice.
+ * @param {*} query 
+ * @param {*} req 
+ * @param {*} res 
+ */
+function showExercice(query, req, res){
     Exercise.getExo(query,function(err, exercise){
         let correctionText;
         let skeletonText;
@@ -52,6 +53,15 @@ exports.getExercise = (req, res) => {
             res.render('ExerciseView', {exercise, menu:"exercises"});
         }
     })
+}
+
+exports.getExercise = (req, res) => {
+    let query = {
+        slug :req.params.slug, 
+        language : req.params.lang
+    };
+
+    showExercice(query, req, res);
 }
 
 exports.postExercise = (req, res) => {
@@ -101,16 +111,7 @@ exports.postExercise = (req, res) => {
                         slug :req.params.slug, 
                         language : req.params.lang
                     };
-                    Exercise.getExo(query,function(err, exercise){
-                        fs.readFile(process.cwd() + `/corrections/${req.params.slug}.js`, "utf-8", function(err, data){
-                            if(data != null){
-                                let correctionText = data;
-                                res.render('ExerciseView', {exercise, correctionText});
-                            }else{
-                                res.render('ExerciseView', {exercise});
-                            }
-                        });
-                    })
+                    showExercice(query, req, res);
                 });
             }
         });
