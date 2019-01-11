@@ -4,25 +4,16 @@
 
     &__languages{
         background-color: whitesmoke;
+        display: flex;
+        flex-direction: column;
 
-        .languages{
-            li {
-                padding: 10px 20px;
-                cursor: pointer;
+        img {
+            width:300px;
+            height: 100px;
+            cursor: pointer;
 
-                &.head{
-                    text-align: center; 
-                    background-color: #333;
-                    color: white;
-                    cursor: initial;
-                }
-
-                &.active{
-                    background-color: $blue;
-                    a{
-                        color: white
-                    }
-                }
+            &:hover{
+                opacity: 0.8;
             }
         }
     }
