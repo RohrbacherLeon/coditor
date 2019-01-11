@@ -1,6 +1,6 @@
 let base_url = "http://localhost:3000/";
 let slot = $('.exercises');
-let current_language = "js";
+let current_language = "all";
 
 switchLanguage = function(li_elem) {
     current_language = li_elem.attr('id').split('_', 2)[1];
@@ -39,6 +39,10 @@ function refreshExercises(exercises_html) {
 }
 
 $(document).ready(function() {
+    $.get(`/api/tags/filter?lang=${current_language}`).then(function(data) {
+        refreshExercises(getExercisesHtml(data));
+    });
+
     $('#searchByTag').select2({ width: '100%' });
 
     $('#lang_js').click(function() {
