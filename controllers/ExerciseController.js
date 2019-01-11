@@ -24,18 +24,21 @@ function showExercice(query, req, res){
         let correctionText;
         let skeletonText;
 
+        //Test if file correction exist
         if(fs.existsSync(process.cwd() + `/corrections/${req.params.slug}.js`)){
             correctionText = fs.readFileSync(process.cwd() + `/corrections/${req.params.slug}.js`, "utf-8");
         }else{
             correctionText = null;
         }
         
+        //Test if file skeletons exist
         if(fs.existsSync(process.cwd() + `/skeletons/${req.params.slug}.js`)){
             skeletonText = fs.readFileSync(process.cwd() + `/skeletons/${req.params.slug}.js`, "utf-8");
         }else{
             skeletonText = null;
         }
 
+        //Return
         //If correction + skeleton
         if(correctionText != null && skeletonText != null){
             res.render('ExerciseView', {exercise, menu:"exercises", correctionText, skeletonText});
