@@ -2,20 +2,19 @@
     <a href="/" class="nav__logo"><img src='/images/logo.png'></a>
     <div class="nav__middle">
         <ul class="nav__middle__list">
-            <li><a href="/" class="{{ menu == 'accueil' ? 'active' }}">Accueil</a></li>
-            <li><a href="/exercises" class="{{ menu == 'exercises' ? 'active' }}">Les exercices</a></li>
-            <li><a href="/profile">Series en cours</a></li>
-
+            <li><a href="/"{{ menu == 'accueil' ? ' class="active"' }}>Accueil</a></li>
+            <li><a href="/exercises"{{ menu == 'exercises' ?  'class="active"' }}>Exercices</a></li>
+            <!--<li><a href="/profile">Séries en cours</a></li>-->
             {% if user %}
-                <li><a href="/logout">Deconnexion</a></li>   
+                <li><a href="/logout">Déconnexion</a></li>   
             {% endif %}
-            
         </ul>
     </div>
     
     <div class="nav__right">
         {% if user == null %}
-            <a href="/login" class="{{ menu == 'login' ? 'active' }}">Se connecter</a>
+            <a href="/login"{{ menu == 'login' ?  'class="active"' }}>Connexion</a>
+            <a href="/register"{{ menu == 'register' ? 'class="active"' }}>Inscription</a>
         {% else %}
             <a href="/profile" class="nav__right__connected {{ menu == 'profile' ? 'activ' }}">
                 {% if user.profile.username %}                
@@ -24,7 +23,7 @@
                     <p>{{user.profile.last_name}}</p>
                     <p>{{user.profile.first_name}}</p>
                 {% endif %}
-                    <img class="logoAccount" src={{user.urlImage}}>
+                <img class="logoAccount" src={{user.urlImage}}>
             </a>
         {% endif %}
     </div>

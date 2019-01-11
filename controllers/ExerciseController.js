@@ -21,12 +21,18 @@ exports.getExercise = (req, res) => {
     };
 
     Exercise.getExo(query,function(err, exercise){
-        res.render('ExerciseView', {exercise, menu:"exercises"});
+        fs.readFile(process.cwd() + `/corrections/${req.params.slug}.js`, "utf-8", function(err, data){
+            if(data != null){
+                let correctionText = data;
+                res.render('ExerciseView', {exercise, menu:"exercises", correctionText});
+            }else{
+                res.render('ExerciseView', {exercise, menu:"exercises"});
+            }
+        });
     })
 }
 
 exports.postExercise = (req, res) => {
-
     //temporaire car mocha garde en cache les fichiers chargés
     mocha = new Mocha({});
 
@@ -56,7 +62,14 @@ exports.postExercise = (req, res) => {
 
                     Generator.remove(nameFile);
                     Exercise.getExo(query,function(err, exercise){
-                        res.render('ExerciseView', {exercise, results : JSON.parse(stdout)});
+                        fs.readFile(process.cwd() + `/corrections/${req.params.slug}.js`, "utf-8", function(err, data){
+                            if(data != null){
+                                let correctionText = data;
+                                res.render('ExerciseView', {exercise, correctionText, results : JSON.parse(stdout)});
+                            }else{
+                                res.render('ExerciseView', {exercise, results : JSON.parse(stdout)});
+                            }
+                        });
                     })
                     
                 });
