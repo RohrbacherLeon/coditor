@@ -13,8 +13,8 @@
     
     <div class="nav__right">
         {% if user == null %}
-            <a href="/login"{{ menu == 'login' ?  'class="active"' }}>Connexion</a>
-            <a href="/register"{{ menu == 'register' ? 'class="active"' }}>Inscription</a>
+            <a href="/login" class="nav__right__item {{ menu == 'login' ?  'active' }}">Connexion</a>
+            <a href="/register" class="nav__right__item {{ menu == 'register' ?  'active' }}">Inscription</a>
         {% else %}
             <a href="/profile" class="nav__right__connected {{ menu == 'profile' ? 'activ' }}">
                 {% if user.profile.username %}                
