@@ -37,24 +37,7 @@ function showExercice(query, req, res){
         }else{
             skeletonText = null;
         }
-
-        //Return
-        //If correction + skeleton
-        if(correctionText != null && skeletonText != null){
-            res.render('ExerciseView', {exercise, menu:"exercises", correctionText, skeletonText});
-        }
-        //If only correction
-        if(correctionText != null && skeletonText == null){
-            res.render('ExerciseView', {exercise, menu:"exercises", correctionText});
-        }
-        //If only skeleton
-        if(correctionText == null && skeletonText != null){
-            res.render('ExerciseView', {exercise, menu:"exercises", skeletonText});
-        }
-        //If no one
-        if(correctionText == null && skeletonText == null){
-            res.render('ExerciseView', {exercise, menu:"exercises"});
-        }
+        res.render('ExerciseView', {exercise, menu:"exercises", correctionText, skeletonText});
     })
 }
 

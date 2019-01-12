@@ -78,19 +78,19 @@ exports.postCreateExercise = (req, res) =>{
             res.render('CreateExerciseView', {message : "Aucun fichier de test donné."});
         }
 
-        //test if correction exist
+        //test if correction exist, create file
         let correction_file;
         if(files.file_correction.size > 0){
             correction_file = saveFile(files.file_correction, "corrections", slug, res);
         }
 
-        //test if skeleton exist
+        //test if skeleton exist, create file
         let skeleton_file;
         if(files.file_skeleton.size > 0){
             skeleton_file = saveFile(files.file_skeleton, "skeletons", slug, res);
         }
 
-        //Return
+        //Return message
         let messageCreation = "";
         if(test_file != null)
         {
