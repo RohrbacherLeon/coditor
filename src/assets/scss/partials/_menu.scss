@@ -5,18 +5,6 @@
     justify-content: space-between;
     padding: 10px 0;
 
-    a:not(.nav__right__connected){
-        padding: 10px 14px;
-
-        &:hover{
-            border-bottom: 2px solid red;
-        }
-
-        &.active{
-            border-bottom: 2px solid red;
-        }
-    }
-
     &__logo{
         img{
             height: 80px;
@@ -32,11 +20,35 @@
 
             li{
                 margin-right: 10px;
+
+                a{
+                    padding: 10px 14px;
+
+                    &:hover{
+                        border-bottom: 2px solid red;
+                    }
+
+                    &.active{
+                        border-bottom: 2px solid red;
+                    }
+                }
             }
         }
     }
 
     &__right{
+
+        &__item{
+            padding: 10px 14px;
+
+            &:hover{
+                border-bottom: 2px solid red;
+            }
+
+            &.active{
+                border-bottom: 2px solid red;
+            }
+        }
         &__connected{
             display: flex;
             align-items: center;
@@ -44,9 +56,9 @@
             transition: 0.4s;
             padding: 10px;
 
-            &.active{
+            &.activ{
                 background-color: rgb(228, 228, 228);
-                border-radius: 100px;            
+                border-radius: 100px;
             }
             
             &:hover{

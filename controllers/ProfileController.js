@@ -77,6 +77,7 @@ exports.postCreateExercise = (req, res) =>{
         }else{
             res.render('CreateExerciseView', {message : "Aucun fichier de test donné."});
         }
+<<<<<<< HEAD
 
         //test if correction exist, create file
         let correction_file;
@@ -106,4 +107,13 @@ exports.postCreateExercise = (req, res) =>{
         }
         res.render('CreateExerciseView', {message : messageCreation});
     });
+=======
+    });    
+}
+
+exports.getCreateExercisesSet = (req, res) =>{
+    Exercise.getAllValuesOf('tags', (err, tags) => {
+        res.render('CreateExercisesSetView', {tags});
+    })
+>>>>>>> ae58a06315aaadee62f94ff22502de7f37ab164b
 }

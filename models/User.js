@@ -29,7 +29,7 @@ UserSchema.statics.createUser = function(data, callback){
 				last_name : data.last_name,
 				email : data.email,
 			}
-			newUser.urlImage   = "../images/iconLocal.png";
+			newUser.urlImage   = "/images/iconLocal.png";
 			
 	        newUser.save(callback);
 	    });
