@@ -2,7 +2,7 @@ let base_url = "http://localhost:3000/";
 let slot = $('.exercises');
 let current_language = "all";
 let arrow_right="<img src='/images/arrow-right.png' class='arrow-right'>";
-let exercise_serie = [];
+let exercises_selected = [];
 
 
 switchLanguage = function(li_elem) {
@@ -17,11 +17,13 @@ switchLanguage = function(li_elem) {
 getExercisesHtml = function(data) {
     let exercises = "";
     data.forEach(exercise => {
-        exercises += `
-        <a href="/exercises/${exercise.language}/${exercise.slug}" id="${exercise._id}" class="exercise ${exercise.language} draggable">
-            <h4>${exercise.title}</h4>
-            <p>${exercise.author}</p>
-        </a>`;
+        if( $.inArray( exercise._id , exercises_selected ) == -1 ){
+            exercises += `
+            <a href="/exercises/${exercise.language}/${exercise.slug}" id="${exercise._id}" class="exercise ${exercise.language} draggable">
+                <h4>${exercise.title}</h4>
+                <p>${exercise.author}</p>
+            </a>`;
+        }
     });
     return exercises;
 }
@@ -76,7 +78,7 @@ $("#drop_zone").droppable({
     drop: function(event, ui) {
         $(this).removeClass("over");
         var dropped = ui.draggable;
-        exercise_serie.push(dropped[0].id);
+        exercises_selected.push(dropped[0].id);
         var droppedOn = $(this);
         $(arrow_right).prependTo(droppedOn);
         $(dropped).detach().css({
