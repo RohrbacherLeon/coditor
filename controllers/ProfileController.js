@@ -1,3 +1,4 @@
+const User = require('../models/User')
 const Exercise = require('../models/Exercise')
 const formidable = require('formidable'),
     fs = require('fs'),
@@ -96,4 +97,45 @@ exports.getCreateExercisesSet = (req, res) =>{
     Exercise.getAllValuesOf('tags', (err, tags) => {
         res.render('CreateExercisesSetView', {tags});
     })
+}
+
+exports.getSettings = (req, res) => {
+    res.render('SettingsView');
+}
+
+exports.postSettingsGlobal = (req, res) => {
+    var form = new formidable.IncomingForm();
+
+    form.parse(req, function(err, fields, files) {
+
+        let update = {}
+        
+        if(req.user.profile.first_name != fields.first_name){
+            update.first_name = fields.first_name
+        }
+
+        if(req.user.profile.last_name != fields.last_name){
+            update.last_name = fields.last_name
+        }
+
+        console.log(update);
+        
+
+        User.updateOne({account:'local', "profile.email" : req.user.profile.email}, {profile :{$set : update}}, function (err, user) {
+            if (err) return handleError(err);
+            console.log(user);
+
+            res.render('SettingsView')
+            
+        });;
+        
+            
+        
+    }); ;
+    
+}
+
+exports.postSettingsPassword = (req, res) => {
+    console.log(req.body);
+    res.render('SettingsView');
 }

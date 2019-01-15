@@ -14,7 +14,15 @@ function isTeacher(req, res, next){
 		res.redirect('/profile')
 }
 
+function isConnectedWithLocalAccount(req, res, next){
+	if(req.user.account == "local")
+		return next()
+	else
+		res.redirect('/profile')
+}
+
 module.exports = {
 	ensureAuthenticated,
-	isTeacher
+	isTeacher,
+	isConnectedWithLocalAccount
 };
