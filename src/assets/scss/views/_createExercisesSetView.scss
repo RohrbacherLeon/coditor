@@ -10,7 +10,18 @@
          
         #drop_zone {
             height: 300px;
-            background-color: grey;
+            //background-color: grey;
+            .exercise {
+                display: inline-block;
+            }
+            
+
         }
+
+        
     }
 }
+
+.over {
+    border: dashed 1px black;
+  }
