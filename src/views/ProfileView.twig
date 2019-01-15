@@ -20,6 +20,10 @@
                 {% if user.profile.email %}
                     <p class="email">{{ user.profile.email }}</p>
                 {% endif %}
+                {% if user.account == "local" %}    
+                    <a href="/profile/settings"><i class="fas fa-cog"></i> Paramètres</a>
+                {% endif %}
+                
                 <p class="exos">Exercices {{ user.type == "student" ? "résolues" : "créés" }} : {{count}}</p>                        
             </div>
         </div>
