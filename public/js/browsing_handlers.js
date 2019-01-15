@@ -80,12 +80,14 @@ $("#drop_zone").droppable({
         var dropped = ui.draggable;
         exercises_selected.push(dropped[0].id);
         var droppedOn = $(this);
-        $(arrow_right).prependTo(droppedOn);
         $(dropped).detach().css({
             top: 0,
             left: 0
-        }).prependTo(droppedOn);
+        }).appendTo(droppedOn);
+        $(arrow_right).appendTo(droppedOn);
+        $('#plus-button').appendTo(droppedOn);
         $(dropped).draggable( "disable" );
+        $(dropped).addClass("selected");
     },
     over: function(event, elem) {
         $(this).addClass("over");
