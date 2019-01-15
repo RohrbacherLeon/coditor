@@ -8,17 +8,29 @@
 
     #workbench {
          
-        #drop_zone {
+        #drop_zone { 
             height: 300px;
-            //background-color: grey;
+            display: flex;
+            overflow: auto;
+            justify-content: center;
+            align-items: center;
+
             .exercise {
-                display: inline-block;
+                height: 100px;
+                width: 300px;
             }
             
+            .arrow-right {
+                margin: 0 10px;
+                height: 64px;
+                width: 64px;
+            }
 
-        }
-
-        
+            .plus-button {
+                height: 64px;
+                width: 64px;
+            }
+        }       
     }
 }
 

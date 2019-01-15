@@ -49,31 +49,6 @@ $.get(`/api/tags/filter?lang=${current_language}`).then(function(data) {
 });
 
 
-
-$("#drop_zone").droppable({
-    accept: ".draggable",
-    drop: function(event, ui) {
-        $(this).removeClass("over");
-        var dropped = ui.draggable;
-        var droppedOn = $(this);
-        $(arrow_right).prependTo(droppedOn);
-        $(dropped).detach().css({
-        top: 0,
-        left: 0
-        }).prependTo(droppedOn);
-        
-
-    },
-    over: function(event, elem) {
-        $(this).addClass("over");
-        console.log("over");
-    },
-    out: function(event, elem) {
-        $(this).removeClass("over");
-    }
-});
-
-
 $('#searchByTag').select2({ width: '100%' });
 
 $('#lang_js').click(function() {
@@ -90,4 +65,28 @@ $('#searchByTag').on('select2:select', function(e) {
 
 $('#searchByTag').on('select2:unselect', function(e) {
     refreshTags(e);
+});
+
+
+
+// Drop script
+$("#drop_zone").droppable({
+    accept: ".draggable",
+    drop: function(event, ui) {
+        $(this).removeClass("over");
+        var dropped = ui.draggable;
+        var droppedOn = $(this);
+        $(arrow_right).prependTo(droppedOn);
+        $(dropped).detach().css({
+            top: 0,
+            left: 0
+        }).prependTo(droppedOn);
+        $(dropped).draggable( "disable" );
+    },
+    over: function(event, elem) {
+        $(this).addClass("over");
+    },
+    out: function(event, elem) {
+        $(this).removeClass("over");
+    }
 });
