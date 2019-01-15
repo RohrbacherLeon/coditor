@@ -23,10 +23,10 @@
 		"mongodb": "^3.1.9",
 		"mongoose": "^5.3.13",
 		"passport": "^0.4.0",
+		"passport-github": "^1.1.0",
+		"passport-google-oauth": "^1.0.0",
 		"passport-http": "^0.3.0",
 		"passport-local": "^1.0.0",
-		"passport-google-oauth": "^1.0.0",
-		"passport-github": "^1.1.0",
 		"path": "^0.12.7",
 		"sass": "^1.15.1",
 		"slugify": "^1.3.4",
@@ -41,6 +41,7 @@
 		"watch": "sass src/assets/scss/style.scss:public/css/style.css --watch",
 		"sass": "sass src/assets/scss/style.scss:public/css/style.css",
 		"test": "mocha --reporter list mocha/tests/*",
+		"mocha": "mocha --reporter json tmp/$1",
 		"cypress": "./node_modules/.bin/cypress open"
 	},
 	"author": {
@@ -53,4 +54,8 @@
 		"Zink Anthony (https://github.com/AnthonyZink)"
 	],
 	"license": "UNLICENSED"
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> ae58a06315aaadee62f94ff22502de7f37ab164b

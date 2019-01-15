@@ -1,7 +1,8 @@
 const fs = require('fs');
-let counter = 1;
+
 module.exports = {
-    generate : function(testFile, fct){
+    generate : function(testFile, fct, name){
+        
         let startFile = `
         let assert = require('assert');
         let fct = ${fct};
@@ -9,7 +10,7 @@ module.exports = {
         let contentFile = startFile + testFile;
         
         //calculer le name : si tmp1 => tmp2 etc...
-        let nameFile = "tmp"+ counter++ + ".js";
+        let nameFile = name + ".js";
         let a = fs.writeFileSync(process.cwd() + '/tmp/' + nameFile, contentFile); 
         return nameFile;
     },

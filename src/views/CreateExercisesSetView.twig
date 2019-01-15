@@ -1,0 +1,29 @@
+{% extends "layouts/master.twig" %}
+
+{% block content %}
+<div class="createExoSet">
+    {{message}}
+    <form method='POST' class='createExoSet__form' enctype="multipart/form-data">
+        <div class="form-group">
+            <h1 class="title">Créer une nouvelle série d'exercices</h1>
+            <input type='text' name='title' id="title" placeholder="Titre de la série">
+            <div class="button_layout button_layout--right">
+                <button class="button button--green" type="submit">Créer la série d'exercice</button>
+            </div>
+        </div>
+
+        <div id="workbench">
+            <div id="drop_zone"></div>
+            {% include "partials/browser.twig" with tags %}
+        </div>
+    </form>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src='https://code.jquery.com/ui/1.12.1/jquery-ui.js'></script>
+    <script src='/js/browsing_handlers.js'></script>
+    <script src='/js/drag_and_drop.js'></script>
+{% endblock %}

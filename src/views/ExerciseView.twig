@@ -2,35 +2,46 @@
 
 {% block assets %}
     <link rel="stylesheet" href="/css/style.css">
+
     <link rel="stylesheet" href="/js/codemirror/lib/codemirror.css">
+    <link rel="stylesheet" href="/js/codemirror/addon/hint/show-hint.css">
     <link rel="stylesheet" href="/js/codemirror/theme/ambiance.css">
+
     <script src="/js/codemirror/lib/codemirror.js"></script>
     <script src="/js/codemirror/mode/javascript/javascript.js"></script>
+
+    <script src="/js/codemirror/addon/hint/show-hint.js"></script>
+    <script src="/js/codemirror/addon/hint/javascript-hint.js"></script>
+
 {% endblock %}
 
 {% block content %}
-        
+
+{% include './partials/popup_correction.twig' %}
+
 <div class="exercise">
     <form class="exercise__top" method='post'>
         <div class="exercise__top__subject">
             <h1>{{ exercise.title }}</h1>
             <div class="description">
-                {{exercise.description}}
+                {{ exercise.description }}
             </div>
-            <p class="author">{{exercise.author}} </p>
+            <p class="author">{{ exercise.author }} </p>
         </div>
         <textarea name="function" id="js-textarea" cols="30" rows="10"></textarea>
     </div>
     <div class="exercise__bottom">
         <ul class="feedback">
-            {% for success in results.success %}
+            {% for success in results.passes %}
                 <li class='success'>{{success.title}}</li>
             {% endfor %}
-            {% for fail in results.fails %}
+            {% for fail in results.failures %}
                 <li class='fail'>{{fail.title}} {{fail.error.operator}} {{fail.error.actual}}</li>
             {% endfor %}
         </ul>
+        <div id="openCorrection" class="button button--green">Afficher la correction</div>
         <button type='submit' class="button button--green">Valider le code</button>
+    </div>
     </form>
 </div>
 {% endblock %}
@@ -43,15 +54,41 @@
         let editor = CodeMirror.fromTextArea(document.getElementById('js-textarea'), {
             lineNumbers: true,
             mode:  "javascript",
-            theme: 'ambiance'
+            theme: 'ambiance',
+            extraKeys: {"Ctrl-Space": "autocomplete"}
         });
     </script>
 
-
-
     <script>
+            // Get the popup
+            let popup = document.getElementById('popupCorrection');
+
+            // Get the button that opens the popup
+            let btn = document.getElementById("openCorrection");
+
+            // Get the <span> element that closes the popup
+            let span = document.getElementsByClassName("close")[0];
+
+            // When the user clicks on the button, open the popup 
+            btn.onclick = function() {
+                popup.style.display = "block";
+                editorCorrection.refresh()
+            }
+
+            // When the user clicks on <span> (x), close the popup
+            span.onclick = function() {
+                popup.style.display = "none";
+            }
+
+            // When the user clicks anywhere outside of the popup, close it
+            window.onclick = function(event) {
+                if (event.target == popup) {
+                    popup.style.display = "none";
+                }
+            }
+
             $('#js-dropdown-head').click(function(){
-            $('#js-dropdown').toggleClass('open')
-        })
+                $('#js-dropdown').toggleClass('open')
+            })
     </script>
 {% endblock %}

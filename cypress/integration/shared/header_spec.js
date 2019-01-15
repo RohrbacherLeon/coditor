@@ -15,6 +15,7 @@ describe("Testing header's menu", function(){
             cy.get('.nav__right').children('a').click();
             cy.url().should('equal', Cypress.env('baseUrl') + "/login");
         });
+        
     });
     
     describe("Student logged in", function(){

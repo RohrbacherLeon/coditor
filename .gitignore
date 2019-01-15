@@ -9,6 +9,9 @@ yarn-error.log*
 tests
 .vscode
 
+#Corrections
+corrections
+
 # Runtime data
 pids
 *.pid
