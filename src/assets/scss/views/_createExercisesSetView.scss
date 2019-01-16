@@ -20,14 +20,21 @@
                 flex-shrink: 1;
             }
             
-            .arrow-right {
-                margin: 0 10px;
+            .delete_arrow {
+                height: 46px;
+                width: 46px;
+                flex-shrink: 1;
+                cursor: pointer;
+            }
+
+            .arrow_right {
+                margin: 0 20px;
                 height: 64px;
                 width: 64px;
                 flex-shrink: 1;
             }
 
-            #plus-button {
+            #plus_button {
                 height: 64px;
                 width: 64px;
                 flex-shrink: 1;

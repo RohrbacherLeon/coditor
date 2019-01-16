@@ -1,7 +1,8 @@
 let base_url = "http://localhost:3000/";
 let slot = $('.exercises');
 let current_language = "all";
-let arrow_right="<img src='/images/arrow-right.png' class='arrow-right'>";
+let arrow_right = "<img src='/images/arrow_right.png' class='arrow_right'>";
+let delete_arrow ="<img src='/images/delete_arrow.png' class='delete_arrow'>";
 let exercises_selected = [];
 
 
@@ -47,52 +48,65 @@ function refreshExercises(exercises_html) {
     });
 }
 
-$.get(`/api/tags/filter?lang=${current_language}`).then(function(data) {
-    refreshExercises(getExercisesHtml(data));
-});
+$(document).ready(function() {
+    $.get(`/api/tags/filter?lang=${current_language}`).then(function(data) {
+        refreshExercises(getExercisesHtml(data));
+    });
 
 
-$('#searchByTag').select2({ width: '100%' });
+    $('#searchByTag').select2({ width: '100%' });
 
-$('#lang_js').click(function() {
-    switchLanguage($(this));
-});
+    $('#lang_js').click(function() {
+        switchLanguage($(this));
+    });
 
-$('#lang_php').click(function() {
-    switchLanguage($(this));
-});
+    $('#lang_php').click(function() {
+        switchLanguage($(this));
+    });
 
-$('#searchByTag').on('select2:select', function(e) {
-    refreshTags(e);
-});
+    $('#searchByTag').on('select2:select', function(e) {
+        refreshTags(e);
+    });
 
-$('#searchByTag').on('select2:unselect', function(e) {
-    refreshTags(e);
-});
+    $('#searchByTag').on('select2:unselect', function(e) {
+        refreshTags(e);
+    });
 
 
 
-// Drop script
-$("#drop_zone").droppable({
-    accept: ".draggable",
-    drop: function(event, ui) {
-        $(this).removeClass("over");
-        var dropped = ui.draggable;
-        exercises_selected.push(dropped[0].id);
-        var droppedOn = $(this);
-        $(dropped).detach().css({
-            top: 0,
-            left: 0
-        }).appendTo(droppedOn);
-        $(arrow_right).appendTo(droppedOn);
-        $('#plus-button').appendTo(droppedOn);
-        $(dropped).draggable( "disable" );
-        $(dropped).addClass("selected");
-    },
-    over: function(event, elem) {
-        $(this).addClass("over");
-    },
-    out: function(event, elem) {
-        $(this).removeClass("over");
-    }
+    // Drop script
+    $("#drop_zone").droppable({
+        accept: ".draggable",
+        drop: function(event, ui) {
+            $(this).removeClass("over");
+            var dropped = ui.draggable;
+            exercises_selected.push(dropped[0].id);
+            var droppedOn = $(this);
+            $(dropped).detach().css({
+                top: 0,
+                left: 0
+            }).appendTo(droppedOn).draggable( "disable" ).addClass("selected");
+            console.log()
+            $(delete_arrow+arrow_right).appendTo(droppedOn);
+            $('#plus_button').appendTo(droppedOn);
+            
+        },
+        over: function(event, elem) {
+            $(this).addClass("over");
+        },
+        out: function(event, elem) {
+            $(this).removeClass("over");
+        }
+    });
+
+     $('#drop_zone').on('click', '.delete_arrow', function(e) {
+        exercises_selected.splice($.inArray($(this).prev()[0].id, exercises_selected),1);
+        console.log(exercises_selected)
+        $(this).next().remove();
+        $(this).prev().remove();
+        $(this).remove();
+        $.get(`/api/tags/filter?lang=${current_language}`).then(function(data) {
+            refreshExercises(getExercisesHtml(data));
+        });
+    });
 });
