@@ -1,5 +1,6 @@
 const User = require('../models/User')
 const Exercise = require('../models/Exercise')
+const Validator = require('../class/Validator');
 const formidable = require('formidable'),
     fs = require('fs'),
     path = require('path'),
@@ -104,35 +105,82 @@ exports.getSettings = (req, res) => {
 }
 
 exports.postSettingsGlobal = (req, res) => {
-    var form = new formidable.IncomingForm();
+    const form = new formidable.IncomingForm();
 
     form.parse(req, function(err, fields, files) {
 
-        let update = {}
+        Validator.check(fields, {
+            'first_name' : {
+                rules : ['required'],
+                messages : [
+                    'Le prénom doit être remplis'
+                ]
+            },
+            'last_name' : {
+                rules : ['required'],
+                messages : [
+                    'Le nom doit être remplis'
+                ]
+            },
+            'email' : {
+                rules : ['email'],
+                messages : [
+                    'L\'adresse email est invalide'
+                ]
+            },
+        })
         
-        if(req.user.profile.first_name != fields.first_name){
-            update.first_name = fields.first_name
-        }
+        if(Validator.getErrors().length > 0){
+            req.flash("error", Validator.getErrors()[0].msg);
+            res.redirect('/profile/settings');
+        }else{
 
-        if(req.user.profile.last_name != fields.last_name){
-            update.last_name = fields.last_name
-        }
+            let update = {}
 
-        console.log(update);
-        
+            update['profile.first_name'] = fields.first_name
+            update['profile.last_name'] = fields.last_name
+            update['profile.email'] = fields.email
 
-        User.updateOne({account:'local', "profile.email" : req.user.profile.email}, {profile :{$set : update}}, function (err, user) {
-            if (err) return handleError(err);
-            console.log(user);
-
-            res.render('SettingsView')
-            
-        });;
-        
-            
-        
-    }); ;
+            if(files.file.size > 0){
+                let old_path = files.file.path,
+                    file_size = files.file.size,
+                    file_ext = files.file.name.split('.').pop(),
+                    index = old_path.lastIndexOf('/') + 1,
+                    file_name = old_path.substr(index),
+                    //Save test file to the avatar folder
+                    new_path = path.join(process.cwd(), '/public/images/avatars/', req.user.id + '.' + file_ext),
+                    save_path = `/images/avatars/${req.user.id}.${file_ext}`;
     
+                    fs.readFile(old_path, function(err, data) {
+                        fs.writeFile(new_path, data, function(err) {
+                            fs.unlink(old_path, function(err) {
+                                //test if correction
+                                if (err) {
+                                    res.redirect('/profile/settings');
+                                } else {
+                                    update['urlImage'] = save_path;
+                                    User.updateOne({account:'local', "profile.email" : req.user.profile.email}, {$set :update}, function (err, user) {
+                                        if (err) console.log(err);
+                        
+                                        res.redirect('/profile/settings')
+                                    });;
+                                }
+                            });
+                        });
+                    });
+    
+                
+            }else{
+                User.updateOne({account:'local', "profile.email" : req.user.profile.email}, {$set :update}, function (err, user) {
+                    if (err) console.log(err);
+    
+                    res.redirect('/profile/settings')
+                });;
+            }
+        }
+        
+    });
+
 }
 
 exports.postSettingsPassword = (req, res) => {
