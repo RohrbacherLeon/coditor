@@ -29,5 +29,6 @@ router.get('/create-exercises-set', isTeacher, ProfileController.getCreateExerci
 router.get('/settings', isConnectedWithLocalAccount, ProfileController.getSettings);
 router.post('/settings/global', isConnectedWithLocalAccount,ProfileController.postSettingsGlobal);
 router.post('/settings/password', isConnectedWithLocalAccount,ProfileController.postSettingsPassword);
+router.post('/settings/delete_account', isConnectedWithLocalAccount,ProfileController.postSettingsDeleteAccount);
 
 module.exports = router;

@@ -231,3 +231,43 @@ exports.postSettingsPassword = (req, res) => {
         });
     }
 }
+
+exports.postSettingsDeleteAccount= (req, res) => {
+    Validator.check(req.body, {
+        'password' : {
+            rules : ['required'],
+            messages : [
+                'Mot de passe actuel erroné'
+            ]
+        }
+    })
+    
+    if(Validator.getErrors().length > 0){
+        req.flash("error", Validator.getErrors()[0].msg);
+        res.redirect('/profile/settings');
+    }else{
+
+        let actual = req.body.password
+        console.log(actual);
+        
+
+        //verifie le mdp actuel
+        bcrypt.compare(actual, req.user.profile.password).then(isSame => {
+            if(isSame){
+
+                User.deleteOne({account:'local', "profile.email" : req.user.profile.email}, function (err) {
+                    if (err) return console.log(err);
+                    // deleted at most one tank document
+                    req.flash("success", "Le compte a été supprimé");
+                    res.redirect('/login')
+                  });
+
+
+            }else{
+                req.flash("error", "Mot de passe actuel erroné");
+                res.redirect('/profile/settings')
+            }
+            
+        });
+    }
+}
