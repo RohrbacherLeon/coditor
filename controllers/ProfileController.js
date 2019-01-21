@@ -1,6 +1,7 @@
 const User = require('../models/User')
 const Exercise = require('../models/Exercise')
 const Validator = require('../class/Validator');
+const bcrypt = require('bcryptjs');
 const formidable = require('formidable'),
     fs = require('fs'),
     path = require('path'),
@@ -184,6 +185,49 @@ exports.postSettingsGlobal = (req, res) => {
 }
 
 exports.postSettingsPassword = (req, res) => {
-    console.log(req.body);
-    res.render('SettingsView');
+
+    Validator.check(req.body, {
+        'password' : {
+            rules : ['required'],
+            messages : [
+                'Mot de passe actuel erroné'
+            ]
+        },
+        'new_password' : {
+            rules : ['required', 'min:8'],
+            messages : [
+                'Vous devais choisir un nouveau mot de passe',
+                'Le nouveau mot de passe doit contenir 8 caratères minimum'
+            ]
+        }
+    })
+    
+    if(Validator.getErrors().length > 0){
+        req.flash("error", Validator.getErrors()[0].msg);
+        res.redirect('/profile/settings');
+    }else{
+
+        let actual = req.body.password
+        let newPassword = req.body.new_password
+
+        //verifie le mdp actuel
+        bcrypt.compare(actual, req.user.profile.password).then(isSame => {
+            if(isSame){
+                bcrypt.hash(newPassword, 10).then(hash => {
+                    let update = {}
+                    update['profile.password'] = hash
+                    User.updateOne({account:'local', "profile.email" : req.user.profile.email}, {$set :update}, function (err, user) {
+                        if (err) console.log(err);
+                        req.flash("success", "Votre mdp a été modifié");
+                        res.redirect('/profile/settings')
+                    });;
+                })
+
+            }else{
+                req.flash("error", "Mot de passe actuel erroné");
+                res.redirect('/profile/settings')
+            }
+            
+        });
+    }
 }
