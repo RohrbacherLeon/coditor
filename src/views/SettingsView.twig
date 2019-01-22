@@ -10,16 +10,16 @@
             <div class="settings__list__item__content">
                 <div class="form-group">
                     <label for="first_name">Prénom</label>
-                    <input type="text" name="first_name" id="first_name" value="{{user.first_name}}">
+                    <input type="text" name="first_name" id="first_name" value="{{user.profile.first_name}}">
                 </div>
                 <div class="form-group">
                     <label for="last_name">Nom</label>
-                    <input type="text" name="last_name" id="last_name" value="{{user.last_name}}">
+                    <input type="text" name="last_name" id="last_name" value="{{user.profile.last_name}}">
                 </div>
 
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" name="email" id="email" value="{{user.email}}">
+                    <input type="email" name="email" id="email" value="{{user.profile.email}}">
                 </div>
 
                 <div class="form-group">
@@ -33,7 +33,7 @@
 
         </form>
 
-        <form method="post" action="/profile/settings/password" class="settings__list__item" enctype="multipart/form-data">
+        <form method="post" action="/profile/settings/password" class="settings__list__item">
             <div class="settings__list__item__header title title--small">Mot de passe</div>
             <div class="settings__list__item__content">
                 <div class="form-group">
@@ -53,15 +53,18 @@
         </form>
 
 
-        {# <div class="settings__list__item">
-            <div class="settings__list__item__header title title--small">Compte</div>
+        <form method="post" action="/profile/settings/delete_account" class="settings__list__item">
+            <div class="settings__list__item__header title title--small">Supprimer le compte</div>
             <div class="settings__list__item__content">
                 <div class="form-group">
-                    <label for="password">Mot de passe actuel</label>
-                    <input type="password" id="password" placeholder="Votre mot de passe actuel">
+                    <label for="passwordd">Mot de passe actuel</label>
+                    <input type="password" name="password" id="passwordd" placeholder="Votre mot de passe actuel">
+                </div>
+                <div class="button_layout button_layout--right">
+                    <button class="button button--red" type="submit">Supprimer</button>
                 </div>
             </div>
-        </div> #}
+        </form>
 
     <div>
 
