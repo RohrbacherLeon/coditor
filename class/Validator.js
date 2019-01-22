@@ -1,3 +1,4 @@
+let {isEmail} = require('./Helper');
 module.exports = {
 
     /**
@@ -6,58 +7,52 @@ module.exports = {
      * @param {Object} arrayCheck - object with the different rules and their messages
      */
     check(values, arrayCheck){
-        errors = []
+        let errors;
         Object.keys(values).forEach(key => {
             
-            let value = values[key];
-            let rules = arrayCheck[key].rules;
-            let messages = arrayCheck[key].messages;
+            const value = values[key];
+            const rules = arrayCheck[key].rules;
+            const messages = arrayCheck[key].messages;
             let variables = null;
 
-            rules.forEach((rule, index) => {
+            errors = rules.reduce((acc, rule, index) => {
 
                 if(rule.split(':').length > 1){
                     variables = parseInt(rule.split(':')[1])
                     rule = rule.split(':')[0]
                 }
 
-                if(rule in functions)
-                    functions[rule](key, value,messages[index], variables)
-                else
-                    console.log("erreur validator ligne 15");
+                if(rule in functions){
+                    let error = functions[rule](key, value,messages[index], variables);
                     
-            })
+                    if (!error) {
+                        return acc;
+                    }
+                    return acc.concat(error);
+                }
+            }, []);
         })
-        
-    },
-
-    /**
-     * returns errors
-     */
-    getErrors(){
         return errors;
     }
 }
 
-let errors = []
-
-let functions = {
+const functions = {
 
     required : (key, value, msg, variables) => {
-        if(value == ""){
-            errors.push({key, msg});
+        if(value === ""){
+            return {key, msg};
         }
     },
 
     email : (key, value, msg, variables) => {
-        if(!value.match(/(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/i)){
-            errors.push({key, msg});
+        if(!isEmail(value)){
+            return {key, msg}
         }
     },
 
     min : (key, value, msg, variables) => {
         if(value.length < variables){
-            errors.push({key, msg});
+            return {key, msg}
         }
     }
 

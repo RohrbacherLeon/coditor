@@ -14,7 +14,7 @@ exports.postSettingsGlobal = (req, res) => {
 
     form.parse(req, function(err, fields, files) {
 
-        Validator.check(fields, {
+        let errors = Validator.check(fields, {
             'first_name' : {
                 rules : ['required'],
                 messages : [
@@ -35,8 +35,8 @@ exports.postSettingsGlobal = (req, res) => {
             },
         })
         
-        if(Validator.getErrors().length > 0){
-            req.flash("error", Validator.getErrors()[0].msg);
+        if(errors.length > 0){
+            req.flash("error",errors[0].msg);
             res.redirect('/profile/settings');
         }else{
 
@@ -90,7 +90,7 @@ exports.postSettingsGlobal = (req, res) => {
 
 exports.postSettingsPassword = (req, res) => {
 
-    Validator.check(req.body, {
+    let errors = Validator.check(req.body, {
         'password' : {
             rules : ['required'],
             messages : [
@@ -100,14 +100,14 @@ exports.postSettingsPassword = (req, res) => {
         'new_password' : {
             rules : ['required', 'min:8'],
             messages : [
-                'Vous devais choisir un nouveau mot de passe',
+                'Vous devez choisir un nouveau mot de passe',
                 'Le nouveau mot de passe doit contenir 8 caratères minimum'
             ]
         }
     })
     
-    if(Validator.getErrors().length > 0){
-        req.flash("error", Validator.getErrors()[0].msg);
+    if(errors.length > 0){
+        req.flash("error", errors[0].msg);
         res.redirect('/profile/settings');
     }else{
 
@@ -137,7 +137,7 @@ exports.postSettingsPassword = (req, res) => {
 }
 
 exports.postSettingsDeleteAccount= (req, res) => {
-    Validator.check(req.body, {
+    let errors = Validator.check(req.body, {
         'password' : {
             rules : ['required'],
             messages : [
@@ -145,20 +145,16 @@ exports.postSettingsDeleteAccount= (req, res) => {
             ]
         }
     })
-    
-    if(Validator.getErrors().length > 0){
-        req.flash("error", Validator.getErrors()[0].msg);
+
+    if(errors.length > 0){
+        req.flash("error", errors[0].msg);
         res.redirect('/profile/settings');
     }else{
-
         let actual = req.body.password
-        console.log(actual);
-        
 
         //verifie le mdp actuel
         bcrypt.compare(actual, req.user.profile.password).then(isSame => {
             if(isSame){
-
                 User.deleteOne({account:'local', "profile.email" : req.user.profile.email}, function (err) {
                     if (err) return console.log(err);
                     // deleted at most one tank document

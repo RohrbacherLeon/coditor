@@ -8,17 +8,19 @@ function ensureAuthenticated (req, res, next){
 }   
 
 function isTeacher(req, res, next){
-	if(req.user.type == "teacher")
+	if(req.user.type == "teacher"){
 		return next()
-	else
-		res.redirect('/profile')
+	}
+	
+	res.redirect('/profile')
 }
 
 function isConnectedWithLocalAccount(req, res, next){
-	if(req.user.account == "local")
+	if(req.user.account == "local"){
 		return next()
-	else
-		res.redirect('/profile')
+	}
+
+	res.redirect('/profile')
 }
 
 module.exports = {
