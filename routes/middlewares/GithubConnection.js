@@ -1,48 +1,43 @@
-const passport = require('passport');
-const GitHubStrategy = require('passport-github').Strategy;
+const passport = require("passport");
+const GitHubStrategy = require("passport-github").Strategy;
 
-const User = require('../../models/User');
+const User = require("../../models/User");
 
 passport.use(new GitHubStrategy({
     clientID: "9b023438a6ce2b64d9be",
     clientSecret: "23e8f7043619d39fe79c0f1cf4d5e6830512664f",
     callbackURL: "http://localhost:3000/auth/github/callback"
   },
-  function(accessToken, refreshToken, profileGithub, done) {
-
-    User.findOne({'remote_id':profileGithub.id}, function(err, user){
-      //If error
-      if(err)
+  function (accessToken, refreshToken, profileGithub, done) {
+    User.findOne({ "remote_id": profileGithub.id }, function (err, user) {
+      if (err) {
         return done(err);
-      //If user already exist, use it
-      if(user){
-
+      }
+      // If user already exist, use it
+      if (user) {
         user.profile = {
-          username : profileGithub.username,
-          email : profileGithub._json.email,
-        }
+          username: profileGithub.username,
+          email: profileGithub._json.email
+        };
 
         user.urlImage = profileGithub.photos[0].value;
         user.save();
-        
+
         return done(null, user);
-      }
-      //Else create one
-      else
-      {
+      } else {
         let newUser = new User();
-        newUser.account = 'github';
+        newUser.account = "github";
         newUser.remote_id = profileGithub.id;
         newUser.profile = {
-          username : profileGithub.username,
-          email : profileGithub._json.email,
-        }
+          username: profileGithub.username,
+          email: profileGithub._json.email
+        };
 
         newUser.urlImage = profileGithub.photos[0].value;
-      
-        newUser.save(function(err){
-          if(err)
+        newUser.save(function (err) {
+          if (err) {
             throw err;
+          }
           return done(null, newUser);
         });
       }

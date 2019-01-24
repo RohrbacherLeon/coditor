@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 // User Schema
 let ExerciseSchema = mongoose.Schema({
@@ -25,51 +25,52 @@ let ExerciseSchema = mongoose.Schema({
         required: true
     },
     description: {
-        type: String,
+        type: String
     }
 });
 
+ExerciseSchema.statics.createExercise = function (data, callback) {
+    Exercise.create(data);
+};
 
-ExerciseSchema.statics.createExercise = function(data, callback) {
-    Exercise.create(data)
-}
+ExerciseSchema.statics.getExo = function (data, callback) {
+    let query = { slug: data.slug, language: data.language };
+    Exercise.findOne(query, callback);
+};
 
-ExerciseSchema.statics.getExo = function(data, callback) {
-    let query = { slug: data.slug, language: data.language }
-    Exercise.findOne(query, callback)
-}
+ExerciseSchema.statics.byLanguage = function (language, callback) {
+    let query = {};
 
-ExerciseSchema.statics.byLanguage = function(language, callback) {
-    let query = {}
-
-    if (language)
-        if (language == 'all')
+    if (language) {
+        if (language === "all") {
             query = {};
-        else
+        } else {
             query.language = language;
+        }
+    }
 
     Exercise.find(query, callback);
-}
+};
 
-ExerciseSchema.statics.byTags = function(tagsString, lang, callback) {
+ExerciseSchema.statics.byTags = function (tagsString, lang, callback) {
     let obj = {
-        tags: { $all: tagsString.split(',') }
+        tags: { $all: tagsString.split(",") }
+    };
+
+    if (lang && lang !== "all") {
+        obj.language = lang;
     }
 
-    if (lang && lang != 'all') {
-        obj.language = lang
-    }
+    Exercise.find(obj, callback);
+};
 
-    Exercise.find(obj, callback)
-}
-
-ExerciseSchema.statics.getAllValuesOf = function(value, callback) {
+ExerciseSchema.statics.getAllValuesOf = function (value, callback) {
     Exercise.find().distinct(value, callback);
-}
+};
 
-ExerciseSchema.statics.getAll = function(callback) {
+ExerciseSchema.statics.getAll = function (callback) {
     Exercise.find({}, callback);
-}
+};
 
-var Exercise = mongoose.model('Exercise', ExerciseSchema);
+var Exercise = mongoose.model("Exercise", ExerciseSchema);
 module.exports = Exercise;
