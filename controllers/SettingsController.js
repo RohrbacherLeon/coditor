@@ -123,7 +123,7 @@ exports.postSettingsPassword = (req, res) => {
                     User.updateOne({account:'local', "profile.email" : req.user.profile.email}, {$set :update}, function (err, user) {
                         if (err) console.log(err);
                         req.flash("success", "Votre mdp a été modifié");
-                        res.redirect('/profile/settings')
+                        res.redirect('/logout')
                     });;
                 })
 
