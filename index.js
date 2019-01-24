@@ -1,31 +1,31 @@
-const config = require('./config/config');
-const express = require('express');
+const config = require("./config/config");
+const express = require("express");
 const app = express();
-const bodyParser = require('body-parser');
-const server = require('http').createServer(app);
-const mongoose = require('mongoose');
-const expressValidator = require('express-validator');
+const bodyParser = require("body-parser");
+const server = require("http").createServer(app);
+const mongoose = require("mongoose");
+const path = require("path");
+const expressValidator = require("express-validator");
 
-const flash = require('connect-flash');
-const session = require('express-session');
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-const cookieParser = require('cookie-parser');
+const flash = require("connect-flash");
+const session = require("express-session");
+const passport = require("passport");
+const cookieParser = require("cookie-parser");
 
-/***** MONGODB *****/
+/* **** MONGODB **** */
 mongoose.connect(`mongodb://${config.db.host}/${config.db.database}`, {
     useCreateIndex: true,
     useNewUrlParser: true
 });
 /*****************************/
 
-/***** VIEW CONFIGURATION *****/
-app.set('views', __dirname + '/src/views');
-app.set('view engine', 'twig');
+/* **** VIEW CONFIGURATION **** */
+app.set("views", path.join(__dirname, "/src/views"));
+app.set("view engine", "twig");
 /*****************************/
 
-/***** MIDDLEWARES *****/
-app.use(express.static(__dirname + '/public'));
+/* **** MIDDLEWARES **** */
+app.use(express.static(path.join(__dirname, "/public")));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -33,7 +33,7 @@ app.use(cookieParser());
 
 // Express Session
 app.use(session({
-    secret: 'secret',
+    secret: "secret",
     saveUninitialized: true,
     resave: true
 }));
@@ -42,15 +42,15 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-//Express validator
+// Express validator
 app.use(expressValidator({
-    errorFormatter: function(param, msg, value) {
-        let namespace = param.split('.'),
-            root = namespace.shift(),
-            formParam = root;
+    errorFormatter: function (param, msg, value) {
+        let namespace = param.split(".");
+        let root = namespace.shift();
+        let formParam = root;
 
         while (namespace.length) {
-            formParam += '[' + namespace.shift() + ']';
+            formParam += "[" + namespace.shift() + "]";
         }
         return {
             param: formParam,
@@ -64,24 +64,24 @@ app.use(expressValidator({
 app.use(flash());
 
 // Global Vars
-app.use(function(req, res, next) {
-    res.locals.success_msg = req.flash('success_msg');
-    res.locals.error_msg = req.flash('error_msg');
-    res.locals.error = req.flash('error');
-    res.locals.success = req.flash('success');
-    res.locals.form = req.flash('form');
+app.use(function (req, res, next) {
+    res.locals.success_msg = req.flash("success_msg");
+    res.locals.error_msg = req.flash("error_msg");
+    res.locals.error = req.flash("error");
+    res.locals.success = req.flash("success");
+    res.locals.form = req.flash("form");
     res.locals.user = req.user || null;
     next();
 });
 /*******************/
-const { ensureAuthenticated } = require('./routes/middlewares/Authenticated');
+const { ensureAuthenticated } = require("./routes/middlewares/Authenticated");
 
-/***** Routes *****/
-app.use('/', require('./routes/UserRoutes'));
-app.use('/exercises', require('./routes/ExerciseRoutes'));
-app.use('/profile', ensureAuthenticated, require('./routes/ProfileRoutes'));
-app.use('/profile/settings', ensureAuthenticated, require('./routes/SettingsRoutes'));
-app.use('/api', require('./routes/ApiRoutes'));
+/* **** Routes **** */
+app.use("/", require("./routes/UserRoutes"));
+app.use("/exercises", require("./routes/ExerciseRoutes"));
+app.use("/profile", ensureAuthenticated, require("./routes/ProfileRoutes"));
+app.use("/profile/settings", ensureAuthenticated, require("./routes/SettingsRoutes"));
+app.use("/api", require("./routes/ApiRoutes"));
 /*******************/
 
 server.listen(config.app.port, () => {
