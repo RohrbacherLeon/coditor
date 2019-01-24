@@ -14,25 +14,25 @@
     .exercises{
         display: grid;
         grid-template-columns: repeat(4,1fr);
-        grid-gap: 20px;
+        grid-row-gap: 20px;
         margin-top: 30px;
     }
-    
-    .exercise{
-        display: block;
-        padding: 5px;
-        min-height: 100px;
-        box-shadow: 0 0 1px 1px lightgray;
-        border-radius: 4px;
-        background-color: whitesmoke; 
+}
+.exercise{
+    display: block;
+    padding: 5px;
+    min-height: 100px;
+    width: 300px;
+    box-shadow: 0 0 1px 1px lightgray;
+    border-radius: 4px;
+    background-color: whitesmoke; 
 
-    }
-    
-    .js{
-        border-left: 15px solid $js_color;
-    }
-    
-    .php{
-        border-left: 15px solid $php_color;
-    }
+}
+
+.js{
+    border-left: 15px solid $js_color;
+}
+
+.php{
+    border-left: 15px solid $php_color;
 }

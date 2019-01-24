@@ -19,9 +19,9 @@
 
 {% include './partials/popup_correction.twig' %}
 
-<div class="exercise">
-    <form class="exercise__top" method='post'>
-        <div class="exercise__top__subject">
+<div class="exercise__opened">
+    <form class="exercise__opened__top" method='post'>
+        <div class="exercise__opened__top__subject">
             <h1>{{ exercise.title }}</h1>
             <div class="description">
                 {{ exercise.description }}
@@ -33,7 +33,7 @@
         {% else %}<textarea name="function" id="js-textarea" cols="30" rows="10"></textarea>
         {% endif %}
     </div>
-    <div class="exercise__bottom">
+    <div class="exercise__opened__bottom">
         <ul class="feedback">
             {% for success in results.passes %}
                 <li class='success'>{{success.title}}</li>

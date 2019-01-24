@@ -8,28 +8,41 @@
 
     #workbench {
          
-        #drop_zone {
+        #drop_zone { 
             height: 300px;
-            background-color: grey;
-        }
-    }
+            display: flex;
+            overflow: auto;
+            align-items: center;
 
-    
-    .exercise{
-        display: block;
-        border-radius: 4px;
-        min-height: 100px;
-        padding: 5px;
-    }
-    
-    .js {
-        border: 1px solid $js_color;
-    }
-    
-    .php {
-        border: 1px solid $php_color;
-    }
-    
+            .exercise {
+                height: 100px;
+                width: 300px;
+                flex-shrink: 1;
+            }
+            
+            .delete_arrow {
+                height: 46px;
+                width: 46px;
+                flex-shrink: 1;
+                cursor: pointer;
+            }
 
+            .arrow_right {
+                margin: 0 20px;
+                height: 64px;
+                width: 64px;
+                flex-shrink: 1;
+            }
 
+            #plus_button {
+                height: 64px;
+                width: 64px;
+                flex-shrink: 1;
+            }
+        }       
+    }
 }
+
+.over {
+    border: dashed 1px black;
+  }

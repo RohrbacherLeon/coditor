@@ -1,6 +1,10 @@
 let base_url = "http://localhost:3000/";
 let slot = $('.exercises');
 let current_language = "all";
+let arrow_right = "<img src='/images/arrow_right.png' class='arrow_right'>";
+let delete_arrow ="<img src='/images/delete_arrow.png' class='delete_arrow'>";
+let exercises_selected = [];
+
 
 switchLanguage = function(li_elem) {
     current_language = li_elem.attr('id').split('_', 2)[1];
@@ -14,11 +18,13 @@ switchLanguage = function(li_elem) {
 getExercisesHtml = function(data) {
     let exercises = "";
     data.forEach(exercise => {
-        exercises += `
-        <a href="/exercises/${exercise.language}/${exercise.slug}" class="exercise ${exercise.language} draggable">
-            <h4>${exercise.title}</h4>
-            <p>${exercise.author}</p>
-        </a>`;
+        if( $.inArray( exercise._id , exercises_selected ) == -1 ){
+            exercises += `
+            <a href="/exercises/${exercise.language}/${exercise.slug}" id="${exercise._id}" class="exercise ${exercise.language} draggable">
+                <h4>${exercise.title}</h4>
+                <p>${exercise.author}</p>
+            </a>`;
+        }
     });
     return exercises;
 }
@@ -36,12 +42,17 @@ function refreshTags(e) {
 function refreshExercises(exercises_html) {
     slot.empty();
     slot.append(exercises_html);
+    $(".draggable").draggable({
+        cursor: "move",
+        revert: "invalid"
+    });
 }
 
 $(document).ready(function() {
     $.get(`/api/tags/filter?lang=${current_language}`).then(function(data) {
         refreshExercises(getExercisesHtml(data));
     });
+
 
     $('#searchByTag').select2({ width: '100%' });
 
@@ -59,5 +70,43 @@ $(document).ready(function() {
 
     $('#searchByTag').on('select2:unselect', function(e) {
         refreshTags(e);
+    });
+
+
+
+    // Drop script
+    $("#drop_zone").droppable({
+        accept: ".draggable",
+        drop: function(event, ui) {
+            $(this).removeClass("over");
+            var dropped = ui.draggable;
+            exercises_selected.push(dropped[0].id);
+            var droppedOn = $(this);
+            $(dropped).detach().css({
+                top: 0,
+                left: 0
+            }).appendTo(droppedOn).draggable( "disable" ).addClass("selected");
+            console.log()
+            $(delete_arrow+arrow_right).appendTo(droppedOn);
+            $('#plus_button').appendTo(droppedOn);
+            
+        },
+        over: function(event, elem) {
+            $(this).addClass("over");
+        },
+        out: function(event, elem) {
+            $(this).removeClass("over");
+        }
+    });
+
+     $('#drop_zone').on('click', '.delete_arrow', function(e) {
+        exercises_selected.splice($.inArray($(this).prev()[0].id, exercises_selected),1);
+        console.log(exercises_selected)
+        $(this).next().remove();
+        $(this).prev().remove();
+        $(this).remove();
+        $.get(`/api/tags/filter?lang=${current_language}`).then(function(data) {
+            refreshExercises(getExercisesHtml(data));
+        });
     });
 });

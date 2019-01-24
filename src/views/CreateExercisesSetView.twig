@@ -13,7 +13,9 @@
         </div>
 
         <div id="workbench">
-            <div id="drop_zone"></div>
+            <div id="drop_zone">
+                <img src="/images/plus_button.png" id="plus_button">
+            </div>
             {% include "partials/browser.twig" with tags %}
         </div>
     </form>
@@ -25,5 +27,4 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src='https://code.jquery.com/ui/1.12.1/jquery-ui.js'></script>
     <script src='/js/browsing_handlers.js'></script>
-    <script src='/js/drag_and_drop.js'></script>
 {% endblock %}
