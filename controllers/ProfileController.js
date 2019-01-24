@@ -4,6 +4,7 @@ const formidable = require('formidable'),
     path = require('path'),
     slugify = require('slugify')
 
+    
 exports.getProfile = (req, res) =>{
     if(req.user.type == "teacher"){
         Exercise.countDocuments({author:req.user.profile.email}, function (err, count) {
@@ -18,6 +19,35 @@ exports.getCreateExercise = (req, res) =>{
     Exercise.getAllValuesOf('tags', (err, tags) => {
         res.render('CreateExerciseView', {tags});
     })
+}
+
+/**
+ * Function used to save a file (Test, Correction and Skeleton). Return "ok" if no error.
+ * @param {*} file the file
+ * @param {*} repertory repertory where the file are save.
+ * @param {*} slug 
+ * @param {*} res 
+ */
+function saveFile(file, repertory, slug, res){
+        let old_path = file.path,
+        file_size = file.size,
+        file_ext = file.name.split('.').pop(),
+        index = old_path.lastIndexOf('/') + 1,
+        file_name = old_path.substr(index),
+        
+        //Save test file to the folder tests
+        new_path = path.join(process.cwd(), '/' + repertory + '/', slug + '.' + file_ext);
+    fs.readFile(old_path, function(err, data) {
+        fs.writeFile(new_path, data, function(err) {
+            fs.unlink(old_path, function(err) {
+                if(err){
+                    res.render('CreateExerciseView', {message : "Erreur lors de la création de l'exercice."});
+                }else{
+                    return "ok";
+                }
+            });
+        });
+    });
 }
 
 exports.postCreateExercise = (req, res) =>{
@@ -40,56 +70,42 @@ exports.postCreateExercise = (req, res) =>{
         //penser a verifer l'extension du fichier de test
         //trier les fichiers de test dans un dossier nommer par l'email de l'auteur ?
         
-        //verification qu'il y est bien un fichier de test
+        //if a file "Test" exist
+        let test_file;
         if(files.file.size > 0){
-            let old_path = files.file.path,
-                file_size = files.file.size,
-                file_ext = files.file.name.split('.').pop(),
-                index = old_path.lastIndexOf('/') + 1,
-                file_name = old_path.substr(index),
-                
-                //Save test file to the folder tests
-                new_path = path.join(process.cwd(), '/tests/', slug + '.' + file_ext);
-            fs.readFile(old_path, function(err, data) {
-                fs.writeFile(new_path, data, function(err) {
-                    fs.unlink(old_path, function(err) {
-                        //test if correction
-                        if(files.file_correction.size > 0){
-                            old_path = files.file_correction.path,
-                                file_size = files.file_correction.size,
-                                file_ext = files.file_correction.name.split('.').pop(),
-                                index = old_path.lastIndexOf('/') + 1,
-                                file_name = old_path.substr(index),
-
-                                //Save correction file to the folder corrections
-                                new_path = path.join(process.cwd(), '/corrections/', slug + '.' + file_ext);
-                            fs.readFile(old_path, function(err, data) {
-                                fs.writeFile(new_path, data, function(err) {
-                                    fs.unlink(old_path, function(err) {
-                                        if (err) {
-                                            res.render('CreateExerciseView', {message : "Erreur lors de la création de l'exercice."});
-                                        } else {
-                                            res.render('CreateExerciseView', {message : "Exercice créé avec une correction."});
-                                        }
-                                    });
-                                });
-                            });
-                        }
-                        //If no correction, render
-                        else{
-                            if (err) {
-                                res.render('CreateExerciseView', {message : "Erreur lors de la création de l'exercice."});
-                            } else {
-                                res.render('CreateExerciseView', {message : "Exercice créé."});
-                            }
-                        }
-                    });
-                });
-            });
+            test_file = saveFile(files.file, "tests", slug, res);
         }else{
             res.render('CreateExerciseView', {message : "Aucun fichier de test donné."});
         }
-    });    
+
+        //test if correction exist, create file
+        let correction_file;
+        if(files.file_correction.size > 0){
+            correction_file = saveFile(files.file_correction, "corrections", slug, res);
+        }
+
+        //test if skeleton exist, create file
+        let skeleton_file;
+        if(files.file_skeleton.size > 0){
+            skeleton_file = saveFile(files.file_skeleton, "skeletons", slug, res);
+        }
+
+        //Return message
+        let messageCreation = "";
+        if(test_file != null)
+        {
+            messageCreation = "Exercice créé";
+        }
+        if(correction_file != null)
+        {
+            messageCreation += ", avec correction";
+        }
+        if(skeleton_file != null)
+        {
+            messageCreation += ", avec squelette";
+        }
+        res.render('CreateExerciseView', {message : messageCreation});
+    });
 }
 
 exports.getCreateExercisesSet = (req, res) =>{

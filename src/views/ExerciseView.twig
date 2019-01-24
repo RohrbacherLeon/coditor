@@ -28,7 +28,10 @@
             </div>
             <p class="author">{{ exercise.author }} </p>
         </div>
-        <textarea name="function" id="js-textarea" cols="30" rows="10"></textarea>
+            {# If skeleton exist, print it #}
+        {% if skeletonText %} <textarea name="function" id="js-textarea" cols="30" rows="10">{{skeletonText}}</textarea>
+        {% else %}<textarea name="function" id="js-textarea" cols="30" rows="10"></textarea>
+        {% endif %}
     </div>
     <div class="exercise__bottom">
         <ul class="feedback">

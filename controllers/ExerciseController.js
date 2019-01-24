@@ -14,22 +14,41 @@ exports.getExoByLang = (req, res) => {
     })
 }
 
+/**
+ * Function used to get the exercice.
+ * @param {*} query 
+ * @param {*} req 
+ * @param {*} res 
+ */
+function showExercice(query, req, res, results){
+    Exercise.getExo(query,function(err, exercise){
+        let correctionText;
+        let skeletonText;
+
+        //Test if file correction exist
+        if(fs.existsSync(process.cwd() + `/corrections/${req.params.slug}.js`)){
+            correctionText = fs.readFileSync(process.cwd() + `/corrections/${req.params.slug}.js`, "utf-8");
+        }else{
+            correctionText = null;
+        }
+        
+        //Test if file skeletons exist
+        if(fs.existsSync(process.cwd() + `/skeletons/${req.params.slug}.js`)){
+            skeletonText = fs.readFileSync(process.cwd() + `/skeletons/${req.params.slug}.js`, "utf-8");
+        }else{
+            skeletonText = null;
+        }
+        res.render('ExerciseView', {exercise, results : results, menu:"exercises", correctionText, skeletonText});
+    })
+}
+
 exports.getExercise = (req, res) => {
     let query = {
         slug :req.params.slug, 
         language : req.params.lang
     };
 
-    Exercise.getExo(query,function(err, exercise){
-        fs.readFile(process.cwd() + `/corrections/${req.params.slug}.js`, "utf-8", function(err, data){
-            if(data != null){
-                let correctionText = data;
-                res.render('ExerciseView', {exercise, menu:"exercises", correctionText});
-            }else{
-                res.render('ExerciseView', {exercise, menu:"exercises"});
-            }
-        });
-    })
+    showExercice(query, req, res);
 }
 
 exports.postExercise = (req, res) => {
@@ -59,19 +78,7 @@ exports.postExercise = (req, res) => {
                         slug     : req.params.slug, 
                         language : req.params.lang
                     };
-
-                    Generator.remove(nameFile);
-                    Exercise.getExo(query,function(err, exercise){
-                        fs.readFile(process.cwd() + `/corrections/${req.params.slug}.js`, "utf-8", function(err, data){
-                            if(data != null){
-                                let correctionText = data;
-                                res.render('ExerciseView', {exercise, correctionText, results : JSON.parse(stdout)});
-                            }else{
-                                res.render('ExerciseView', {exercise, results : JSON.parse(stdout)});
-                            }
-                        });
-                    })
-                    
+                    showExercice(query, req, res, JSON.parse(stdout));
                 });
     
             }

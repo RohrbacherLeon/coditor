@@ -12,6 +12,9 @@ tests
 #Corrections
 corrections
 
+#Skeletons
+skeletons
+
 # Runtime data
 pids
 *.pid
