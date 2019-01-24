@@ -1,57 +1,57 @@
 {
-	"name": "coditor",
-	"version": "1.0.0",
-	"description": "Projet tutoré de LP CIASIE",
-	"main": "index.js",
-	"homepage": "https://github.com/RohrbacherLeon/coditor",
-	"bugs": {
-		"url": "https://github.com/RohrbacherLeon/coditor/issues"
-	},
-	"dependencies": {
-		"bcryptjs": "^2.4.3",
-		"body-parser": "^1.18.3",
-		"connect-flash": "^0.1.1",
-		"cookie-parser": "^1.4.3",
-		"dotenv": "^6.1.0",
-		"express": "^4.16.4",
-		"express-messages": "^1.0.1",
-		"express-session": "^1.15.6",
-		"express-validator": "^5.3.0",
-		"formidable": "^1.2.1",
-		"fs": "0.0.1-security",
-		"mocha": "^5.2.0",
-		"mongodb": "^3.1.9",
-		"mongoose": "^5.3.13",
-		"passport": "^0.4.0",
-		"passport-github": "^1.1.0",
-		"passport-google-oauth": "^1.0.0",
-		"passport-http": "^0.3.0",
-		"passport-local": "^1.0.0",
-		"path": "^0.12.7",
-		"sass": "^1.15.1",
-		"slugify": "^1.3.4",
-		"twig": "^1.12.0"
-	},
-	"devDependencies": {
-		"cypress": "^3.1.4",
-		"chai": "^4.2.0"
-	},
-	"scripts": {
-		"start": "node index.js",
-		"watch": "sass src/assets/scss/style.scss:public/css/style.css --watch",
-		"sass": "sass src/assets/scss/style.scss:public/css/style.css",
-		"test": "mocha --reporter list mocha/tests/*",
-		"mocha": "mocha --reporter json tmp/$1",
-		"cypress": "./node_modules/.bin/cypress open"
-	},
-	"author": {
-		"name": "Rohrbacher Léon",
-		"url": "https://github.com/RohrbacherLeon/"
-	},
-	"contributors": [
-		"Cordier Florian (https://github.com/FlorianCordier)",
-		"Ralli Alexandre (https://github.com/alexdukeb)",
-		"Zink Anthony (https://github.com/AnthonyZink)"
-	],
-	"license": "UNLICENSED"
+  "name": "coditor",
+  "version": "1.0.0",
+  "description": "Projet tutoré de LP CIASIE",
+  "main": "index.js",
+  "homepage": "https://github.com/RohrbacherLeon/coditor",
+  "bugs": {
+    "url": "https://github.com/RohrbacherLeon/coditor/issues"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.3",
+    "dotenv": "^6.1.0",
+    "express": "^4.16.4",
+    "express-messages": "^1.0.1",
+    "express-session": "^1.15.6",
+    "express-validator": "^5.3.0",
+    "formidable": "^1.2.1",
+    "fs": "0.0.1-security",
+    "mocha": "^5.2.0",
+    "mongodb": "^3.1.9",
+    "mongoose": "^5.3.13",
+    "passport": "^0.4.0",
+    "passport-github": "^1.1.0",
+    "passport-google-oauth": "^1.0.0",
+    "passport-http": "^0.3.0",
+    "passport-local": "^1.0.0",
+    "path": "^0.12.7",
+    "sass": "^1.15.1",
+    "slugify": "^1.3.4",
+    "twig": "^1.12.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "cypress": "^3.1.4"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "watch": "sass src/assets/scss/style.scss:public/css/style.css --watch",
+    "sass": "sass src/assets/scss/style.scss:public/css/style.css",
+    "test": "mocha --reporter list mocha/tests/*",
+    "mocha": "mocha --reporter json tmp/$1",
+    "cypress": "./node_modules/.bin/cypress open"
+  },
+  "author": {
+    "name": "Rohrbacher Léon",
+    "url": "https://github.com/RohrbacherLeon/"
+  },
+  "contributors": [
+    "Cordier Florian (https://github.com/FlorianCordier)",
+    "Ralli Alexandre (https://github.com/alexdukeb)",
+    "Zink Anthony (https://github.com/AnthonyZink)"
+  ],
+  "license": "UNLICENSED"
 }

@@ -80,6 +80,7 @@ const { ensureAuthenticated } = require('./routes/middlewares/Authenticated');
 app.use('/', require('./routes/UserRoutes'));
 app.use('/exercises', require('./routes/ExerciseRoutes'));
 app.use('/profile', ensureAuthenticated, require('./routes/ProfileRoutes'));
+app.use('/profile/settings', ensureAuthenticated, require('./routes/SettingsRoutes'));
 app.use('/api', require('./routes/ApiRoutes'));
 /*******************/
 

@@ -23,4 +23,6 @@ router.post('/create-exercise', isTeacher, ProfileController.postCreateExercise)
  */
 router.get('/create-exercises-set', isTeacher, ProfileController.getCreateExercisesSet);
 
+
+
 module.exports = router;
