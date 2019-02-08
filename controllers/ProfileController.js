@@ -102,7 +102,11 @@ exports.postCreateExercise = (req, res) => {
         if (skeletonFile != null) {
             messageCreation += ", avec squelette";
         }
-        res.render("CreateExerciseView", { message: messageCreation });
+
+        Exercise.getAllValuesOf("tags", (err, tags) => {
+            if (err) console.log(err);
+            res.render("CreateExerciseView", { tags });
+        });
     });
 };
 
