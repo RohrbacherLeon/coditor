@@ -1,4 +1,5 @@
 const Exercise = require("../models/Exercise");
+const Set = require("../models/Set");
 const formidable = require("formidable");
 const fs = require("fs");
 const path = require("path");
@@ -112,4 +113,18 @@ exports.getCreateExercisesSet = (req, res) => {
 
         res.render("CreateExercisesSetView", { tags });
     });
+};
+
+
+exports.postCreateExerciseSet = (req, res) => {
+    Set.create({
+        title: req.body.title,
+        exercises: req.body.exercises_selected.split(","),
+        author: req.user.profile.email,
+    }, function (err, set) {
+        if (err) console.log(err);
+    });
+    
+    req.flash("success", "Série d'exercices créée avec succès");
+    res.redirect("/profile");    
 };

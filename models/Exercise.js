@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-// User Schema
+// Exercise Schema
 let ExerciseSchema = mongoose.Schema({
     title: {
         type: String,
@@ -18,7 +18,7 @@ let ExerciseSchema = mongoose.Schema({
     tags: {
         type: Array,
         required: true,
-        dafault: []
+        default: []
     },
     author: {
         type: String,

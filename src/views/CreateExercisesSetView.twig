@@ -3,10 +3,12 @@
 {% block content %}
 <div class="createExoSet">
     {{message}}
-    <form method='POST' class='createExoSet__form' enctype="multipart/form-data">
+    <form method='POST' class='createExoSet__form'>
         <div class="form-group">
             <h1 class="title">Créer une nouvelle série d'exercices</h1>
-            <input type='text' name='title' id="title" placeholder="Titre de la série">
+            <input type='text' name='title' id="title" placeholder="Titre de la série" required>
+            <input type='hidden' name='exercises_selected' id="exercises_selected">
+
             <div class="button_layout button_layout--right">
                 <button class="button button--green" type="submit">Créer la série d'exercice</button>
             </div>
