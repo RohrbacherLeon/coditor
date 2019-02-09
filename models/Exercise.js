@@ -30,7 +30,7 @@ let ExerciseSchema = mongoose.Schema({
 });
 
 ExerciseSchema.statics.createExercise = function (data, callback) {
-    Exercise.create(data);
+    Exercise.create(data, callback);
 };
 
 ExerciseSchema.statics.getExo = function (data, callback) {
