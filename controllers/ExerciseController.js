@@ -74,12 +74,13 @@ exports.postExercise = (req, res) => {
                         console.error(`exec error: ${error}`);
                         return;
                     }
-
-                    let query = {
-                        slug: req.params.slug,
-                        language: req.params.lang
-                    };
-                    showExercice(query, req, res, JSON.parse(stdout));
+                    fs.unlink(process.cwd() + `/tmp/${nameFile}`, () => {
+                        let query = {
+                            slug: req.params.slug,
+                            language: req.params.lang
+                        };
+                        showExercice(query, req, res, JSON.parse(stdout));
+                    });
                 });
             }
         });
