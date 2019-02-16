@@ -26,6 +26,16 @@ let ExerciseSchema = mongoose.Schema({
     },
     description: {
         type: String
+    },
+    stats: {
+        fails: {
+            type: Number,
+            default: 0
+        },
+        success: {
+            type: Number,
+            default: 0
+        }
     }
 });
 

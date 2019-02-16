@@ -40,6 +40,25 @@ function showExercice (query, req, res, results) {
         } else {
             skeletonText = null;
         }
+
+        if (results) {
+            Exercise.findOne({ slug: query.slug }, function (err, exo) {
+                if (err) console.log(err);
+
+                let update = {};
+
+                if (results.failures.length > 0) {
+                    update["stats.fails"] = exo.stats.fails + 1;
+                } else {
+                    update["stats.success"] = exo.stats.success + 1;
+                }
+
+                Exercise.updateOne({ slug: query.slug }, { $set: update }, (err, updated) => {
+                    if (err) console.log(err);
+                });
+            });
+        }
+
         res.render("ExerciseView", { exercise, results: results, menu: "exercises", correctionText, skeletonText });
     });
 }
@@ -74,13 +93,12 @@ exports.postExercise = (req, res) => {
                         console.error(`exec error: ${error}`);
                         return;
                     }
-                    fs.unlink(process.cwd() + `/tmp/${nameFile}`, () => {
-                        let query = {
-                            slug: req.params.slug,
-                            language: req.params.lang
-                        };
-                        showExercice(query, req, res, JSON.parse(stdout));
-                    });
+                    fs.unlinkSync(process.cwd() + `/tmp/${nameFile}`);
+                    let query = {
+                        slug: req.params.slug,
+                        language: req.params.lang
+                    };
+                    showExercice(query, req, res, JSON.parse(stdout));
                 });
             }
         });
