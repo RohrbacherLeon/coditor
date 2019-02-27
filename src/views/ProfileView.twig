@@ -24,7 +24,8 @@
                     <a href="/profile/settings"><i class="fas fa-cog"></i> Paramètres</a>
                 {% endif %}
                 
-                <p class="exos">Exercices {{ user.type == "student" ? "résolues" : "créés" }} : {{exos.length}}</p>                        
+                <p class="exos">Exercices {{ user.type == "student" ? "réalisés" : "créés" }} : {{exos.length}}</p> 
+                <p class="exos">Séries d'exercises {{ user.type == "student" ? "réalisées" : "créées" }} : {{series.length}}</p>                        
             </div>
         </div>
     </div>
