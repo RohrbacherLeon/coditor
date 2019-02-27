@@ -38,6 +38,11 @@ ExerciseSchema.statics.getExo = function (data, callback) {
     Exercise.findOne(query, callback);
 };
 
+ExerciseSchema.statics.ByAuthor = function (author, callback) {
+    let query = { author: author };
+    Exercise.find(query, callback);
+};
+
 ExerciseSchema.statics.byLanguage = function (language, callback) {
     let query = {};
 

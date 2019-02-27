@@ -19,6 +19,9 @@ let SetSchema = mongoose.Schema({
     }
 });
 
-
+SetSchema.statics.ByAuthor = function (author, callback) {
+    let query = { author: author };
+    Set.find(query, callback);
+};
 var Set = mongoose.model("Set", SetSchema);
 module.exports = Set;

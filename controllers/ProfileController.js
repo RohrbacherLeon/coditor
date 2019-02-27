@@ -7,9 +7,12 @@ const slugify = require("slugify");
 
 exports.getProfile = (req, res) => {
     if (req.user.type === "teacher") {
-        Exercise.countDocuments({ author: req.user.profile.email }, function (err, count) {
+        Exercise.ByAuthor(req.user.profile.email, function (err, exos) {
             if (err) console.log(err);
-            res.render("ProfileView", { count, menu: "profile" });
+            Set.ByAuthor(req.user.profile.email, function (err, series) {
+                if (err) console.log(err);
+                res.render("ProfileView", { exos, series, menu: "profile" });    
+            });  
         });
     } else {
         res.render("ProfileView", { count: "xx", menu: "profile" });
