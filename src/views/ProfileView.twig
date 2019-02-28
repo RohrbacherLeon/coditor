@@ -31,7 +31,7 @@
     </div>
 
     <div class="profile__data">
-        <h2 class="title">Mes exercices créés</h2>
+        <h2 class="title">Mes exercices {{ user.type == "student" ? "réalisés" : "créés" }}</h2>
 
         <div class="profile__exercises">
             {% for exo in exos %}
@@ -44,7 +44,7 @@
             
         </div>
 
-        <h2 class="title">Mes séries exercices créés</h2>
+        <h2 class="title">Mes séries exercices {{ user.type == "student" ? "réalisées" : "créées" }}</h2>
 
         <div class="profile__series">
             {% for serie in series %}
