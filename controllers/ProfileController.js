@@ -1,4 +1,5 @@
 const Exercise = require("../models/Exercise");
+const Set = require("../models/Set");
 const formidable = require("formidable");
 const fs = require("fs");
 const path = require("path");
@@ -6,9 +7,12 @@ const slugify = require("slugify");
 
 exports.getProfile = (req, res) => {
     if (req.user.type === "teacher") {
-        Exercise.countDocuments({ author: req.user.profile.email }, function (err, count) {
+        Exercise.ByAuthor(req.user.profile.email, function (err, exos) {
             if (err) console.log(err);
-            res.render("ProfileView", { count, menu: "profile" });
+            Set.ByAuthor(req.user.profile.email, function (err, series) {
+                if (err) console.log(err);
+                res.render("ProfileView", { exos, series, menu: "profile" });    
+            });  
         });
     } else {
         res.render("ProfileView", { count: "xx", menu: "profile" });
@@ -112,4 +116,18 @@ exports.getCreateExercisesSet = (req, res) => {
 
         res.render("CreateExercisesSetView", { tags });
     });
+};
+
+
+exports.postCreateExerciseSet = (req, res) => {
+    Set.create({
+        title: req.body.title,
+        exercises: req.body.exercises_selected.split(","),
+        author: req.user.profile.email,
+    }, function (err, set) {
+        if (err) console.log(err);
+    });
+    
+    req.flash("success", "Série d'exercices créée avec succès");
+    res.redirect("/profile");    
 };

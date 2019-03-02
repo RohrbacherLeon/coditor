@@ -19,8 +19,13 @@ router.get("/create-exercise", isTeacher, ProfileController.getCreateExercise);
 router.post("/create-exercise", isTeacher, ProfileController.postCreateExercise);
 
 /**
- * Get the page to create an exercise
+ * Get the page to create an exercise set
  */
 router.get("/create-exercises-set", isTeacher, ProfileController.getCreateExercisesSet);
+
+/**
+ * When teacher created an exercise set
+ */
+router.post("/create-exercises-set", isTeacher, ProfileController.postCreateExerciseSet);
 
 module.exports = router;

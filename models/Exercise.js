@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-// User Schema
+// Exercise Schema
 let ExerciseSchema = mongoose.Schema({
     title: {
         type: String,
@@ -18,7 +18,7 @@ let ExerciseSchema = mongoose.Schema({
     tags: {
         type: Array,
         required: true,
-        dafault: []
+        default: []
     },
     author: {
         type: String,
@@ -36,6 +36,11 @@ ExerciseSchema.statics.createExercise = function (data, callback) {
 ExerciseSchema.statics.getExo = function (data, callback) {
     let query = { slug: data.slug, language: data.language };
     Exercise.findOne(query, callback);
+};
+
+ExerciseSchema.statics.ByAuthor = function (author, callback) {
+    let query = { author };
+    Exercise.find(query, callback);
 };
 
 ExerciseSchema.statics.byLanguage = function (language, callback) {
