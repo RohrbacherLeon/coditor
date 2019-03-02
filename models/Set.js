@@ -20,7 +20,7 @@ let SetSchema = mongoose.Schema({
 });
 
 SetSchema.statics.ByAuthor = function (author, callback) {
-    let query = { author: author };
+    let query = { author };
     Set.find(query, callback);
 };
 var Set = mongoose.model("Set", SetSchema);

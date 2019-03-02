@@ -39,7 +39,7 @@ ExerciseSchema.statics.getExo = function (data, callback) {
 };
 
 ExerciseSchema.statics.ByAuthor = function (author, callback) {
-    let query = { author: author };
+    let query = { author };
     Exercise.find(query, callback);
 };
 
