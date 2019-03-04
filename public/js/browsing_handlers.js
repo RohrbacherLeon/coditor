@@ -81,12 +81,12 @@ $(document).ready(function() {
             $(this).removeClass("over");
             var dropped = ui.draggable;
             exercises_selected.push(dropped[0].id);
+            $("#exercises_selected").val(exercises_selected);
             var droppedOn = $(this);
             $(dropped).detach().css({
                 top: 0,
                 left: 0
             }).appendTo(droppedOn).draggable( "disable" ).addClass("selected");
-            console.log()
             $(delete_arrow+arrow_right).appendTo(droppedOn);
             $('#plus_button').appendTo(droppedOn);
             
@@ -101,7 +101,7 @@ $(document).ready(function() {
 
      $('#drop_zone').on('click', '.delete_arrow', function(e) {
         exercises_selected.splice($.inArray($(this).prev()[0].id, exercises_selected),1);
-        console.log(exercises_selected)
+        $("#exercises_selected").val(exercises_selected);
         $(this).next().remove();
         $(this).prev().remove();
         $(this).remove();

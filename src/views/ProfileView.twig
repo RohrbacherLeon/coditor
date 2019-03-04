@@ -24,38 +24,37 @@
                     <a href="/profile/settings"><i class="fas fa-cog"></i> Paramètres</a>
                 {% endif %}
                 
-                <p class="exos">Exercices {{ user.type == "student" ? "résolues" : "créés" }} : {{count}}</p>                        
+                <p class="exos">Exercices {{ user.type == "student" ? "réalisés" : "créés" }} : {{exos.length}}</p> 
+                <p class="exos">Séries d'exercises {{ user.type == "student" ? "réalisées" : "créées" }} : {{series.length}}</p>                        
             </div>
         </div>
     </div>
 
-    <div class="profile__series">
-        <h2 class="title">Mes séries en cours</h2>
+    <div class="profile__data">
+        <h2 class="title">Mes exercices {{ user.type == "student" ? "réalisés" : "créés" }}</h2>
 
-        <div class="series">
-            <a href='#' class="serie">
-                <p class="title--small">Nom de la série</p>
-                <p class="subtitle">auteur</p>
-                <div class="button_layout button_layout--center">
-                    <div class="button button--green">Reprendre</div>
-                </div>
-            </a>
+        <div class="profile__exercises">
+            {% for exo in exos %}
+                <a href="/exercises/{{exo.language}}/{{exo.slug}}" class="exercise {{exo.language}}">
+                    <h4>{{exo.title}}</h4>
+                    <p>{{exo.author}}</p>
+                    <p>{{exo.description}}</p>
+                </a>
+            {% endfor %}
+            
+        </div>
 
-            <a href='#' class="serie">
-                <p class="title--small">Nom de la série</p>
-                <p class="subtitle">auteur</p>
-                <div class="button_layout button_layout--center">
-                    <div class="button button--green">Reprendre</div>
-                </div>
-            </a>
+        <h2 class="title">Mes séries exercices {{ user.type == "student" ? "réalisées" : "créées" }}</h2>
 
-            <a href='#' class="serie">
-                <p class="title--small">Nom de la série</p>
-                <p class="subtitle">auteur</p>
-                <div class="button_layout button_layout--center">
-                    <div class="button button--green">Reprendre</div>
-                </div>
-            </a>
+        <div class="profile__series">
+            {% for serie in series %}
+                <a href="" class="exercise">
+                    <h4>{{serie.title}}</h4>
+                    <p>{{serie.author}}</p>
+                    <p>{{serie.description}}</p>
+                </a>
+            {% endfor %}
+            
         </div>
     </div>
 
