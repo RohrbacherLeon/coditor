@@ -26,11 +26,21 @@ let ExerciseSchema = mongoose.Schema({
     },
     description: {
         type: String
+    },
+    stats: {
+        fails: {
+            type: Number,
+            default: 0
+        },
+        success: {
+            type: Number,
+            default: 0
+        }
     }
 });
 
 ExerciseSchema.statics.createExercise = function (data, callback) {
-    Exercise.create(data);
+    Exercise.create(data, callback);
 };
 
 ExerciseSchema.statics.getExo = function (data, callback) {

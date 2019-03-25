@@ -2,10 +2,19 @@ const fs = require("fs");
 
 module.exports = {
     generate: function (testFile, fct, name) {
+        console.log(fct.indexOf("function"));
+
         let startFile = `
         let assert = require("assert");
-        let fct = ${fct};
+        
         `;
+
+        if (fct.indexOf("function") === 0) {
+            startFile += `let fct = ${fct};`;
+        } else {
+            startFile += fct;
+        }
+
         let contentFile = startFile + testFile;
 
         // calculer le name : si tmp1 => tmp2 etc...

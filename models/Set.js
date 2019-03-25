@@ -7,7 +7,7 @@ let SetSchema = mongoose.Schema({
         required: true,
         index: true
     },
-    
+
     exercises: {
         type: Array,
         required: true,
