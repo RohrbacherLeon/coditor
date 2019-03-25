@@ -1,7 +1,7 @@
 const Exercise = require("../models/Exercise");
 const fs = require("fs");
 const Generator = require("../class/Generator");
-const Analyser = require("../class/Analyzer");
+const Analyzer = require("../class/Analyzer");
 const { exec } = require("child_process");
 
 exports.getExoByLang = (req, res) => {
@@ -81,29 +81,41 @@ exports.postExercise = (req, res) => {
         req.flash("error", "Fait l'exercice feignant");
         res.redirect(req.originalUrl);
     } else {
-        let variables = Analyser.analyse(fct);
-        console.log(variables);
-        // Lecture du fichier du prof pour vérifier la fonction de l'etudiant
-        fs.readFile(process.cwd() + `/tests/${req.params.slug}.js`, "utf-8", function (err, data) {
+        Exercise.findOne({ slug: req.params.slug }, (err, exo) => {
             if (err) console.log(err);
 
-            // Génére un fichier nameFile de test (ajoute la fonction étudiante dans le fichier test du prof)
-            let nameFile = Generator.generate(data, fct, req.params.slug);
-            if (nameFile) {
-                // execute le test dans un container docker
-                exec(`docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp node:8 node nodescript.js ${nameFile}`, (error, stdout, stderr) => {
-                    if (error) {
-                        console.error(`exec error: ${error}`);
-                        return;
-                    }
-                    // fs.unlinkSync(process.cwd() + `/tmp/${nameFile}`);
-                    let query = {
-                        slug: req.params.slug,
-                        language: req.params.lang
-                    };
-                    showExercice(query, req, res, JSON.parse(stdout));
-                });
+            let analyzeStudent = Analyzer.analyse(fct);
+
+            if (analyzeStudent.functions.length > 0) {
+                Analyzer.functionHasGoodName(analyzeStudent, exo.awaited);
+            }
+
+            if (analyzeStudent.variables !== null) {
+                Analyzer.varaiblesHasGoodName(analyzeStudent, exo.awaited);
             }
         });
+
+        // Lecture du fichier du prof pour vérifier la fonction de l'etudiant
+        // fs.readFile(process.cwd() + `/tests/${req.params.slug}.js`, "utf-8", function (err, data) {
+        //     if (err) console.log(err);
+
+        //     // Génére un fichier nameFile de test (ajoute la fonction étudiante dans le fichier test du prof)
+        //     let nameFile = Generator.generate(data, fct, req.params.slug);
+        //     if (nameFile) {
+        //         // execute le test dans un container docker
+        //         exec(`docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp node:8 node nodescript.js ${nameFile}`, (error, stdout, stderr) => {
+        //             if (error) {
+        //                 console.error(`exec error: ${error}`);
+        //                 return;
+        //             }
+        //             // fs.unlinkSync(process.cwd() + `/tmp/${nameFile}`);
+        //             let query = {
+        //                 slug: req.params.slug,
+        //                 language: req.params.lang
+        //             };
+        //             showExercice(query, req, res, JSON.parse(stdout));
+        //         });
+        //     }
+        // });
     }
 };

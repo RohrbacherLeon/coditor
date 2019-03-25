@@ -3,6 +3,7 @@ const Set = require("../models/Set");
 const formidable = require("formidable");
 const fs = require("fs");
 const path = require("path");
+const Analyzer = require("../class/Analyzer");
 const slugify = require("slugify");
 
 exports.getProfile = (req, res) => {
@@ -32,6 +33,7 @@ exports.postCreateExercise = (req, res) => {
     form.parse(req, function (err, fields, files) {
         if (err) console.log(err);
         let slug = slugify(fields.title);
+        let teacherWaiting = Analyzer.analyseTeacher(fields.description);
 
         Exercise.createExercise({
             title: fields.title,
@@ -39,10 +41,12 @@ exports.postCreateExercise = (req, res) => {
             tags: fields.tags.split(","),
             language: fields.language,
             author: req.user.profile.email,
-            description: fields.description
+            description: fields.description,
+            awaited: teacherWaiting
         }, function (err, exo) {
             if (err) console.log(err);
 
+            console.log(teacherWaiting);
             // Enregistement des fichiers sur le serveurs
             for (const file in files) {
                 let currentFile = files[file];

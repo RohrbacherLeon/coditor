@@ -36,6 +36,16 @@ let ExerciseSchema = mongoose.Schema({
             type: Number,
             default: 0
         }
+    },
+    awaited: {
+        variables: {
+            type: Array,
+            default: []
+        },
+        functions: {
+            type: Array,
+            default: []
+        }
     }
 });
 
