@@ -85,13 +85,33 @@ exports.postExercise = (req, res) => {
             if (err) console.log(err);
 
             let analyzeStudent = Analyzer.analyse(fct);
+            console.log(analyzeStudent);
+            console.log(exo.awaited);
 
-            if (analyzeStudent.functions.length > 0) {
-                Analyzer.functionHasGoodName(analyzeStudent, exo.awaited);
+            if (exo.awaited.variables === null && Object.entries(analyzeStudent.variables).length > 0) {
+                console.log(" ------- Variables non attendues");
             }
 
-            if (analyzeStudent.variables !== null) {
-                Analyzer.varaiblesHasGoodName(analyzeStudent, exo.awaited);
+            if (exo.awaited.functions.length > 0) {
+                if (analyzeStudent.functions.length === 0) {
+                    console.log(" ------- Aucun nom de fonction trouvée");
+                } else {
+                    let errors = Analyzer.functionHasGoodName(analyzeStudent, exo.awaited);
+                    if (errors.length > 0) {
+                        console.log(" ------- Le nom de la fonction n'est pas bon");
+                    }
+                }
+            }
+
+            if (exo.awaited.variables !== null) {
+                if (analyzeStudent.variables == null) {
+                    console.log(" ------- Aucun nom de variable trouvée");
+                } else {
+                    let errors = Analyzer.variablesHasGoodName(analyzeStudent, exo.awaited);
+                    if (errors.length > 0) {
+                        console.log(" ------- Le nom de la variable n'est pas bon");
+                    }
+                }
             }
         });
 
