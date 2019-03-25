@@ -44,7 +44,7 @@ app.use(passport.session());
 
 // Express validator
 app.use(expressValidator({
-    errorFormatter: function (param, msg, value) {
+    errorFormatter: function(param, msg, value) {
         let namespace = param.split(".");
         let root = namespace.shift();
         let formParam = root;
@@ -64,7 +64,7 @@ app.use(expressValidator({
 app.use(flash());
 
 // Global Vars
-app.use(function (req, res, next) {
+app.use(function(req, res, next) {
     res.locals.success_msg = req.flash("success_msg");
     res.locals.error_msg = req.flash("error_msg");
     res.locals.error = req.flash("error");
@@ -74,7 +74,7 @@ app.use(function (req, res, next) {
     next();
 });
 /*******************/
-const { ensureAuthenticated } = require("./routes/middlewares/Authenticated");
+const { ensureAuthenticated, isAdmin } = require("./routes/middlewares/Authenticated");
 
 /* **** Routes **** */
 app.use("/", require("./routes/UserRoutes"));
@@ -82,6 +82,7 @@ app.use("/exercises", require("./routes/ExerciseRoutes"));
 app.use("/profile", ensureAuthenticated, require("./routes/ProfileRoutes"));
 app.use("/profile/settings", ensureAuthenticated, require("./routes/SettingsRoutes"));
 app.use("/api", require("./routes/ApiRoutes"));
+app.use("/manage", isAdmin, require("./routes/AdminRoutes"));
 /*******************/
 
 server.listen(config.app.port, () => {

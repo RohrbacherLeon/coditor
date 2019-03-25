@@ -1,10 +1,7 @@
-const User = require("../models/User");
+const User = require('../models/User');
 const { formFlash } = require("../class/Helper");
 
-/**
- * When register is reached with post method
- */
-exports.register_post = (req, res) => {
+exports.register_teacher = (req, res) => {
     req.sanitize("last_name").trim();
     req.sanitize("first_name").trim();
     req.sanitize("email").trim();
@@ -20,7 +17,7 @@ exports.register_post = (req, res) => {
     if (req.validationErrors()) {
         req.flash("error", req.validationErrors()[0].msg);
         formFlash(req);
-        res.redirect("/register");
+        res.redirect("/manage/register");
     } else {
         // test si l"email n"est deja pas utilise
         User.findOne({ email: { "$regex": "^" + req.body.email + "\\b", "$options": "i" } }, (err, user) => {
@@ -29,27 +26,19 @@ exports.register_post = (req, res) => {
             if (user) {
                 req.flash("error", "Cette adresse email est déjà utilisée.");
                 formFlash(req);
-                res.redirect("/register");
+                res.redirect("/manage/register");
             } else {
                 // si email pas utilisé, on créé l'utilisateur et on le redirige vers le login
+                req.body.type = "teacher";
                 User.createUser(req.body, (err, user) => {
                     if (err) {
                         throw err;
                     } else {
-                        req.flash("success", "Votre compte a bien été créé !");
-                        res.redirect("/login");
+                        req.flash("success", "Le compte enseignant a bien été créé !");
+                        res.redirect("/manage/register");
                     }
                 });
             }
         });
     }
-};
-
-/**
- * When logout is reached with get method
- */
-exports.logout = (req, res) => {
-    req.logout();
-    req.flash("success_msg", "Vous avez été deconnecté.");
-    res.redirect("/login");
-};
+}

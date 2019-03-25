@@ -6,6 +6,12 @@
             <li><a href="/exercises"{{ menu == 'exercises' ?  'class="active"' }}>Exercices</a></li>
             <!--<li><a href="/profile">Séries en cours</a></li>-->
             {% if user %}
+                {% if user.type == 'teacher' or user.type == 'admin' %}
+                    <li><a href="/profile/create-exercise">Créer un exercice</a></li>
+                    {% if user.type == 'admin' %}
+                        <li><a href="/manage/register">Gérer le site</a></li>
+                    {% endif %}
+                {% endif %}
                 <li><a href="/logout">Déconnexion</a></li>   
             {% endif %}
         </ul>
