@@ -26,16 +26,28 @@
     &--green{
         background-color: green;
         color: white;
+        transition: all 0.3s ease 0s;
+        &:hover{
+            background-color: rgb(1, 97, 1);
+        }
     }
 
     &--red{
         background-color: red;
         color: white;
+        transition: all 0.3s ease 0s;
+        &:hover{
+            background-color: rgb(147, 3, 3);
+        }
     }
 
     &--white{
         background-color: white;
         color: black;
         border: 1px solid black;
+        transition: all 0.3s ease 0s;
+        &:hover{
+            background-color: rgb(205, 202, 202);
+        }
     }
 }
