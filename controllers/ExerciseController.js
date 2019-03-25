@@ -1,6 +1,7 @@
 const Exercise = require("../models/Exercise");
 const fs = require("fs");
 const Generator = require("../class/Generator");
+const Analyser = require("../class/Analyzer");
 const { exec } = require("child_process");
 
 exports.getExoByLang = (req, res) => {
@@ -80,6 +81,8 @@ exports.postExercise = (req, res) => {
         req.flash("error", "Fait l'exercice feignant");
         res.redirect(req.originalUrl);
     } else {
+        let variables = Analyser.analyse(fct);
+        console.log(variables);
         // Lecture du fichier du prof pour vérifier la fonction de l'etudiant
         fs.readFile(process.cwd() + `/tests/${req.params.slug}.js`, "utf-8", function (err, data) {
             if (err) console.log(err);
@@ -93,7 +96,7 @@ exports.postExercise = (req, res) => {
                         console.error(`exec error: ${error}`);
                         return;
                     }
-                    fs.unlinkSync(process.cwd() + `/tmp/${nameFile}`);
+                    // fs.unlinkSync(process.cwd() + `/tmp/${nameFile}`);
                     let query = {
                         slug: req.params.slug,
                         language: req.params.lang
