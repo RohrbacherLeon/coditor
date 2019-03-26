@@ -20,9 +20,15 @@ exports.getProfile = (req, res) => {
 };
 
 exports.getCreateExercise = (req, res) => {
+    let params = {};
     Exercise.getAllValuesOf("tags", (err, tags) => {
         if (err) console.log(err);
-        res.render("CreateExerciseView", { tags });
+        params.tags = tags;
+        Exercise.getAllValuesOf("language", (err, langs) => {
+            if (err) console.log(err);
+            params.languages = langs;
+            res.render("CreateExerciseView", params);
+        });
     });
 };
 
@@ -83,23 +89,20 @@ exports.getCreateExercisesSet = (req, res) => {
     });
 };
 
-
 exports.postCreateExercisesSet = (req, res) => {
     let exSelected = req.body.exercises_selected.split(",");
-    if(req.user.profile.email){
+    if (req.user.profile.email) {
         Set.create({
             title: req.body.title,
             exercises: exSelected,
-            author: req.user.profile.email,
+            author: req.user.profile.email
         }, function (err, set) {
             if (err) console.log(err);
             req.flash("success", "Série d'exercices créée avec succès");
             res.redirect("/profile");
         });
-    }
-    else {
+    } else {
         req.flash("error", "Une erreur est survenue.");
         res.redirect(req.originalUrl);
     }
-    
 };

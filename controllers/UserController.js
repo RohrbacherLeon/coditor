@@ -25,19 +25,21 @@ exports.register_post = (req, res) => {
         // test si l"email n"est deja pas utilise
         User.findOne({ email: { "$regex": "^" + req.body.email + "\\b", "$options": "i" } }, (err, user) => {
             if (err) console.log(err);
-
             // si email deja utilisé, on redirige vers la page register
             if (user) {
                 req.flash("error", "Cette adresse email est déjà utilisée.");
                 formFlash(req);
                 res.redirect("/register");
             } else {
-                // si email pas utilisé, on créé l"utilisateur et on le redirige vers le login
+                // si email pas utilisé, on créé l'utilisateur et on le redirige vers le login
                 User.createUser(req.body, (err, user) => {
-                    if (err) throw err;
+                    if (err) {
+                        throw err;
+                    } else {
+                        req.flash("success", "Votre compte a bien été créé !");
+                        res.redirect("/login");
+                    }
                 });
-                req.flash("success", "Votre compte à bien été créé !");
-                res.redirect("/login");
             }
         });
     }
@@ -48,6 +50,6 @@ exports.register_post = (req, res) => {
  */
 exports.logout = (req, res) => {
     req.logout();
-    req.flash("success_msg", "You are logged out");
+    req.flash("success_msg", "Vous avez été deconnecté.");
     res.redirect("/login");
 };

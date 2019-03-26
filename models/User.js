@@ -30,7 +30,9 @@ UserSchema.statics.createUser = function (data, callback) {
                 last_name: data.last_name,
                 email: data.email
             };
-
+            if (data.type != null) {
+                newUser.type = data.type;
+            }
             newUser.urlImage = "/images/iconLocal.png";
             newUser.save(callback);
         });

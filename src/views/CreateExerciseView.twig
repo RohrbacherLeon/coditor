@@ -12,27 +12,14 @@
             <label for="title">Titre</label>
             <input type='text' name='title' id="title" placeholder="Titre de l'exo" required>
         </div>
-
         <div class="form-group">
             <label for="language">Langage</label>
-            <input type='text' name='language' id="language" placeholder="Langue" required>
+            <select class="selectLanguage" name="language">
+            {% for language in languages %}
+                <option value="{{language}}">{{language}}</option>
+            {% endfor %}
+            </select>
         </div>
-
-        <div class="form-group">
-            <label for="file">Fichier de test</label>
-            <input type='file' id="label" name='file_tests'>
-        </div>
-
-        <div class="form-group">
-            <label for="file">Correction de l'exercice (Optionnel)</label>
-            <input type='file' id="label" name='file_corrections'>
-        </div>
-
-        <div class="form-group">
-            <label for="file">Squelette de l'exercice (Optionnel)</label>
-            <input type='file' id="label" name='file_skeletons'>
-        </div>
-
         <div class="form-group">
             <label>Tags de l'exercices</label>
             <input type='hidden' name='tags'>
@@ -47,17 +34,26 @@
                 </div>
             </div>
         </div>
-
+        <div class="form-group">
+            <label for="file">Fichier de test</label>
+            <input type='file' id="label" name='file_tests'>
+        </div>
+        <div class="form-group">
+            <label for="file">Correction de l'exercice (Optionnel)</label>
+            <input type='file' id="label" name='file_corrections'>
+        </div>
+        <div class="form-group">
+            <label for="file">Squelette de l'exercice (Optionnel)</label>
+            <input type='file' id="label" name='file_skeletons'>
+        </div>
         <div class="form-group">
             <label>Description de l'exercices</label>
             <textarea id="md" name="description"></textarea>
         </div>
-
         <div class="button_layout button_layout--right">
             <button class="button button--green" type="submit">Créer l'exercice</button>
         </div>
     </form>
-
 </div>
 {% endblock %}
 
