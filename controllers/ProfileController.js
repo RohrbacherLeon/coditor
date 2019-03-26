@@ -7,9 +7,9 @@ const slugify = require("slugify");
 
 exports.getProfile = (req, res) => {
     if (req.user.type === "teacher") {
-        Exercise.ByAuthor(req.user.profile.email, function (err, exos) {
+        Exercise.ByAuthor(req.user.profile.email, function(err, exos) {
             if (err) console.log(err);
-            Set.ByAuthor(req.user.profile.email, function (err, series) {
+            Set.ByAuthor(req.user.profile.email, function(err, series) {
                 if (err) console.log(err);
                 res.render("ProfileView", { exos, series, menu: "profile" });
             });
@@ -20,16 +20,22 @@ exports.getProfile = (req, res) => {
 };
 
 exports.getCreateExercise = (req, res) => {
+    let params = {};
     Exercise.getAllValuesOf("tags", (err, tags) => {
         if (err) console.log(err);
-        res.render("CreateExerciseView", { tags });
+        params.tags = tags;
+        Exercise.getAllValuesOf("language", (err, langs) => {
+            if (err) console.log(err);
+            params.languages = langs;
+            res.render("CreateExerciseView", params);
+        });
     });
 };
 
 exports.postCreateExercise = (req, res) => {
     var form = new formidable.IncomingForm();
 
-    form.parse(req, function (err, fields, files) {
+    form.parse(req, function(err, fields, files) {
         if (err) console.log(err);
         let slug = slugify(fields.title);
 
@@ -40,7 +46,7 @@ exports.postCreateExercise = (req, res) => {
             language: fields.language,
             author: req.user.profile.email,
             description: fields.description
-        }, function (err, exo) {
+        }, function(err, exo) {
             if (err) console.log(err);
 
             // Enregistement des fichiers sur le serveurs
@@ -52,11 +58,11 @@ exports.postCreateExercise = (req, res) => {
 
                     // Save test file to the folder tests
                     let newPath = path.join(process.cwd(), "/" + file.split("_").pop() + "/", slug + "." + fileExt);
-                    fs.readFile(oldPath, function (err, data) {
+                    fs.readFile(oldPath, function(err, data) {
                         if (err) console.log(err);
-                        fs.writeFile(newPath, data, function (err) {
+                        fs.writeFile(newPath, data, function(err) {
                             if (err) console.log(err);
-                            fs.unlink(oldPath, function (err) {
+                            fs.unlink(oldPath, function(err) {
                                 if (err) {
                                     res.render("CreateExerciseView", { message: "Erreur lors de la création de l'exercice." });
                                 }
@@ -88,7 +94,7 @@ exports.postCreateExerciseSet = (req, res) => {
         title: req.body.title,
         exercises: req.body.exercises_selected.split(","),
         author: req.user.profile.email
-    }, function (err, set) {
+    }, function(err, set) {
         if (err) console.log(err);
     });
 
