@@ -16,7 +16,7 @@ let UserSchema = mongoose.Schema({
     urlImage: String
 });
 
-UserSchema.statics.createUser = function(data, callback) {
+UserSchema.statics.createUser = function (data, callback) {
     bcrypt.genSalt(10, (err, salt) => {
         if (err) console.log(err);
 
@@ -39,12 +39,12 @@ UserSchema.statics.createUser = function(data, callback) {
     });
 };
 
-UserSchema.statics.getUserByEmail = function(email, callback) {
+UserSchema.statics.getUserByEmail = function (email, callback) {
     User.findOne({ "profile.email": email, account: "local" }, callback);
 };
 
-UserSchema.statics.comparePassword = function(candidatePassword, hash, callback) {
-    bcrypt.compare(candidatePassword, hash, function(err, isMatch) {
+UserSchema.statics.comparePassword = function (candidatePassword, hash, callback) {
+    bcrypt.compare(candidatePassword, hash, function (err, isMatch) {
         if (err) throw err;
         callback(null, isMatch);
     });

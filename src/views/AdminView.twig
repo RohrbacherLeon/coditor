@@ -1,0 +1,38 @@
+{% extends 'layouts/master.twig' %}
+
+{% block assets %}
+<link rel="stylesheet" type="text/css" href="/css/datatables.css">
+{% endblock %}
+
+{% block content %}
+<table id="requests">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Email</th>
+            <th>Documents</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for request in requests %}
+    <a class="request_row" href="/admin/request/{{request._id}}">
+        <tr>
+            <td>{{request.nom}}</td>
+            <td>{{request.prenom}}</td>
+            <td>{{request.email}}</td>
+            <td>{{request.documents}}</td>
+        </tr>
+    </a>
+    {% endfor %}
+    </tbody>
+{% endblock %}
+
+{% block scripts %}
+<script src="/js/datatables.js"></script>
+<script>
+$(document).ready(function(){
+    $("#requests").DataTable();
+});
+</script>
+{% endblock %}
