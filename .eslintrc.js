@@ -3,9 +3,10 @@ module.exports = {
 
     "rules": {
         "semi": ["error", "always"],
-        "quotes": ["error", "double", "simple", "backtick"],
+        "quotes": ["error", "double"],
         "indent": ["off"],
         "no-control-regex": ["off"],
-        "no-tabs": ["error", { allowIndentationTabs: true }]
+        "no-tabs": ["error", { allowIndentationTabs: true }],
+        "eol-last": ["error", "never"]
     }
 };
