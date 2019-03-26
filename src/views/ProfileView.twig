@@ -27,7 +27,12 @@
             <p class="">Séries d'exercises {{ user.type == "student" ? "réalisées" : "créées" }} : {{series.length}}</p>                        
         </div>
     </div>
-
+    {% if user.type == "teacher" %}
+        <div class="profile__actions">
+            <a href="profile/create-exercise" class="button button--red" type="submit">Nouvel exercice</a>
+            <a href="profile/create-exercises-set" class="button button--red" type="submit">Nouvelle série d'exercices</a>
+        </div>
+    {% endif %}
     <div class="profile__data">
         <h2 class="title">Mes exercices {{ user.type == "student" ? "réalisés" : "créés" }}</h2>
 
