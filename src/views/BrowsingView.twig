@@ -3,7 +3,8 @@
 {% block content %}
         
 <div class="browsing">
-
+    <input type="checkbox" id="navigation" />
+    <label for="navigation">+</label>
     <div class="browsing__languages">
         <img src='/images/lang/js.png' id="lang_js">
         <img src='/images/lang/php.png' id="lang_php">
@@ -18,7 +19,6 @@
                 <a href="#" class="exercise"><p>Nom</p></a>
             </div>
         </div>
-        
         {% include "partials/browser.twig" with tags %}
 
     </div>

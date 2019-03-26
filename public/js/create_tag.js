@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('.createTag').select2({ width: '100%' });
+    $('.createTag').select2({ width: '100%', tags:true });
 });
 
 $('.createTag').on('select2:select', function (e) {
