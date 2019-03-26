@@ -38,6 +38,10 @@ let ExerciseSchema = mongoose.Schema({
         }
     },
     awaited: {
+        titles: {
+            type: Array,
+            default: []
+        },
         variables: {
             type: Array,
             default: []

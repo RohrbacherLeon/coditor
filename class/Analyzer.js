@@ -30,16 +30,19 @@ module.exports = {
 		return [];
 	},
 
-	analyseTeacher: function (content) {
-		var regFunctions = new RegExp("(?<=(\\*\\_))(.*)(?=(\\_\\*))", "gm");
-		var regVariables = new RegExp("(?<=`)(.*)(?=`)", "gm");
+	analyseTeacher: function (content, testFileContent) {
+		const regFunctions = new RegExp("(?<=(\\*\\_))(.*)(?=(\\_\\*))", "gm");
+		const regVariables = new RegExp("(?<=`)(.*)(?=`)", "gm");
+		const regIt = new RegExp("(?<=(it\\(('|\"|`)))(.*)(?=('|\"|`))", "g");
 
+		let titles = testFileContent.match(regIt);
 		let functions = content.match(regFunctions);
 		let variables = content.match(regVariables);
 
 		return {
 			functions,
-			variables
+			variables,
+			titles
 		};
 	},
 	functionHasGoodName (student, teacher) {

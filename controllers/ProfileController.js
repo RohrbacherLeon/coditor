@@ -33,7 +33,10 @@ exports.postCreateExercise = (req, res) => {
     form.parse(req, function (err, fields, files) {
         if (err) console.log(err);
         let slug = slugify(fields.title);
-        let teacherWaiting = Analyzer.analyseTeacher(fields.description);
+
+        let testFile = files["file_tests"];
+        let testFileData = fs.readFileSync(testFile.path);
+        let teacherWaiting = Analyzer.analyseTeacher(fields.description, testFileData.toString("utf8"));
 
         Exercise.createExercise({
             title: fields.title,
@@ -46,7 +49,6 @@ exports.postCreateExercise = (req, res) => {
         }, function (err, exo) {
             if (err) console.log(err);
 
-            console.log(teacherWaiting);
             // Enregistement des fichiers sur le serveurs
             for (const file in files) {
                 let currentFile = files[file];
