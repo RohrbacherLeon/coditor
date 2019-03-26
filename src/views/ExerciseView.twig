@@ -41,7 +41,7 @@
         </div>
             {# If skeleton exist, print it #}
         {% if skeletonText %} <textarea name="function" id="js-textarea" cols="30" rows="10">{{skeletonText}}</textarea>
-        {% else %}<textarea name="function" id="js-textarea" cols="30" rows="10">{{content}}</textarea>
+        {% else %}<textarea name="function" id="js-textarea" cols="30" rows="10">{{content.fct}}</textarea>
         {% endif %}
     </div>
     <div class="exercise__opened__bottom">

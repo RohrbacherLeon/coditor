@@ -51,6 +51,9 @@ function showExercice (query, req, res, results) {
 }
 
 exports.getExercise = (req, res) => {
+    if (req.session.content && req.session.content.slug !== req.params.slug) {
+        req.session.content = {};
+    }
     let query = {
         slug: req.params.slug,
         language: req.params.lang
@@ -67,8 +70,7 @@ exports.postExercise = (req, res) => {
         req.flash("error", "Fait l'exercice feignant");
         res.redirect(req.originalUrl);
     } else {
-        req.session.content = fct;
-
+        req.session.content = { fct, slug: req.params.slug };
         Exercise.findOne({ slug: req.params.slug }, (err, exo) => {
             if (err) console.log(err);
 
