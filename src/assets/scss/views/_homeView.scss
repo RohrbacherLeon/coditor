@@ -12,15 +12,23 @@
     .row{
         display: flex;
         padding: 30px 0;
-        border-top: 1px solid black;
+
+        &.centered-row{
+            background-color: rgb(188, 196, 220);
+        }
         
         .column{
             flex-grow: 1;
 
-            .redSquare{
-                width: 200px;
+            .rowImg{
+                width: 300px;
                 height: 200px;
-                background-color: red;
+                margin-right: 10px;
+
+                &-reverse{
+                    height: 150px;
+                    margin-left: 10px;
+                }
             }
 
             &.x2{
@@ -29,11 +37,13 @@
                 flex-direction: column;
                 justify-content: space-evenly;
                 padding-right: 30px;
+                margin-left: 15px;
 
                 &-reverse{
                     display: flex;
                     flex-direction: column;
                     justify-content: space-evenly;
+                    margin-right: 15px;
 
                     padding-left: 30px;
                     padding-right: 0;

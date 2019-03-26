@@ -89,15 +89,20 @@ exports.getCreateExercisesSet = (req, res) => {
     });
 };
 
-exports.postCreateExerciseSet = (req, res) => {
-    Set.create({
-        title: req.body.title,
-        exercises: req.body.exercises_selected.split(","),
-        author: req.user.profile.email
-    }, function (err, set) {
-        if (err) console.log(err);
-    });
-
-    req.flash("success", "Série d'exercices créée avec succès");
-    res.redirect("/profile");
+exports.postCreateExercisesSet = (req, res) => {
+    let exSelected = req.body.exercises_selected.split(",");
+    if (req.user.profile.email) {
+        Set.create({
+            title: req.body.title,
+            exercises: exSelected,
+            author: req.user.profile.email
+        }, function (err, set) {
+            if (err) console.log(err);
+            req.flash("success", "Série d'exercices créée avec succès");
+            res.redirect("/profile");
+        });
+    } else {
+        req.flash("error", "Une erreur est survenue.");
+        res.redirect(req.originalUrl);
+    }
 };

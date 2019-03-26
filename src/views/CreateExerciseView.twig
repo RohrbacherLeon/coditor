@@ -1,5 +1,8 @@
 {% extends "layouts/master.twig" %}
 
+{% block assets %}
+{% endblock %}
+
 {% block content %}
 <div class="createExo">
     {{message}}
@@ -45,7 +48,7 @@
         </div>
         <div class="form-group">
             <label>Description de l'exercices</label>
-            <textarea name="description" required></textarea>
+            <textarea id="md" name="description"></textarea>
         </div>
         <div class="button_layout button_layout--right">
             <button class="button button--green" type="submit">Créer l'exercice</button>
@@ -55,5 +58,12 @@
 {% endblock %}
 
 {% block scripts %}
-<script src='/js/create_tag.js'></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/highlight.js/latest/highlight.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/highlight.js/latest/styles/github.min.css">
+    <script src="/js/simplemde.js"></script>
+
+    <script src='/js/create_tag.js'></script>
 {% endblock %}

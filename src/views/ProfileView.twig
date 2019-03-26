@@ -4,32 +4,35 @@
 <div class="profile">
     <div class="profile__head">
         <div class="image">
-            <img class="logoAccount" src="{{user.urlImage}}">
+            <img class="imgAccount" src="{{user.urlImage}}">
         </div>
-        <div class="infos">
-            <div class="infos__user">
-                <div class="infos__user__id">
-                {% if user.profile.username %}                
-                    <p>{{user.profile.username}}</p>
-                {% else %}
-                    <p>{{ user.profile.last_name }}</p>
-                    <p>{{ user.profile.first_name }}</p>
-                {% endif %}
-                </div>
-
-                {% if user.profile.email %}
-                    <p class="email">{{ user.profile.email }}</p>
-                {% endif %}
-                {% if user.account == "local" %}    
-                    <a href="/profile/settings"><i class="fas fa-cog"></i> Paramètres</a>
-                {% endif %}
-                
-                <p class="exos">Exercices {{ user.type == "student" ? "réalisés" : "créés" }} : {{exos.length}}</p> 
-                <p class="exos">Séries d'exercises {{ user.type == "student" ? "réalisées" : "créées" }} : {{series.length}}</p>                        
+        <div class="infos__user">
+            <div class="infos__user__id">
+            {% if user.profile.username %}                
+                <h3>{{user.profile.username}}</h3>
+            {% else %}
+                <h3>{{ user.profile.last_name }}</h3>
+                <h3>{{ user.profile.first_name }}</h3>
+            {% endif %}
             </div>
+
+            {% if user.profile.email %}
+                <p class="email">{{ user.profile.email }}</p>
+            {% endif %}
+            {% if user.account == "local" %}    
+                <a href="/profile/settings"><i class="fas fa-cog"></i> Paramètres</a>
+            {% endif %}
+            
+            <p class="">Exercices {{ user.type == "student" ? "réalisés" : "créés" }} : {{exos.length}}</p> 
+            <p class="">Séries d'exercises {{ user.type == "student" ? "réalisées" : "créées" }} : {{series.length}}</p>                        
         </div>
     </div>
-
+    {% if user.type == "teacher" %}
+        <div class="profile__actions">
+            <a href="profile/create-exercise" class="button button--red" type="submit">Nouvel exercice</a>
+            <a href="profile/create-exercises-set" class="button button--red" type="submit">Nouvelle série d'exercices</a>
+        </div>
+    {% endif %}
     <div class="profile__data">
         <h2 class="title">Mes exercices {{ user.type == "student" ? "réalisés" : "créés" }}</h2>
 
@@ -48,7 +51,7 @@
 
         <div class="profile__series">
             {% for serie in series %}
-                <a href="" class="exercise">
+                <a href="" class="serie">
                     <h4>{{serie.title}}</h4>
                     <p>{{serie.author}}</p>
                     <p>{{serie.description}}</p>
