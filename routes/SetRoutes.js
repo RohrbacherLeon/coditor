@@ -5,6 +5,3 @@ const SetController = require("../controllers/SetController");
 router.get("/:slug", SetController.getSet);
 
 module.exports = router;
-
-
-
