@@ -1,7 +1,6 @@
 const Exercise = require("../models/Exercise");
 const fs = require("fs");
 const Generator = require("../class/Generator");
-const Analyzer = require("../class/Analyzer");
 const { exec } = require("child_process");
 const showdown = require("showdown");
 
@@ -74,75 +73,35 @@ exports.postExercise = (req, res) => {
         Exercise.findOne({ slug: req.params.slug }, (err, exo) => {
             if (err) console.log(err);
 
-            let analyzeError = [];
-
-            let analyzeStudent = Analyzer.analyse(fct);
-
-            // si l'exercice n'attend pas de variable mais que l'étudiant en met une
-            if (exo.awaited.variables === null && Object.entries(analyzeStudent.variables).length > 0) {
-                analyzeError.push("Variables non attendues");
-            }
-
-            // si l'exercice attend une fonction
-            if (exo.awaited.functions.length > 0) {
-                if (analyzeStudent.functions.length === 0) {
-                    analyzeError.push("Aucun nom de fonction trouvée");
-                } else {
-                    let errors = Analyzer.functionHasGoodName(analyzeStudent, exo.awaited);
-                    if (errors.length > 0) {
-                        analyzeError.push("Le nom de la fonction n'est pas bon");
-                    }
-                }
-            }
-
-            // si l'exercice attend une variable
-            if (exo.awaited.variables !== null) {
-                if (analyzeStudent.variables == null) {
-                        analyzeError.push("Aucun nom de variable trouvée");
-                } else {
-                    let errors = Analyzer.variablesHasGoodName(analyzeStudent, exo.awaited);
-                    if (errors.length > 0) {
-                        analyzeError.push("Le nom de la variable n'est pas bon");
-                    }
-                }
-            }
-
             // si il n'y a aucune erreur d'analyse -> execute les tests unitaires
-            if (analyzeError.length === 0) {
-                // Lecture du fichier du prof pour vérifier la fonction de l'etudiant
-                fs.readFile(process.cwd() + `/tests/${req.params.slug}.js`, "utf-8", function (err, data) {
-                    if (err) console.log(err);
+            // Lecture du fichier du prof pour vérifier la fonction de l'etudiant
+            fs.readFile(process.cwd() + `/tests/${req.params.slug}.js`, "utf-8", function (err, data) {
+                if (err) console.log(err);
 
-                    // Génére un fichier nameFile de test (ajoute la fonction étudiante dans le fichier test du prof)
-                    let nameFile = Generator.generate(data, fct, req.params.slug);
-                    if (nameFile) {
-                        // execute le test dans un container docker
-                        exec(`docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp node:8 node nodescript.js ${nameFile}`, (error, stdout, stderr) => {
-                            if (error) {
-                                console.error(`exec error: ${error}`);
-                                return;
-                            }
-                            fs.unlinkSync(process.cwd() + `/tmp/${nameFile}`);
-                            let query = {
-                                slug: req.params.slug,
-                                language: req.params.lang
-                            };
+                // Génére un fichier nameFile de test (ajoute la fonction étudiante dans le fichier test du prof)
+                let nameFile = Generator.generate(data, fct, req.params.slug);
+                if (nameFile) {
+                    // execute le test dans un container docker
+                    exec(`docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp node:8 node nodescript.js ${nameFile}`, (error, stdout, stderr) => {
+                        if (error) {
+                            console.error(`exec error: ${error}`);
+                            return;
+                        }
+                        fs.unlinkSync(process.cwd() + `/tmp/${nameFile}`);
+                        let query = {
+                            slug: req.params.slug,
+                            language: req.params.lang
+                        };
 
-                            console.log(JSON.parse(stdout).passes);
-
-                            let titles = [];
-                            JSON.parse(stdout).passes.forEach(passe => {
-                                titles.push(passe.title);
-                            });
-
-                            showExercice(query, req, res, titles);
+                        let titles = [];
+                        JSON.parse(stdout).passes.forEach(passe => {
+                            titles.push(passe.title);
                         });
-                    }
-                });
-            } else {
-                req.flash("error", analyzeError[0]);
-                res.redirect(req.originalUrl);
-            }
+
+                        showExercice(query, req, res, titles);
+                    });
+                }
+            });
         });
     }
 };
