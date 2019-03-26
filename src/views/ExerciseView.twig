@@ -24,24 +24,27 @@
         <div class="exercise__opened__top__subject">
             <h1>{{ exercise.title }}</h1>
             <div class="description">
-                {{ exercise.description }}
+                {{ markdown }}
             </div>
-            <p class="author">{{ exercise.author }} </p>
+            <div class="waitings">
+                {% for title in exercise.awaited.titles %}
+                    <div class="waiting {{ title in results ? 'success' : 'error' }}">
+                        {% if title in results %}
+                            <i class="far fa-check-circle"></i>
+                        {% else %}
+                            <i class="far fa-times-circle"></i>
+                        {% endif %}
+                        {{title}}
+                    </div>
+                {% endfor %}
+            </div>
         </div>
             {# If skeleton exist, print it #}
         {% if skeletonText %} <textarea name="function" id="js-textarea" cols="30" rows="10">{{skeletonText}}</textarea>
-        {% else %}<textarea name="function" id="js-textarea" cols="30" rows="10"></textarea>
+        {% else %}<textarea name="function" id="js-textarea" cols="30" rows="10">{{content.fct}}</textarea>
         {% endif %}
     </div>
     <div class="exercise__opened__bottom">
-        <ul class="feedback">
-            {% for success in results.passes %}
-                <li class='success'>{{success.title}}</li>
-            {% endfor %}
-            {% for fail in results.failures %}
-                <li class='fail'>{{fail.title}} {{fail.error.operator}} {{fail.error.actual}}</li>
-            {% endfor %}
-        </ul>
         <div id="openCorrection" class="button button--green">Afficher la correction</div>
         <button type='submit' class="button button--green">Valider le code</button>
     </div>
@@ -52,13 +55,15 @@
         
 
 {% block scripts %}
+
         
     <script>
         let editor = CodeMirror.fromTextArea(document.getElementById('js-textarea'), {
+            value: "",
             lineNumbers: true,
             mode:  "javascript",
             theme: 'ambiance',
-            extraKeys: {"Ctrl-Space": "autocomplete"}
+            extraKeys: {"Ctrl-Space": "autocomplete"},
         });
     </script>
 

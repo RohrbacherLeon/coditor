@@ -6,14 +6,8 @@ module.exports = {
 
         let startFile = `
         let assert = require("assert");
-        
+        ${fct}
         `;
-
-        if (fct.indexOf("function") === 0) {
-            startFile += `let fct = ${fct};`;
-        } else {
-            startFile += fct;
-        }
 
         let contentFile = startFile + testFile;
 

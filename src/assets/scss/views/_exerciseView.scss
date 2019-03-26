@@ -22,8 +22,27 @@
                 margin: 20px 0;
             }
     
-            .author{
-                text-align: right;
+            .waitings{
+                .waiting{
+                    background-color: whitesmoke;
+                    margin-bottom: 5px;
+                    padding: 10px 15px;
+                    border-radius: 5px;
+
+                    &.success{
+                        border: 1px solid green;
+                        i{
+                            color: green;
+                        }
+                    }
+
+                    &.error{
+                        border: 1px solid red;
+                        i{
+                            color: red;
+                        }
+                    }
+                }
             }
         }
     
