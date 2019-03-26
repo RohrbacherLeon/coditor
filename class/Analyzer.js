@@ -1,21 +1,70 @@
 module.exports = {
 	analyse: function (content) {
-		let lets = this.getVariables(content, "let");
-		let consts = this.getVariables(content, "const");
-		console.log(lets);
-		console.log(consts);
+		let variables = this.getVariables(content);
+		let functions = this.getFunctions(content);
+		return {
+			variables, functions
+		};
 	},
 	getVariables: function (text, type) {
-		var re = new RegExp(`(?<=${type}\\s)(.*)(?=;)`, "gm");
-
-		let all = text.match(re);
+		let regexes = [new RegExp("(?<=let\\s)(.*)(?=;)", "gm"), new RegExp("(?<=const\\s)(.*)(?=;)", "gm")];
 		let formated = {};
 
-		all.forEach(item => {
-			let split = item.split("=");
-			formated[split[0].trim()] = split[1].trim().replace(/"/g, "");
+		regexes.forEach(re => {
+			let all = text.match(re);
+			if (all) {
+				all.forEach(item => {
+					let split = item.split("=");
+					formated[split[0].trim()] = split[1].trim().replace(/"/g, "");
+				});
+			}
 		});
 
 		return formated;
+	},
+	getFunctions: function (text) {
+		var re = new RegExp("(?<=function\\s)(.*)(?=\\()", "gm");
+		if (text.match(re)) {
+			return text.match(re);
+		}
+		return [];
+	},
+
+	analyseTeacher: function (content, testFileContent) {
+		const regFunctions = new RegExp("(?<=(\\*\\_))(.*)(?=(\\_\\*))", "gm");
+		const regVariables = new RegExp("(?<=`)(.*)(?=`)", "gm");
+		const regIt = new RegExp("(?<=(it\\(('|\"|`)))(.*)(?=('|\"|`))", "g");
+
+		let titles = testFileContent.match(regIt);
+		let functions = content.match(regFunctions);
+		let variables = content.match(regVariables);
+
+		return {
+			functions,
+			variables,
+			titles
+		};
+	},
+	functionHasGoodName (student, teacher) {
+		let errors = [];
+		if (teacher.functions) {
+			teacher.functions.forEach(functionName => {
+				if (!student.functions.includes(functionName)) {
+					errors.push(functionName);
+				}
+			});
+		}
+		return errors;
+	},
+	variablesHasGoodName (student, teacher) {
+		let errors = [];
+		if (teacher.variables) {
+			teacher.variables.forEach(variable => {
+				if (student.variables.includes(variable)) {
+					errors.push(variable);
+				}
+			});
+		}
+		return errors;
 	}
 };
