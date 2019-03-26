@@ -6,10 +6,10 @@
     <form method='POST' class='createExoSet__form'>
         <div class="form-group">
             <h1 class="title">Créer une nouvelle série d'exercices</h1>
-            <input type='text' name='title' id="title" placeholder="Titre de la série" required>
+            
             <input type='hidden' name='exercises_selected' id="exercises_selected">
-
-            <div class="button_layout button_layout--right">
+            <div class="form-inputs">
+                <input type='text' name='title' id="title" placeholder="Titre de la série" required>
                 <button class="button button--green" type="submit">Créer la série d'exercice</button>
             </div>
         </div>
@@ -28,5 +28,6 @@
 {% block scripts %}
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src='https://code.jquery.com/ui/1.12.1/jquery-ui.js'></script>
-    <script src='/js/browsing_handlers.js'></script>
+    <script src='/js/browsing_handler.js'></script>
+    <script src='/js/drag_and_drop_handler.js'></script>
 {% endblock %}
