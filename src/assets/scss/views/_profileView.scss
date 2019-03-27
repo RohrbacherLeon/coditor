@@ -98,6 +98,7 @@
                 position: absolute;
                 top: 0;
                 right: 0;
+
                 color: white;
                 background-color: lightgrey;
                 transition: all 0.5s linear;
@@ -107,7 +108,25 @@
                 border-radius: 0 4px 0 4px;
 
                 &:hover{
-                    background-color: black;
+                    background-color: gray;
+                }
+            }
+
+            .link-delete{
+                position: absolute;
+                top: 0;
+                right: 0;
+                color: red;
+                background-color: lightgrey;
+                transition: all 0.5s linear;
+                padding: 3px;
+                padding-left: 15px;
+                padding-right: 15px;
+                border-radius: 0 0 4px 4px;
+                margin-right: 45px;
+
+                &:hover{
+                    background-color: gray;
                 }
             }
         }

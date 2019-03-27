@@ -44,6 +44,7 @@
                         <p>{{exo.author}}</p>
                         <p>{{exo.description}}</p>
                         {% if user.type == "teacher" %}
+                            <a href="" class="link-delete"><i class="fas fa-trash-alt"></i></a>
                             <a href="/profile/update-exercise?lang={{exo.language}}&slug={{exo.slug}}" class="link-modify"><i class="fas fa-cog"></i></a>
                         {% endif %}
                     </a>
