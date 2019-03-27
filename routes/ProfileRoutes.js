@@ -36,6 +36,6 @@ router.get("/create-exercises-set", isTeacher, ProfileController.getCreateExerci
 /**
  * When teacher created an exercise set
  */
-router.post("/create-exercises-set", isTeacher, ProfileController.postCreateExerciseSet);
+router.post("/create-exercises-set", isTeacher, ProfileController.postCreateExercisesSet);
 
 module.exports = router;

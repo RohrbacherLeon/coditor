@@ -4,6 +4,11 @@
         #title {
             width:50%;
         }
+
+        .form-inputs {
+            display: flex;
+            justify-content: space-around;
+        }
     }
 
     #workbench {

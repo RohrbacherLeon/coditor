@@ -6,6 +6,12 @@
             <li><a href="/exercises"{{ menu == 'exercises' ?  'class="active"' }}>Exercices</a></li>
             <!--<li><a href="/profile">Séries en cours</a></li>-->
             {% if user %}
+                {% if user.type == 'teacher' or user.type == 'admin' %}
+                    <li><a href="/profile/create-exercise">Créer un exercice</a></li>
+                    {% if user.type == 'admin' %}
+                        <li><a href="/admin/">Gérer le site</a></li>
+                    {% endif %}
+                {% endif %}
                 <li><a href="/logout">Déconnexion</a></li>   
             {% endif %}
         </ul>
@@ -23,7 +29,7 @@
                     <p>{{user.profile.last_name}}</p>
                     <p>{{user.profile.first_name}}</p>
                 {% endif %}
-                <img class="logoAccount" src={{user.urlImage}}>
+                <img src={{user.urlImage}}>
             </a>
         {% endif %}
     </div>
