@@ -39,6 +39,9 @@
                     <h4>{{exo.title}}</h4>
                     <p>{{exo.author}}</p>
                     <p>{{exo.description}}</p>
+                    {% if user.type == "teacher" %}
+                        <a href="/profile/update-exercise?lang={{exo.language}}&slug={{exo.slug}}" class="button--white">Modifier</a>
+                    {% endif %}
                 </a>
             {% endfor %}
             

@@ -19,6 +19,16 @@ router.get("/create-exercise", isTeacher, ProfileController.getCreateExercise);
 router.post("/create-exercise", isTeacher, ProfileController.postCreateExercise);
 
 /**
+ * Get the page to update an exercise
+ */
+router.get("/update-exercise", isTeacher, ProfileController.getUpdateExercise);
+
+/**
+ * When teacher updated an exercise
+ */
+router.post("/update-exercise", isTeacher, ProfileController.postUpdateExercise);
+
+/**
  * Get the page to create an exercise set
  */
 router.get("/create-exercises-set", isTeacher, ProfileController.getCreateExercisesSet);
