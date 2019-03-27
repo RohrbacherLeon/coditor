@@ -1,5 +1,5 @@
 @import './globals/variables';
-@import './globals/reset';
+// @import './globals/reset';
 @import './globals/typos';
 @import './globals/buttons';
 @import './globals/form';
@@ -8,6 +8,7 @@
 @import './partials/menu';
 @import './partials/correction_popup';
 @import './views/exerciseView';
+@import './views/setView';
 @import './views/profileView';
 @import './views/loginView';
 @import './views/registerView';

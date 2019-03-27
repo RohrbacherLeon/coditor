@@ -6,6 +6,7 @@ module.exports = {
         "quotes": ["error", "double"],
         "indent": ["off"],
         "no-control-regex": ["off"],
-        "no-tabs": ["error", { allowIndentationTabs: true }]
+        "no-tabs": ["error", { allowIndentationTabs: true }],
+        "eol-last": ["error", "never"]
     }
 };

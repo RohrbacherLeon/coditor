@@ -4,7 +4,7 @@
 <div class="profile">
     <div class="profile__head">
         <div class="image">
-            <img class="imgAccount" src={{user.urlImage}}>
+            <img class="imgAccount" src="{{user.urlImage}}">
         </div>
         <div class="infos__user">
             <div class="infos__user__id">
@@ -51,7 +51,7 @@
 
         <div class="profile__series">
             {% for serie in series %}
-                <a href="" class="serie">
+                <a href="/sets/{{serie.slug}}" class="serie">
                     <h4>{{serie.title}}</h4>
                     <p>{{serie.author}}</p>
                     <p>{{serie.description}}</p>

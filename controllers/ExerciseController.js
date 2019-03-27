@@ -1,8 +1,8 @@
 const Exercise = require("../models/Exercise");
 const fs = require("fs");
 const Generator = require("../class/Generator");
-const Analyser = require("../class/Analyzer");
 const { exec } = require("child_process");
+const showdown = require("showdown");
 
 exports.getExoByLang = (req, res) => {
     Exercise.getAllValuesOf("language", function (err, languages) {
@@ -42,29 +42,17 @@ function showExercice (query, req, res, results) {
             skeletonText = null;
         }
 
-        if (results) {
-            Exercise.findOne({ slug: query.slug }, function (err, exo) {
-                if (err) console.log(err);
+        let converter = new showdown.Converter();
+        let markdown = converter.makeHtml(exercise.description);
 
-                let update = {};
-
-                if (results.failures.length > 0) {
-                    update["stats.fails"] = exo.stats.fails + 1;
-                } else {
-                    update["stats.success"] = exo.stats.success + 1;
-                }
-
-                Exercise.updateOne({ slug: query.slug }, { $set: update }, (err, updated) => {
-                    if (err) console.log(err);
-                });
-            });
-        }
-
-        res.render("ExerciseView", { exercise, results: results, menu: "exercises", correctionText, skeletonText });
+        res.render("ExerciseView", { exercise, results, menu: "exercises", correctionText, skeletonText, markdown, content: req.session.content });
     });
 }
 
 exports.getExercise = (req, res) => {
+    if (req.session.content && req.session.content.slug !== req.params.slug) {
+        req.session.content = {};
+    }
     let query = {
         slug: req.params.slug,
         language: req.params.lang
@@ -81,29 +69,39 @@ exports.postExercise = (req, res) => {
         req.flash("error", "Fait l'exercice feignant");
         res.redirect(req.originalUrl);
     } else {
-        let variables = Analyser.analyse(fct);
-        console.log(variables);
-        // Lecture du fichier du prof pour vérifier la fonction de l'etudiant
-        fs.readFile(process.cwd() + `/tests/${req.params.slug}.js`, "utf-8", function (err, data) {
+        req.session.content = { fct, slug: req.params.slug };
+        Exercise.findOne({ slug: req.params.slug }, (err, exo) => {
             if (err) console.log(err);
 
-            // Génére un fichier nameFile de test (ajoute la fonction étudiante dans le fichier test du prof)
-            let nameFile = Generator.generate(data, fct, req.params.slug);
-            if (nameFile) {
-                // execute le test dans un container docker
-                exec(`docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp node:8 node nodescript.js ${nameFile}`, (error, stdout, stderr) => {
-                    if (error) {
-                        console.error(`exec error: ${error}`);
-                        return;
-                    }
-                    // fs.unlinkSync(process.cwd() + `/tmp/${nameFile}`);
-                    let query = {
-                        slug: req.params.slug,
-                        language: req.params.lang
-                    };
-                    showExercice(query, req, res, JSON.parse(stdout));
-                });
-            }
+            // si il n'y a aucune erreur d'analyse -> execute les tests unitaires
+            // Lecture du fichier du prof pour vérifier la fonction de l'etudiant
+            fs.readFile(process.cwd() + `/tests/${req.params.slug}.js`, "utf-8", function (err, data) {
+                if (err) console.log(err);
+
+                // Génére un fichier nameFile de test (ajoute la fonction étudiante dans le fichier test du prof)
+                let nameFile = Generator.generate(data, fct, req.params.slug);
+                if (nameFile) {
+                    // execute le test dans un container docker
+                    exec(`docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp node:8 node nodescript.js ${nameFile}`, (error, stdout, stderr) => {
+                        if (error) {
+                            console.error(`exec error: ${error}`);
+                            return;
+                        }
+                        fs.unlinkSync(process.cwd() + `/tmp/${nameFile}`);
+                        let query = {
+                            slug: req.params.slug,
+                            language: req.params.lang
+                        };
+
+                        let titles = [];
+                        JSON.parse(stdout).passes.forEach(passe => {
+                            titles.push(passe.title);
+                        });
+
+                        showExercice(query, req, res, titles);
+                    });
+                }
+            });
         });
     }
 };

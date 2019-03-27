@@ -22,6 +22,9 @@ mongoose.connect(`mongodb://${config.db.host}/${config.db.database}`, {
 /* **** VIEW CONFIGURATION **** */
 app.set("views", path.join(__dirname, "/src/views"));
 app.set("view engine", "twig");
+app.set("twig options", {
+    allow_async: true // Allow asynchronous compiling
+});
 /*****************************/
 
 /* **** MIDDLEWARES **** */
@@ -74,14 +77,16 @@ app.use(function (req, res, next) {
     next();
 });
 /*******************/
-const { ensureAuthenticated } = require("./routes/middlewares/Authenticated");
+const { ensureAuthenticated, isAdmin } = require("./routes/middlewares/Authenticated");
 
 /* **** Routes **** */
 app.use("/", require("./routes/UserRoutes"));
 app.use("/exercises", require("./routes/ExerciseRoutes"));
+app.use("/sets", require("./routes/SetRoutes"));
 app.use("/profile", ensureAuthenticated, require("./routes/ProfileRoutes"));
 app.use("/profile/settings", ensureAuthenticated, require("./routes/SettingsRoutes"));
 app.use("/api", require("./routes/ApiRoutes"));
+app.use("/admin", isAdmin, require("./routes/AdminRoutes"));
 /*******************/
 
 server.listen(config.app.port, () => {
