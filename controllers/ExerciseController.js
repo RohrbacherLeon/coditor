@@ -88,7 +88,7 @@ exports.postExercise = (req, res) => {
                             req.flash("error", "Une erreur est survenue.");
                             res.redirect(req.originalUrl);
                         } else {
-                            // fs.unlinkSync(process.cwd() + `/tmp/${nameFile}`);
+                            fs.unlinkSync(process.cwd() + `/tmp/${nameFile}`);
                             let query = {
                                 slug: req.params.slug,
                                 language: req.params.lang
