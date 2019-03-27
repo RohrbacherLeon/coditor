@@ -1,5 +1,6 @@
 const Set = require("../models/Set");
 const Exercise = require("../models/Exercise");
+const ExerciseController = require("../controllers/ExerciseController");
 
 exports.getSet = (req, res) => {
     Set.getSetBySlug(req.params.slug, function (err, data) {
@@ -11,4 +12,8 @@ exports.getSet = (req, res) => {
             });
             res.render("SetView", { setExercises, set });
         });
+};
+
+exports.getExerciseInSet = (req, res) => {
+    ExerciseController.getExercise(req, res);
 };
