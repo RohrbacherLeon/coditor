@@ -136,12 +136,12 @@ exports.getUpdateExercise = (req, res) => {
 };
 
 exports.postUpdateExercise = (req, res) => {
-    var form = new formidable.IncomingForm();
+    let form = new formidable.IncomingForm();
     form.parse(req, function (err, fields, files) {
         if (err) console.log(err);
 
-        var newTitle = fields.title.split("+").join(" ");
-        var lastTitle, lastSlug, lastExtFile;
+        fields.title = fields.title.split("+").join(" ");
+        let lastTitle, lastSlug, lastExtFile;
         // Get last exo
         Exercise.getExo({ slug: req.query.slug, language: req.query.lang }, function (err, exercise) {
             if (err) console.log(err);
@@ -150,12 +150,13 @@ exports.postUpdateExercise = (req, res) => {
             lastExtFile = exercise.language;
 
             // After, do all (update, files)
-            let slug = slugify(newTitle);
-            let update = {};
-            update["title"] = newTitle;
-            update["slug"] = slug;
-            update["tags"] = fields.tags.split(",");
-            update["description"] = fields.description;
+            let slug = slugify(fields.title);
+            let update = {
+                title: fields.title,
+                slug: slug,
+                tags: fields.tags.split(","),
+                description: fields.description
+            };
             // Update exercise
             Exercise.updateOne({ slug: req.query.slug, language: req.query.lang }, { $set: update }, function (err, exo) {
                 if (err) {
@@ -167,19 +168,15 @@ exports.postUpdateExercise = (req, res) => {
                         let currentFile = files[file];
                         // If new file
                         if (currentFile.size > 0) {
-                            let oldPath = currentFile.path;
-                            let fileExt = currentFile.name.split(".").pop();
                             // Remove old file
-                            let oldFile = path.join(process.cwd(), "/" + file.split("_").pop() + "/" + lastSlug + "." + lastExtFile);
-                            fs.unlink(oldFile, function (err) {
+                            fs.unlink(path.join(process.cwd(), "/" + file.split("_").pop() + "/" + lastSlug + "." + lastExtFile), function (err) {
                                 if (err) console.log(err);
                                 // Create new file and save it to the folder
-                                let newPath = path.join(process.cwd(), "/" + file.split("_").pop() + "/", slug + "." + fileExt);
-                                fs.readFile(oldPath, function (err, data) {
+                                fs.readFile(currentFile.path, function (err, data) {
                                     if (err) console.log(err);
-                                    fs.writeFile(newPath, data, function (err) {
+                                    fs.writeFile(path.join(process.cwd(), "/" + file.split("_").pop() + "/", slug + "." + currentFile.name.split(".").pop()), data, function (err) {
                                         if (err) console.log(err);
-                                        fs.unlink(oldPath, function (err) {
+                                        fs.unlink(currentFile.path, function (err) {
                                             if (err) {
                                                 res.render("CreateExerciseView", { message: "Erreur lors de la création de l'exercice." });
                                             }
@@ -188,7 +185,7 @@ exports.postUpdateExercise = (req, res) => {
                                 });
                             });
                         // if it's not a new file, update file name (if title has changed and no file is given)
-                        } else if (lastTitle !== newTitle) {
+                        } else if (lastTitle !== fields.title) {
                             let oldFile = path.join(process.cwd(), "/" + file.split("_").pop() + "/" + lastSlug + "." + lastExtFile);
                             let newFile = path.join(process.cwd(), "/" + file.split("_").pop() + "/" + slug + "." + lastExtFile);
                             fs.rename(oldFile, newFile, function () {
