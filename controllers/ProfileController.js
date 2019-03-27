@@ -155,7 +155,6 @@ exports.postUpdateExercise = (req, res) => {
             update["title"] = newTitle;
             update["slug"] = slug;
             update["tags"] = fields.tags.split(",");
-            console.log(fields.tags);
             update["description"] = fields.description;
             // Update exercise
             Exercise.updateOne({ slug: req.query.slug, language: req.query.lang }, { $set: update }, function (err, exo) {
