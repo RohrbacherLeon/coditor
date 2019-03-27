@@ -2,7 +2,7 @@ let base_url = "http://localhost:3000/";
 let slot = $('.exercises');
 let current_language = "all";
 let arrow_right = "<img src='/images/arrow_right.png' class='arrow_right'>";
-let delete_arrow ="<img src='/images/delete_arrow.png' class='delete_arrow'>";
+let delete_arrow = "<img src='/images/delete_arrow.png' class='delete_arrow'>";
 let exercises_selected = [];
 
 
@@ -18,7 +18,7 @@ switchLanguage = function(li_elem) {
 getExercisesHtml = function(data) {
     let exercises = "";
     data.forEach(exercise => {
-        if( $.inArray( exercise._id , exercises_selected ) == -1 ){
+        if ($.inArray(exercise._id, exercises_selected) == -1) {
             exercises += `
             <a href="/exercises/${exercise.language}/${exercise.slug}" id="${exercise._id}" class="exercise ${exercise.language} draggable">
                 <h4>${exercise.title}</h4>

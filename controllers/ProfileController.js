@@ -21,9 +21,15 @@ exports.getProfile = (req, res) => {
 };
 
 exports.getCreateExercise = (req, res) => {
+    let params = {};
     Exercise.getAllValuesOf("tags", (err, tags) => {
         if (err) console.log(err);
-        res.render("CreateExerciseView", { tags });
+        params.tags = tags;
+        Exercise.getAllValuesOf("language", (err, langs) => {
+            if (err) console.log(err);
+            params.languages = langs;
+            res.render("CreateExerciseView", params);
+        });
     });
 };
 

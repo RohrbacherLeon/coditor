@@ -13,7 +13,8 @@ let UserSchema = mongoose.Schema({
     profile: {
         type: Object
     },
-    urlImage: String
+    urlImage: String,
+    pending: Boolean
 });
 
 UserSchema.statics.createUser = function (data, callback) {
@@ -30,7 +31,12 @@ UserSchema.statics.createUser = function (data, callback) {
                 last_name: data.last_name,
                 email: data.email
             };
-
+            if (data.type != null) {
+                newUser.type = data.type;
+            }
+            if (data.pending != null) {
+                newUser.pending = data.pending;
+            }
             newUser.urlImage = "/images/iconLocal.png";
             newUser.save(callback);
         });
