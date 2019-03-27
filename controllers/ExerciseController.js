@@ -44,6 +44,7 @@ function showExercice (query, req, res, results) {
 
         let converter = new showdown.Converter();
         let markdown = converter.makeHtml(exercise.description);
+        console.log(results);
 
         res.render("ExerciseView", { exercise, results, menu: "exercises", correctionText, skeletonText, markdown, content: req.session.content });
     });
@@ -84,21 +85,22 @@ exports.postExercise = (req, res) => {
                     // execute le test dans un container docker
                     exec(`docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp node:8 node nodescript.js ${nameFile}`, (error, stdout, stderr) => {
                         if (error) {
-                            console.error(`exec error: ${error}`);
-                            return;
+                            req.flash("error", "Une erreur est survenue.");
+                            res.redirect(req.originalUrl);
+                        } else {
+                            // fs.unlinkSync(process.cwd() + `/tmp/${nameFile}`);
+                            let query = {
+                                slug: req.params.slug,
+                                language: req.params.lang
+                            };
+
+                            let titles = [];
+                            JSON.parse(stdout).passes.forEach(passe => {
+                                titles.push(passe.title);
+                            });
+
+                            showExercice(query, req, res, titles);
                         }
-                        fs.unlinkSync(process.cwd() + `/tmp/${nameFile}`);
-                        let query = {
-                            slug: req.params.slug,
-                            language: req.params.lang
-                        };
-
-                        let titles = [];
-                        JSON.parse(stdout).passes.forEach(passe => {
-                            titles.push(passe.title);
-                        });
-
-                        showExercice(query, req, res, titles);
                     });
                 }
             });

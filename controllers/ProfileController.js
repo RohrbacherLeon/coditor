@@ -4,6 +4,7 @@ const formidable = require("formidable");
 const fs = require("fs");
 const path = require("path");
 const slugify = require("slugify");
+const Analyzer = require("../class/Analyzer");
 
 exports.getProfile = (req, res) => {
     if (req.user.type === "teacher") {
@@ -33,13 +34,18 @@ exports.postCreateExercise = (req, res) => {
         if (err) console.log(err);
         let slug = slugify(fields.title);
 
+        let testFile = files["file_tests"];
+        let testFileData = fs.readFileSync(testFile.path);
+        let titles = Analyzer.analyseTeacher(testFileData.toString("utf8"));
+
         Exercise.createExercise({
             title: fields.title,
             slug,
             tags: fields.tags.split(","),
             language: fields.language,
             author: req.user.profile.email,
-            description: fields.description
+            description: fields.description,
+            awaited: { titles }
         }, function (err, exo) {
             if (err) console.log(err);
 
@@ -83,23 +89,20 @@ exports.getCreateExercisesSet = (req, res) => {
     });
 };
 
-
 exports.postCreateExercisesSet = (req, res) => {
     let exSelected = req.body.exercises_selected.split(",");
-    if(req.user.profile.email){
+    if (req.user.profile.email) {
         Set.create({
             title: req.body.title,
             exercises: exSelected,
-            author: req.user.profile.email,
+            author: req.user.profile.email
         }, function (err, set) {
             if (err) console.log(err);
             req.flash("success", "Série d'exercices créée avec succès");
             res.redirect("/profile");
         });
-    }
-    else {
+    } else {
         req.flash("error", "Une erreur est survenue.");
         res.redirect(req.originalUrl);
     }
-    
 };
