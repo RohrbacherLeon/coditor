@@ -12,7 +12,7 @@ router.get("/", (req, res) => {
 router.get("/login", (req, res) => {
     res.render("LoginView", { menu: "login" });
 });
-router.post("/login", passport.authenticate("local", { successRedirect: "/profile", failureRedirect: "/login", failureFlash: "Adresse email ou mot de passe incorrecte." }));
+router.post("/login", passport.authenticate("local", { successRedirect: "/exercises", failureRedirect: "/login", failureFlash: "Adresse email ou mot de passe incorrecte." }));
 
 router.get("/register", (req, res) => {
     res.render("RegisterView", { menu: "register" });
@@ -40,6 +40,7 @@ router.get("/auth/github/callback", githubPassport.authenticate("github", {
 router.get("/register_teacher", (req, res) => {
     res.render("RegisterTeacherView");
 });
+router.post("/register_teacher", UserController.register_teacher);
 
 router.get("/forgot_password", (req, res) => {
     res.render("ForgotPasswordView");
