@@ -40,10 +40,6 @@ Un compte professeur est disponible avec les informations suivantes :
     email : teacher@teacher.fr  
     password: teacher  
 
-## URLs
-
-/profile/create-exercise => create exercise (should be login with teacher accoune)
-
 ## Auteurs
 * **CORDIER Florian**
 * **ROHRBACHER Léon**
