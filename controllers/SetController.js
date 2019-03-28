@@ -24,7 +24,6 @@ exports.getExerciseInSet = (req, res) => {
             if (err) console.log(err);
             // get les infos du set
             let set = data[0];
-            console.log(set.exercises);
             // get l'index de l'exo en cours dans le set d'exos
             let index = set.exercises.indexOf(currentEx._id);
             let setParams = {
@@ -39,7 +38,7 @@ exports.getExerciseInSet = (req, res) => {
                     Exercise.findById(set.exercises[index + 1], function (err, data) {
                         if (err) console.log(err);
                         setParams.next = data;
-                        ExerciseController.getExercise(req, res);
+                        ExerciseController.getExercise(req, res, setParams);
                     });
                 }
                 // si ce n'est pas le premier
@@ -54,12 +53,10 @@ exports.getExerciseInSet = (req, res) => {
                             Exercise.findById(set.exercises[index + 1], function (err, data) {
                                 if (err) console.log(err);
                                 setParams.next = data;
-                                console.log(setParams);
-                                ExerciseController.getExercise(req, res);
+                                ExerciseController.getExercise(req, res, setParams);
                             });
                         } else {
-                            console.log(setParams);
-                            ExerciseController.getExercise(req, res);
+                            ExerciseController.getExercise(req, res, setParams);
                         }
                     });
                 }

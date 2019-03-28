@@ -44,12 +44,11 @@ function showExercice (query, req, res, results) {
 
         let converter = new showdown.Converter();
         let markdown = converter.makeHtml(exercise.description);
-
         res.render("ExerciseView", { exercise, results, menu: "exercises", correctionText, skeletonText, markdown, content: req.session.content });
     });
 }
 
-exports.getExercise = (req, res) => {
+exports.getExercise = (req, res, setParams) => {
     if (req.session.content && req.session.content.slug !== req.params.slug) {
         req.session.content = {};
     }
@@ -57,8 +56,11 @@ exports.getExercise = (req, res) => {
         slug: req.params.slug,
         language: req.params.lang
     };
-
-    showExercice(query, req, res);
+    if (setParams) {
+        showExercice(query, req, res, setParams);
+    } else {
+        showExercice(query, req, res);
+    }
 };
 
 exports.postExercise = (req, res) => {
