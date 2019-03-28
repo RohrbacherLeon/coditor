@@ -1,9 +1,8 @@
 .nav{
-
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 0;
+    padding: 10px;
 
     ul{
         list-style: none;
@@ -29,11 +28,11 @@
                     padding: 10px 14px;
 
                     &:hover{
-                        border-bottom: 2px solid red;
+                        border-bottom: 2px solid royalblue;
                     }
 
                     &.active{
-                        border-bottom: 2px solid red;
+                        border-bottom: 2px solid royalblue;
                     }
                 }
             }
@@ -66,8 +65,10 @@
             }
             
             &:hover{
-                background-color: rgb(228, 228, 228);
-                border-radius: 100px;
+                border-radius: 100px;            
+                background: rgb(255,255,255);
+                background: linear-gradient(180deg, rgba(223,239,242,1) 0%, rgba(222,231,247,1) 40%, rgba(155,187,238,1) 100%);
+    
             }
 
             p{
