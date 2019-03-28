@@ -25,11 +25,6 @@ exports.getExerciseInSet = (req, res) => {
             let set = data[0];
             // get l'index de l'exo en cours dans le set d'exos
             let index = set.exercises.indexOf(currentEx._id);
-            let setParams = {
-                setSlug: req.params.setslug,
-                previous: null,
-                next: null
-            };
             // si l'index de l'exo en cours est ok
             if (index >= 0 && index < set.exercises.length) {
                 // si c'est le premier
@@ -37,8 +32,8 @@ exports.getExerciseInSet = (req, res) => {
                     // on get l'exo next
                     Exercise.findById(set.exercises[index + 1], function (err, data) {
                         if (err) console.log(err);
-                        setParams.next = data;
-                        ExerciseController.getExercise(req, res, setParams);
+                        req.params.next = data;
+                        ExerciseController.getExercise(req, res);
                     });
                 }
                 // si ce n'est pas le premier
@@ -46,17 +41,17 @@ exports.getExerciseInSet = (req, res) => {
                     // on get l'exo previous
                     Exercise.findById(set.exercises[index - 1], function (err, data) {
                         if (err) console.log(err);
-                        setParams.previous = data;
+                        req.params.previous = data;
                         // si ce n'ext pas le dernier
                         if (index < set.exercises.length - 1) {
                             // on get l'exo next
                             Exercise.findById(set.exercises[index + 1], function (err, data) {
                                 if (err) console.log(err);
-                                setParams.next = data;
-                                ExerciseController.getExercise(req, res, setParams);
+                                req.params.next = data;
+                                ExerciseController.getExercise(req, res);
                             });
                         } else {
-                            ExerciseController.getExercise(req, res, setParams);
+                            ExerciseController.getExercise(req, res);
                         }
                     });
                 }

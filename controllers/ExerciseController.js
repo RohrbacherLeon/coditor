@@ -45,11 +45,11 @@ function showExercice (query, req, res, results) {
         let converter = new showdown.Converter();
         let markdown = converter.makeHtml(exercise.description);
 
-        res.render("ExerciseView", { exercise, results, menu: "exercises", correctionText, skeletonText, markdown, content: req.session.content });
+        res.render("ExerciseView", { exercise, results, menu: "exercises", correctionText, skeletonText, markdown, content: req.session.content, setParams: req.params });
     });
 }
 
-exports.getExercise = (req, res, setParams) => {
+exports.getExercise = (req, res) => {
     if (req.session.content && req.session.content.slug !== req.params.slug) {
         req.session.content = {};
     }
@@ -57,11 +57,7 @@ exports.getExercise = (req, res, setParams) => {
         slug: req.params.slug,
         language: req.params.lang
     };
-    if (setParams) {
-        showExerciceInSet(query, req, res, setParams);
-    } else {
-        showExercice(query, req, res);
-    }
+    showExercice(query, req, res);
 };
 
 exports.postExercise = (req, res) => {
@@ -110,14 +106,12 @@ exports.postExercise = (req, res) => {
     }
 };
 
-
-/**
+/*
  * Function used to get the exercice in a set.
  * @param {*} query
  * @param {*} req
  * @param {*} res
  * @param {*} setParams
- */
 function showExerciceInSet (query, req, res, setParams, results) {
     Exercise.getExo(query, function (err, exercise) {
         if (err) console.log(err);
@@ -143,7 +137,7 @@ function showExerciceInSet (query, req, res, setParams, results) {
         let markdown = converter.makeHtml(exercise.description);
         res.render("ExerciseView", { exercise, setParams, results, menu: "exercises", correctionText, skeletonText, markdown, content: req.session.content });
     });
-}
+ } */
 
 exports.deleteExercise = (req, res) => {
     Exercise.findOneAndDelete({ _id: req.params.id }, (err, doc) => {

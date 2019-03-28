@@ -47,12 +47,10 @@
         <div class="exercise__opened__bottom">
             <div id="openCorrection" class="button button--green">Afficher la correction</div>
             <button type='submit' class="button button--green">Valider le code</button>
-            {% if setParams %}
-                {% if setParams.next %}
-                <a href="../{{ setParams.next.language }}/{{ setParams.next.slug }}" type='submit' class="button button--green">Exercice suivant</a>
-                {% else %}
-                <a href="/sets/{{ setParams.setSlug }}" type='submit' class="button button--green">Terminer série</a>
-                {% endif %}
+            {% if setParams.next %}
+                <a href="../{{ setParams.next.language }}/{{ setParams.next.slug }}" class="button button--green">Exercice suivant</a>
+            {% elseif setParams.setslug %}
+                <a href="/sets/{{ setParams.setslug }}" class="button button--green">Terminer série</a>
             {% endif %}
         </div>
     </form>
