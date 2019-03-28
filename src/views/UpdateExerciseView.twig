@@ -3,55 +3,63 @@
 {% block content %}
 <div class="updateExo">
     {{message}}
-    <h1 class="title">Update</h1>
-    <form method='POST' class='updateExo__form' enctype="multipart/form-data">
-        <div class="form-group">
-            <label for="title">Titre</label>
-            <input type='text' name='title' id="title" value="{{exercise.title}}">
-        </div>
+    <h1 class="title">Modification d'exercice</h1>
+    <form method='POST' enctype="multipart/form-data">
+        <div class="createExo__form">
+            <div class="text-container">
+                <div class="form-group">
+                    <label for="title">Titre</label>
+                    <input type='text' name='title' id="title" value="{{exercise.title}}">
+                </div>
 
-        <div class="form-group">
-            <label for="language">Langage</label>
-            <input type='text' name='language' id="language" value="{{exercise.language}}" disabled>
-        </div>
+                <div class="form-group">
+                    <label for="language">Langage</label>
+                    <input type='text' name='language' id="language" value="{{exercise.language}}" disabled>
+                </div>
 
-        <div class="form-group">
-            <label for="file">Fichier de test</label>
-            <input type='file' id="label" name='file_tests'>
-        </div>
+                <div class="form-group">
+                    <label>Tags de l'exercice</label>
+                    <input type='hidden' name='tags' value='{{tagsValue}}'>
+                    <div class="searchbar">
+                        <div class="autocomplete">
+                            <div class="autocomplete-tags"></div>
+                            <select class="createTag" multiple="multiple">
+                                {% for tag in exercise.tags %}
+                                    <option value="{{tag}}" selected>{{tag}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-        <div class="form-group">
-            <label for="file">Correction de l'exercice (Optionnel)</label>
-            <input type='file' id="label" name='file_corrections'>
-        </div>
+            <div class="files-container">
+                <div class="form-group">
+                    <label for="file">Fichier de test</label>
+                    <input type='file' id="label" name='file_tests'>
+                </div>
 
-        <div class="form-group">
-            <label for="file">Squelette de l'exercice (Optionnel)</label>
-            <input type='file' id="label" name='file_skeletons'>
-        </div>
+                <div class="form-group">
+                    <label for="file">Correction de l'exercice (Optionnel)</label>
+                    <input type='file' id="label" name='file_corrections'>
+                </div>
 
-        <div class="form-group">
-            <label>Tags de l'exercices</label>
-            <input type='hidden' name='tags' value='{{tagsValue}}'>
-            <div class="searchbar">
-                <div class="autocomplete">
-                    <div class="autocomplete-tags"></div>
-                    <select class="createTag" multiple="multiple">
-                        {% for tag in exercise.tags %}
-                            <option value="{{tag}}" selected>{{tag}}</option>
-                        {% endfor %}
-                    </select>
+                <div class="form-group">
+                    <label for="file">Squelette de l'exercice (Optionnel)</label>
+                    <input type='file' id="label" name='file_skeletons'>
                 </div>
             </div>
         </div>
 
-        <div class="form-group">
-            <label>Description de l'exercices</label>
-            <textarea name="description">{{exercise.description}}</textarea>
-        </div>
+        <div class="bottom-container">
+            <div class="form-group">
+                <label>Description de l'exercice</label>
+                <textarea id="md" name="description">{{exercise.description}}</textarea>
+            </div>
 
-        <div class="button_layout button_layout--right">
-            <button class="button button--green" type="submit">Modifier l'exercice</button>
+            <div class="button_layout button_layout--right">
+                <button class="button" type="submit">Modifier l'exercice</button>
+            </div>
         </div>
     </form>
 
@@ -59,5 +67,12 @@
 {% endblock %}
 
 {% block scripts %}
-<script src='/js/create_tag.js'></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/highlight.js/latest/highlight.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/highlight.js/latest/styles/github.min.css">
+    <script src="/js/simplemde.js"></script>
+
+    <script src='/js/create_tag.js'></script>
 {% endblock %}
