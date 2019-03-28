@@ -98,9 +98,11 @@ exports.getCreateExercisesSet = (req, res) => {
 
 exports.postCreateExercisesSet = (req, res) => {
     let exSelected = req.body.exercises_selected.split(",");
+    let slug = slugify(req.body.title);
     if (req.user.profile.email) {
         Set.create({
             title: req.body.title,
+            slug: slug,
             exercises: exSelected,
             author: req.user.profile.email
         }, function (err, set) {

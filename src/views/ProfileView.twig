@@ -53,7 +53,7 @@
         <h2 class="title">Mes séries exercices {{ user.type == "student" ? "réalisées" : "créées" }}</h2>
         <div class="profile__series">
             {% for serie in series %}
-                <a href="" class="serie">
+                <a href="/sets/{{serie.slug}}" class="serie">
                     <h4>{{serie.title}}</h4>
                     <p>{{serie.author}}</p>
                     <p>{{serie.description}}</p>

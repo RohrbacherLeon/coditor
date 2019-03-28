@@ -49,7 +49,7 @@ function showExercice (query, req, res, results) {
             results = results.map(result => result.toLowerCase());
         }
 
-        res.render("ExerciseView", { exercise, results, menu: "exercises", correctionText, skeletonText, markdown, content: req.session.content });
+        res.render("ExerciseView", { exercise, results, menu: "exercises", correctionText, skeletonText, markdown, content: req.session.content, setParams: req.params });
     });
 }
 
@@ -61,7 +61,6 @@ exports.getExercise = (req, res) => {
         slug: req.params.slug,
         language: req.params.lang
     };
-
     showExercice(query, req, res);
 };
 

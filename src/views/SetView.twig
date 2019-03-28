@@ -1,0 +1,21 @@
+{% extends "layouts/master.twig" %}
+
+{% block content %}
+<div class="setBegin">
+    <h1>{{set.title}}</h1>
+    <p>{{set.description}}</p>
+    <h2>Cette série contient {{setExercises.length}} exercices :</h2>
+
+    <div class="setExercises">
+    {% for exo in setExercises %}
+        <div class="exercise {{exo.language}}">
+            <h4>{{exo.title}}</h4>
+            <p>{{exo.author}}</p>
+            <p>{{exo.description}}</p>
+        </div>
+    {% endfor %}
+    </div>         
+    <a href="{{set.slug}}/exercises/{{setExercises[0].language}}/{{setExercises[0].slug}}" class="button button--red">Démarrer série</a> 
+</div>
+
+{% endblock %}
