@@ -25,11 +25,8 @@ exports.getCreateExercise = (req, res) => {
     Exercise.getAllValuesOf("tags", (err, tags) => {
         if (err) console.log(err);
         params.tags = tags;
-        Exercise.getAllValuesOf("language", (err, langs) => {
-            if (err) console.log(err);
-            params.languages = langs;
-            res.render("CreateExerciseView", params);
-        });
+        params.languages = ["js", "php"];
+        res.render("CreateExerciseView", params);
     });
 };
 
