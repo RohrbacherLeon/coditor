@@ -1,7 +1,18 @@
 const fs = require("fs");
 
 module.exports = {
-    generate: function (testFile, fct, name) {
+    generatePHP: function (testFile, fct, name) {
+        let startFile = `
+                ${fct}
+        `;
+
+        let contentFile = testFile + startFile;
+
+        let nameFile = name + ".php";
+        fs.writeFileSync(process.cwd() + "/tmp/" + nameFile, contentFile);
+        return nameFile;
+    },
+    generateJS: function (testFile, fct, name) {
         let startFile = `
             let assert = require('chai').assert;
         ${fct}
@@ -14,7 +25,6 @@ module.exports = {
         fs.writeFileSync(process.cwd() + "/tmp/" + nameFile, contentFile);
         return nameFile;
     },
-
     remove: function (fileName) {
         fs.unlinkSync(process.cwd() + "/tmp/" + fileName);
     }

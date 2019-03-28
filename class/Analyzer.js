@@ -1,8 +1,23 @@
 module.exports = {
-    analyseTeacher: function (testFileContent) {
-        const regIt = new RegExp("(?<=(it\\(('|\"|`)))(.*)(?=('|\"|`))", "g");
-        console.log(testFileContent.match(regIt));
-
-        return testFileContent.match(regIt);
+    analyseTeacher: function (testFileContent, language) {
+        let reg = null;
+        if (language === "js") {
+            reg = new RegExp("(?<=(it\\(('|\"|`)))(.*)(?=('|\"|`))", "g");
+        } else {
+            reg = new RegExp("(?<=(function\\stest))(.*)(?=(\\(\\)))", "g");
+        }
+        return testFileContent.match(reg);
+    },
+    analysePHPUnit: function (content) {
+        const regTest = new RegExp(" .*", "g");
+        let tests = content.match(regTest);
+        tests.shift();
+        let success = [];
+        tests.map(test => {
+            if (test.match("\\[x\\]", "g")) {
+                success.push(test.split("]")[1].trim());
+            }
+        });
+        return success;
     }
 };

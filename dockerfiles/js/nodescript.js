@@ -5,7 +5,7 @@ const mocha = new Mocha({
 
 let nameFile = process.argv[process.argv.length -1];
 
-mocha.addFile(process.cwd() +'/tmp/' + nameFile);
+mocha.addFile(process.cwd() +'/'+nameFile);
 
 let results = {
     fails   : [],
