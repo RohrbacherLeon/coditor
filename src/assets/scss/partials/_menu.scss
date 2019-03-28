@@ -28,11 +28,11 @@
                     padding: 10px 14px;
 
                     &:hover{
-                        border-bottom: 2px solid royalblue;
+                        border-bottom: 2px solid $primary-color;
                     }
 
                     &.active{
-                        border-bottom: 2px solid royalblue;
+                        border-bottom: 2px solid $primary-color;
                     }
                 }
             }
@@ -45,11 +45,11 @@
             padding: 10px 14px;
 
             &:hover{
-                border-bottom: 2px solid red;
+                border-bottom: 2px solid $primary-color;
             }
 
             &.active{
-                border-bottom: 2px solid red;
+                border-bottom: 2px solid $primary-color;
             }
         }
         &__connected{
@@ -59,8 +59,9 @@
             transition: 0.4s;
             padding: 10px;
 
-            &.activ{
-                background-color: rgb(228, 228, 228);
+            &.activ{                
+                background: rgb(255,255,255);
+                background: linear-gradient(180deg, rgba(223,239,242,1) 0%, rgba(222,231,247,1) 40%, rgba(155,187,238,1) 100%);
                 border-radius: 100px;
             }
             
@@ -68,7 +69,6 @@
                 border-radius: 100px;            
                 background: rgb(255,255,255);
                 background: linear-gradient(180deg, rgba(223,239,242,1) 0%, rgba(222,231,247,1) 40%, rgba(155,187,238,1) 100%);
-    
             }
 
             p{
