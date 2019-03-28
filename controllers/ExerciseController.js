@@ -57,7 +57,7 @@ exports.getExercise = (req, res, setParams) => {
         language: req.params.lang
     };
     if (setParams) {
-        showExercice(query, req, res, setParams);
+        showExerciceInSet(query, req, res, setParams);
     } else {
         showExercice(query, req, res);
     }
@@ -107,3 +107,37 @@ exports.postExercise = (req, res) => {
         });
     }
 };
+
+/**
+ * Function used to get the exercice in a set.
+ * @param {*} query
+ * @param {*} req
+ * @param {*} res
+ * @param {*} setParams
+ */
+function showExerciceInSet (query, req, res, setParams, results) {
+    Exercise.getExo(query, function (err, exercise) {
+        if (err) console.log(err);
+
+        let correctionText;
+        let skeletonText;
+
+        // Test if file correction exist
+        if (fs.existsSync(process.cwd() + `/corrections/${req.params.slug}.js`)) {
+            correctionText = fs.readFileSync(process.cwd() + `/corrections/${req.params.slug}.js`, "utf-8");
+        } else {
+            correctionText = null;
+        }
+
+        // Test if file skeletons exist
+        if (fs.existsSync(process.cwd() + `/skeletons/${req.params.slug}.js`)) {
+            skeletonText = fs.readFileSync(process.cwd() + `/skeletons/${req.params.slug}.js`, "utf-8");
+        } else {
+            skeletonText = null;
+        }
+
+        let converter = new showdown.Converter();
+        let markdown = converter.makeHtml(exercise.description);
+        res.render("ExerciseView", { exercise, setParams, results, menu: "exercises", correctionText, skeletonText, markdown, content: req.session.content });
+    });
+}

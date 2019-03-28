@@ -10,7 +10,6 @@ exports.getSet = (req, res) => {
         set.exercises.forEach(exercise => {
             setExercises.push(Exercise.findById(exercise));
         });
-        console.log(set);
         res.render("SetView", { setExercises, set });
     });
 };
@@ -27,6 +26,7 @@ exports.getExerciseInSet = (req, res) => {
             // get l'index de l'exo en cours dans le set d'exos
             let index = set.exercises.indexOf(currentEx._id);
             let setParams = {
+                setSlug: req.params.setslug,
                 previous: null,
                 next: null
             };
