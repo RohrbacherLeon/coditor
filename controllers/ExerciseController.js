@@ -110,6 +110,7 @@ exports.postExercise = (req, res) => {
     }
 };
 
+
 /**
  * Function used to get the exercice in a set.
  * @param {*} query
@@ -143,3 +144,14 @@ function showExerciceInSet (query, req, res, setParams, results) {
         res.render("ExerciseView", { exercise, setParams, results, menu: "exercises", correctionText, skeletonText, markdown, content: req.session.content });
     });
 }
+
+exports.deleteExercise = (req, res) => {
+    Exercise.findOneAndDelete({ _id: req.params.id }, (err, doc) => {
+        if (err) {
+            res.sendStatus(404);
+        } else {
+            res.status(200);
+            res.json(doc);
+        }
+    });
+};

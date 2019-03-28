@@ -35,26 +35,22 @@
     {% endif %}
     <div class="profile__data">
         <h2 class="title">Mes exercices {{ user.type == "student" ? "réalisés" : "créés" }}</h2>
-
         <div class="profile__exercises">
             {% for exo in exos %}
-                <div class="exercise-container">
+                <div class="exercise-container" id="{{ exo._id }}">
                     <a href="/exercises/{{exo.language}}/{{exo.slug}}" class="exercise {{exo.language}}">
                         <h4>{{exo.title}}</h4>
                         <p>{{exo.author}}</p>
-                        <p>{{exo.description}}</p>
-                        {% if user.type == "teacher" %}
-                            <a href="" class="link-delete"><i class="fas fa-trash-alt"></i></a>
-                            <a href="/profile/update-exercise?lang={{exo.language}}&slug={{exo.slug}}" class="link-modify"><i class="fas fa-cog"></i></a>
-                        {% endif %}
+                        <p>{{exo.description}}</p>                    
                     </a>
+                    {% if user.type == "teacher" or user.type == "admin" %}
+                        <button class="link-delete"><i class="fas fa-trash-alt"></i></button>                     
+                        <a href="/profile/update-exercise?lang={{exo.language}}&slug={{exo.slug}}" class="link-modify"><i class="fas fa-cog"></i></a>
+                    {% endif %}
                 </div>
             {% endfor %}
-            
         </div>
-
         <h2 class="title">Mes séries exercices {{ user.type == "student" ? "réalisées" : "créées" }}</h2>
-
         <div class="profile__series">
             {% for serie in series %}
                 <a href="/sets/{{serie.slug}}" class="serie">
@@ -63,10 +59,11 @@
                     <p>{{serie.description}}</p>
                 </a>
             {% endfor %}
-            
         </div>
     </div>
-
-
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="js/delete_exercise_handler.js"></script>
 {% endblock %}
