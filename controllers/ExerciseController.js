@@ -3,6 +3,7 @@ const fs = require("fs");
 const Generator = require("../class/Generator");
 const { exec } = require("child_process");
 const showdown = require("showdown");
+const { analysePHPUnit } = require("../class/Analyzer");
 
 exports.getExoByLang = (req, res) => {
     Exercise.getAllValuesOf("language", function (err, languages) {
@@ -44,7 +45,9 @@ function showExercice (query, req, res, results) {
 
         let converter = new showdown.Converter();
         let markdown = converter.makeHtml(exercise.description);
-        console.log(results);
+        if (results) {
+            results = results.map(result => result.toLowerCase());
+        }
 
         res.render("ExerciseView", { exercise, results, menu: "exercises", correctionText, skeletonText, markdown, content: req.session.content });
     });
@@ -76,32 +79,57 @@ exports.postExercise = (req, res) => {
 
             // si il n'y a aucune erreur d'analyse -> execute les tests unitaires
             // Lecture du fichier du prof pour vérifier la fonction de l'etudiant
-            fs.readFile(process.cwd() + `/tests/${req.params.slug}.js`, "utf-8", function (err, data) {
+            fs.readFile(process.cwd() + `/tests/${exo.language}/${req.params.slug}.${exo.language}`, "utf-8", function (err, data) {
                 if (err) console.log(err);
 
-                // Génére un fichier nameFile de test (ajoute la fonction étudiante dans le fichier test du prof)
-                let nameFile = Generator.generate(data, fct, req.params.slug);
-                if (nameFile) {
-                    // execute le test dans un container docker
-                    exec(`docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp node:8 node nodescript.js ${nameFile}`, (error, stdout, stderr) => {
-                        if (error) {
-                            req.flash("error", "Une erreur est survenue.");
-                            res.redirect(req.originalUrl);
-                        } else {
-                            fs.unlinkSync(process.cwd() + `/tmp/${nameFile}`);
-                            let query = {
-                                slug: req.params.slug,
-                                language: req.params.lang
-                            };
+                switch (exo.language) {
+                    case "js":
+                        // // Génére un fichier nameFile de test (ajoute la fonction étudiante dans le fichier test du prof)
+                        let nameFile = Generator.generateJS(data, fct, req.params.slug);
+                        if (nameFile) {
+                            // execute le test dans un container docker
+                            exec(`docker run --rm -v $(pwd)/tmp:/app/tests/ myjs node nodescript.js tests/${nameFile}`, (error, stdout, stderr) => {
+                                if (error) {
+                                    req.flash("error", "Une erreur est survenue.");
+                                    res.redirect(req.originalUrl);
+                                } else {
+                                    fs.unlinkSync(process.cwd() + `/tmp/${nameFile}`);
+                                    let query = {
+                                        slug: req.params.slug,
+                                        language: req.params.lang
+                                    };
 
-                            let titles = [];
-                            JSON.parse(stdout).passes.forEach(passe => {
-                                titles.push(passe.title);
+                                    let titles = [];
+                                    JSON.parse(stdout).passes.forEach(passe => {
+                                        titles.push(passe.title);
+                                    });
+
+                                    showExercice(query, req, res, titles);
+                                }
                             });
-
-                            showExercice(query, req, res, titles);
                         }
-                    });
+                        break;
+                    case "php":
+                        let name = Generator.generatePHP(data, fct, req.params.slug);
+                        if (name) {
+                            // execute le test dans un container docker
+                            exec(`docker run --rm -v $(pwd)/tmp:/app/tests/ myphp vendor/bin/phpunit --testdox tests/${name}`, (error, stdout, stderr) => {
+                                if (error) console.log(err);
+
+                                // retourne les tests passés avec succès
+                                let success = analysePHPUnit(stdout);
+
+                                fs.unlinkSync(process.cwd() + `/tmp/${name}`);
+                                let query = {
+                                    slug: req.params.slug,
+                                    language: req.params.lang
+                                };
+                                showExercice(query, req, res, success);
+                            });
+                        }
+                        break;
+                    default:
+                        break;
                 }
             });
         });

@@ -5,6 +5,7 @@ const fs = require("fs");
 const path = require("path");
 const slugify = require("slugify");
 const Analyzer = require("../class/Analyzer");
+const { decamelize } = require("../class/Helper");
 
 exports.getProfile = (req, res) => {
     if (req.user.type === "teacher") {
@@ -39,7 +40,9 @@ exports.postCreateExercise = (req, res) => {
 
         let testFile = files["file_tests"];
         let testFileData = fs.readFileSync(testFile.path);
-        let titles = Analyzer.analyseTeacher(testFileData.toString("utf8"));
+
+        let titles = Analyzer.analyseTeacher(testFileData.toString("utf8"), fields.language);
+        titles = titles.map(title => decamelize(title));
 
         Exercise.createExercise({
             title: fields.title,
@@ -60,7 +63,7 @@ exports.postCreateExercise = (req, res) => {
                     let fileExt = currentFile.name.split(".").pop();
 
                     // Save test file to the folder tests
-                    let newPath = path.join(process.cwd(), "/" + file.split("_").pop() + "/", slug + "." + fileExt);
+                    let newPath = path.join(process.cwd(), "/" + file.split("_").pop() + "/" + fields.language + "/", slug + "." + fileExt);
                     fs.readFile(oldPath, function (err, data) {
                         if (err) console.log(err);
                         fs.writeFile(newPath, data, function (err) {
