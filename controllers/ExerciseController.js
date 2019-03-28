@@ -107,3 +107,14 @@ exports.postExercise = (req, res) => {
         });
     }
 };
+
+exports.deleteExercise = (req, res) => {
+    Exercise.findOneAndDelete({ _id: req.params.id }, (err, doc) => {
+        if (err) {
+            res.sendStatus(404);
+        } else {
+            res.status(200);
+            res.json(doc);
+        }
+    });
+};

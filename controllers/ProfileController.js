@@ -7,7 +7,7 @@ const slugify = require("slugify");
 const Analyzer = require("../class/Analyzer");
 
 exports.getProfile = (req, res) => {
-    if (req.user.type === "teacher") {
+    if (req.user.type === "teacher" || req.user.type === "admin") {
         Exercise.ByAuthor(req.user.profile.email, function (err, exos) {
             if (err) console.log(err);
             Set.ByAuthor(req.user.profile.email, function (err, series) {
@@ -181,7 +181,7 @@ exports.postUpdateExercise = (req, res) => {
                                     });
                                 });
                             });
-                        // if it's not a new file, update file name (if title has changed and no file is given)
+                            // if it's not a new file, update file name (if title has changed and no file is given)
                         } else if (lastTitle !== fields.title) {
                             let oldFile = path.join(process.cwd(), "/" + file.split("_").pop() + "/" + lastSlug + "." + lastExtFile);
                             let newFile = path.join(process.cwd(), "/" + file.split("_").pop() + "/" + slug + "." + lastExtFile);
