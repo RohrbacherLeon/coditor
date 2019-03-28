@@ -2,10 +2,8 @@ const fs = require("fs");
 
 module.exports = {
     generate: function (testFile, fct, name) {
-        console.log(fct.indexOf("function"));
-
         let startFile = `
-        let assert = require("assert");
+            let assert = require('chai').assert;
         ${fct}
         `;
 

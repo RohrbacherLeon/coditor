@@ -1,35 +1,36 @@
 {% extends 'layouts/master.twig' %}
 
 {% block assets %}
-<link rel="stylesheet" type="text/css" href="/css/datatables.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 {% endblock %}
 
 {% block content %}
-<table id="requests">
+<h2>Demandes d'inscription en cours</h2>
+<table id="requests" class="display" style="width:100%">
     <thead>
         <tr>
             <th>Nom</th>
             <th>Prénom</th>
             <th>Email</th>
             <th>Documents</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
     {% for request in requests %}
-    <a class="request_row" href="/admin/request/{{request._id}}">
         <tr>
-            <td>{{request.nom}}</td>
-            <td>{{request.prenom}}</td>
-            <td>{{request.email}}</td>
+            <td>{{request.profile.last_name}}</td>
+            <td>{{request.profile.first_name}}</td>
+            <td>{{request.profile.email}}</td>
             <td>{{request.documents}}</td>
+            <td><form action="/admin/{{request._id}}" method="POST"><button type="submit">Inscrire</button></form></td>
         </tr>
-    </a>
     {% endfor %}
     </tbody>
 {% endblock %}
 
 {% block scripts %}
-<script src="/js/datatables.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script>
 $(document).ready(function(){
     $("#requests").DataTable();

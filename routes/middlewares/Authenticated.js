@@ -1,4 +1,4 @@
-function ensureAuthenticated(req, res, next) {
+function ensureAuthenticated (req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     } else {
@@ -7,21 +7,21 @@ function ensureAuthenticated(req, res, next) {
     }
 };
 
-function isTeacher(req, res, next) {
-    if (req.user.type === "teacher" || req.user.type === "admin") {
+function isTeacher (req, res, next) {
+    if ((req.user.type === "teacher" && !req.user.pending) || req.user.type === "admin") {
         return next();
     }
     res.redirect("/profile");
 }
 
-function isAdmin(req, res, next) {
+function isAdmin (req, res, next) {
     if (req.user !== undefined && req.user.type !== undefined && req.user.type === "admin") {
         return next();
     }
     res.redirect("/");
 }
 
-function isConnectedWithLocalAccount(req, res, next) {
+function isConnectedWithLocalAccount (req, res, next) {
     if (req.user.account === "local") {
         return next();
     }
