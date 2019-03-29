@@ -136,6 +136,19 @@ exports.postExercise = (req, res) => {
 };
 
 exports.deleteExercise = (req, res) => {
+    Exercise.findById(req.params.id, (err, exo) => {
+        if (err) res.sendStatus(404);
+        if (exo.author === req.user.profile.email || req.user.type === "admin") {
+            res.status(200);
+            res.json(exo);
+            exo.remove();
+        } else {
+            res.sendStatus(403);
+        }
+    });
+};
+
+    /*
     Exercise.findOneAndDelete({ _id: req.params.id }, (err, doc) => {
         if (err) {
             res.sendStatus(404);
@@ -148,4 +161,4 @@ exports.deleteExercise = (req, res) => {
             }
         }
     });
-};
+    */
