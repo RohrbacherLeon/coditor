@@ -1,10 +1,7 @@
 const User = require("../models/User");
 const { formFlash } = require("../class/Helper");
 
-/**
- * When register is reached with post method
- */
-exports.register_post = (req, res) => {
+function filterPost (req) {
     req.sanitize("last_name").trim();
     req.sanitize("first_name").trim();
     req.sanitize("email").trim();
@@ -16,6 +13,14 @@ exports.register_post = (req, res) => {
     req.checkBody("password", "Un mot de passe est requis.").notEmpty();
     req.checkBody("password", "Le mot de passe doit contenir au minimum 8 caractères.").isLength({ min: 8 });
     req.checkBody("confirm_password", "Les mots de passes ne correspondent pas.").equals(req.body.password);
+    return req;
+}
+
+/**
+ * When register is reached with post method
+ */
+exports.register_post = (req, res) => {
+    req = filterPost(req);
 
     if (req.validationErrors()) {
         req.flash("error", req.validationErrors()[0].msg);
@@ -46,17 +51,7 @@ exports.register_post = (req, res) => {
 };
 
 exports.register_teacher = (req, res) => {
-    req.sanitize("last_name").trim();
-    req.sanitize("first_name").trim();
-    req.sanitize("email").trim();
-
-    req.checkBody("last_name", "Le nom est requis.").notEmpty();
-    req.checkBody("first_name", "Le prénom est requis.").notEmpty();
-    req.checkBody("email", "L'email est requis.").notEmpty();
-    req.checkBody("email", "L'email n'est pas valide.").isEmail();
-    req.checkBody("password", "Un mot de passe est requis.").notEmpty();
-    req.checkBody("password", "Le mot de passe doit contenir au minimum 8 caractères.").isLength({ min: 8 });
-    req.checkBody("confirm_password", "Les mots de passes ne correspondent pas.").equals(req.body.password);
+    req = filterPost(req);
 
     if (req.validationErrors()) {
         req.flash("error", req.validationErrors()[0].msg);
