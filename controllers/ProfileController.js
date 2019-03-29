@@ -45,20 +45,26 @@ exports.postCreateExercise = (req, res) => {
             remove: /[*+~.()'"!:@]/g,
             lower: true
         });
+        let errors = [];
 
         req.session.create = fields;
 
         if (fields.tags === "") {
-            req.flash("error", "Aucun tags n'a été associé à cet exercice.");
-            res.redirect(req.originalUrl);
+            errors.push("Aucun tags n'a été associé à cet exercice.");
         }
 
         if (!languages.includes(fields.language)) {
-            req.flash("error", "Le langage selectionné non valide.");
-            res.redirect(req.originalUrl);
+            errors.push("Le langage selectionné non valide.");
         }
 
-        if (files["file_tests"].size > 0) {
+        if (files["file_tests"].size === 0) {
+            errors.push("Aucun fichier de test n'a été choisis.");
+        }
+
+        if (errors.length > 0) {
+            req.flash("error", errors[0]);
+            res.redirect(req.originalUrl);
+        } else {
             let testFile = files["file_tests"];
             let testFileData = fs.readFileSync(testFile.path);
 
@@ -105,9 +111,6 @@ exports.postCreateExercise = (req, res) => {
                     res.redirect("/profile/create-exercise");
                 });
             });
-        } else {
-            req.flash("error", "Aucun fichier de test n'a été choisis.");
-            res.redirect(req.originalUrl);
         }
     });
 };
