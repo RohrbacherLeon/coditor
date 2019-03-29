@@ -39,12 +39,14 @@
                 {% endfor %}
             </div>
         </div>
-            {# If skeleton exist, print it #}
         {% if skeletonText %} <textarea name="function" id="js-textarea" cols="30" rows="10">{{skeletonText}}</textarea>
         {% else %}<textarea name="function" id="js-textarea" cols="30" rows="10">{{content.fct}}</textarea>
         {% endif %}
         </div>
         <div class="exercise__opened__bottom">
+            {% if user.type == "admin" %}
+                <button class="button button--red button--delete" type="button">Supprimer l'exercice</button>
+            {% endif %}
             <div id="openCorrection" class="button button--green">Afficher la correction</div>
             <button type='submit' class="button button--green">Valider le code</button>
             {% if setParams.next %}
@@ -60,7 +62,6 @@
         
 
 {% block scripts %}
-
         
     <script>
         let editor = CodeMirror.fromTextArea(document.getElementById('js-textarea'), {
@@ -104,4 +105,22 @@
                 $('#js-dropdown').toggleClass('open')
             })
     </script>
+
+    <div id="ex_id" data-exercise-id="{{exercise._id}}"></div>
+    <script>
+        $(document).ready(function(){
+            $(".button--delete").click(function(event) {
+                if (confirm("Etes vous sûr de vouloir supprimer cet exercice ?")) {
+                    $.ajax({
+                        url: `/exercises/${$("#ex_id").data("exerciseId")}`,
+                        method: "DELETE",
+                        success: (data) => {
+                            window.location.href = "/exercises";
+                        }
+                    });
+                }
+            });
+        });   
+    </script>
+
 {% endblock %}
