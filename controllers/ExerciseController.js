@@ -88,8 +88,10 @@ exports.postExercise = (req, res) => {
                         let nameFile = Generator.generateJS(data, fct, req.params.slug);
                         if (nameFile) {
                             // execute le test dans un container docker
-                            exec(`docker run --rm -v $(pwd)/tmp:/app/tests/ myjs node nodescript.js tests/${nameFile}`, (error, stdout, stderr) => {
+                            exec(`docker run --rm -v $(pwd)/tmp:/app/tmp coditor-js node nodescript.js tmp/${nameFile}`, (error, stdout, stderr) => {
                                 if (error) {
+                                    console.log(error);
+                                    
                                     req.flash("error", "Une erreur est survenue.");
                                     res.redirect(req.originalUrl);
                                 } else {
@@ -113,8 +115,8 @@ exports.postExercise = (req, res) => {
                         let name = Generator.generatePHP(data, fct, req.params.slug);
                         if (name) {
                             // execute le test dans un container docker
-                            exec(`docker run --rm -v $(pwd)/tmp:/app/tests/ myphp vendor/bin/phpunit --testdox tests/${name}`, (error, stdout, stderr) => {
-                                if (error) console.log(err);
+                            exec(`docker run --rm -v $(pwd)/tmp:/app/tests/ coditor-php vendor/bin/phpunit --testdox tests/${name}`, (error, stdout, stderr) => {
+                                if (error) console.log(error);
 
                                 // retourne les tests passés avec succès
                                 let success = analysePHPUnit(stdout);

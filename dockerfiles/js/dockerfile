@@ -1,0 +1,8 @@
+FROM node:8
+
+WORKDIR /app
+RUN apt-get update \ 
+&& apt-get install -y tree 
+RUN npm install mocha \
+ && npm install chai 
+ COPY ./nodescript.js /app
