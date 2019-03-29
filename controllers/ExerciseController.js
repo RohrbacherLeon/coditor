@@ -1,9 +1,11 @@
 const Exercise = require("../models/Exercise");
+const User = require("../models/User");
 const fs = require("fs");
 const Generator = require("../class/Generator");
 const { exec } = require("child_process");
 const showdown = require("showdown");
-const { analysePHPUnit } = require("../class/Analyzer");
+const { analysePHPUnit, analyseJS } = require("../class/Analyzer");
+var mongoose = require("mongoose");
 
 exports.getExoByLang = (req, res) => {
     Exercise.getAllValuesOf("language", function (err, languages) {
@@ -81,58 +83,20 @@ exports.postExercise = (req, res) => {
             fs.readFile(process.cwd() + `/tests/${exo.language}/${req.params.slug}.${exo.language}`, "utf-8", function (err, data) {
                 if (err) console.log(err);
 
+                let nameFile = "";
+                let dockerCommande = "";
+
                 switch (exo.language) {
                     case "js":
                         // // Génére un fichier nameFile de test (ajoute la fonction étudiante dans le fichier test du prof)
-                        let nameFile = Generator.generateJS(data, fct, req.params.slug);
-                        if (nameFile) {
-                            // execute le test dans un container docker
-                            exec(`docker run --rm -v $(pwd)/tmp:/app/tmp coditor-js node nodescript.js tmp/${nameFile}`, (error, stdout, stderr) => {
-                                if (error) {
-                                    console.log(error);
-
-                                    req.flash("error", "Une erreur est survenue.");
-                                    res.redirect(req.originalUrl);
-                                } else {
-                                    fs.unlinkSync(process.cwd() + `/tmp/${nameFile}`);
-                                    let query = {
-                                        slug: req.params.slug,
-                                        language: req.params.lang
-                                    };
-
-                                    let titles = [];
-                                    JSON.parse(stdout).passes.forEach(passe => {
-                                        titles.push(passe.title);
-                                    });
-                                    /*
-                                    if (JSON.parse(stdout).stats.tests <= titles.length) {
-                                        req.user.score.total += 1;
-                                        req.user.score.lang.js += 1;
-                                    }
-                                    */
-                                    showExercice(query, req, res, titles);
-                                }
-                            });
-                        }
+                        nameFile = Generator.generateJS(data, fct, req.params.slug);
+                        dockerCommande = `docker run --rm -v $(pwd)/tmp:/app/tmp coditor-js node nodescript.js tmp/${nameFile}`;
+                        executeDocker(req, res, nameFile, dockerCommande, exo.language);
                         break;
                     case "php":
-                        let name = Generator.generatePHP(data, fct, req.params.slug);
-                        if (name) {
-                            // execute le test dans un container docker
-                            exec(`docker run --rm -v $(pwd)/tmp:/app/tests/ coditor-php vendor/bin/phpunit --testdox tests/${name}`, (error, stdout, stderr) => {
-                                if (error) console.log(error);
-
-                                // retourne les tests passés avec succès
-                                let success = analysePHPUnit(stdout);
-
-                                fs.unlinkSync(process.cwd() + `/tmp/${name}`);
-                                let query = {
-                                    slug: req.params.slug,
-                                    language: req.params.lang
-                                };
-                                showExercice(query, req, res, success);
-                            });
-                        }
+                        nameFile = Generator.generatePHP(data, fct, req.params.slug);
+                        dockerCommande = `docker run --rm -v $(pwd)/tmp:/app/tests/ coditor-php vendor/bin/phpunit --testdox tests/${nameFile}`;
+                        executeDocker(req, res, nameFile, dockerCommande, exo.language);
                         break;
                     default:
                         break;
@@ -141,6 +105,46 @@ exports.postExercise = (req, res) => {
         });
     }
 };
+
+function executeDocker (req, res, nameFile, commande, lang) {
+    exec(commande, (error, stdout, stderr) => {
+        if (error) {
+            fs.unlinkSync(process.cwd() + `/tmp/${nameFile}`);
+            req.flash("error", "Une erreur est survenue.");
+            res.redirect(req.originalUrl);
+        } else {
+            fs.unlinkSync(process.cwd() + `/tmp/${nameFile}`);
+            let query = {
+                slug: req.params.slug,
+                language: req.params.lang
+            };
+            let analyse = {};
+            switch (lang) {
+                case "js":
+                    analyse = analyseJS(stdout);
+                    break;
+                case "php":
+                    analyse = analysePHPUnit(stdout);
+                    break;
+            }
+
+            if (analyse.total === analyse.success.length) {
+                updateScore(req, lang);
+            }
+
+            showExercice(query, req, res, analyse.success);
+        }
+    });
+}
+
+function updateScore (req, language) {
+    req.user.score.total += 1;
+    req.user.score.langs[language] = req.user.score.langs[language] >= 1 ? req.user.score.langs[language] + 1 : 1;
+
+    User.findByIdAndUpdate(req.user._id, { $set: { score: req.user.score } }, function (err, result) {
+        if (err) console.log(err);
+    });
+}
 
 exports.deleteExercise = (req, res) => {
     Exercise.findById(req.params.id, (err, exo) => {

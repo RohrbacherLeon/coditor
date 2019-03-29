@@ -8,7 +8,11 @@ db.users.insert({
         "last_name": "zink",
         "email": "test@test.fr"
     },
-    "urlImage": "/images/iconLocal.png"
+    "urlImage": "/images/iconLocal.png",
+    "score": {
+        "total": 0,
+        "langs": {}
+    }
 });
 
 db.users.insert({
@@ -20,7 +24,11 @@ db.users.insert({
         "last_name": "admin",
         "email": "admin@admin.fr"
     },
-    "urlImage": "/images/iconLocal.png"
+    "urlImage": "/images/iconLocal.png",
+    "score": {
+        "total": 0,
+        "langs": {}
+    }
 });
 
 db.exercises.insert({
