@@ -91,7 +91,7 @@ exports.postExercise = (req, res) => {
                             exec(`docker run --rm -v $(pwd)/tmp:/app/tmp coditor-js node nodescript.js tmp/${nameFile}`, (error, stdout, stderr) => {
                                 if (error) {
                                     console.log(error);
-                                    
+
                                     req.flash("error", "Une erreur est survenue.");
                                     res.redirect(req.originalUrl);
                                 } else {
