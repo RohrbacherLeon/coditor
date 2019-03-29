@@ -25,11 +25,11 @@
             <div class="user_score">
                 <h3>Mon avancée :</h3>
                 <div class="score-total">
-                    <span><i class="fa fa-medal"></i>{{user.score.total}}</span>
+                    <span><i class="fas fa-award"></i> {{user.score.total}}</span>
                 </div>
                 <div class="score-langs">
                     {% for lang, score in user.score.langs %}
-                        <span class="score-{{lang}}"><i class="fa fa-medal"></i>{{score}}</span>           
+                        <span class="score-{{lang}}"><i class="fas fa-medal"></i> {{score}}</span>           
                     {% endfor %}
                 </div>
             </div>
