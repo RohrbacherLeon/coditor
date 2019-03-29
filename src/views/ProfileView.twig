@@ -60,7 +60,7 @@
                 </div>
             {% endfor %}
         </div>
-        <h2 class="title">Mes séries exercices {{ user.type == "student" ? "réalisées" : "créées" }}</h2>
+        <h2 class="title">Mes séries d'exercices {{ user.type == "student" ? "réalisées" : "créées" }}</h2>
         <div class="profile__series">
             {% for serie in series %}
                 <a href="/sets/{{serie.slug}}" class="serie">
