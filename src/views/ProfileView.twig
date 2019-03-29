@@ -9,7 +9,7 @@
         <div class="infos__user">
             <div class="infos__user__id">
             {% if user.profile.username %}                
-                <h3>{{user.profile.username}}</h3>
+                <h3>{{ user.profile.username }}</h3>
             {% else %}
                 <h3>{{ user.profile.last_name }}</h3>
                 <h3>{{ user.profile.first_name }}</h3>
@@ -22,12 +22,22 @@
             {% if user.account == "local" %}    
                 <a href="/profile/settings"><i class="fas fa-cog"></i> Paramètres</a>
             {% endif %}
-            
+            <div class="user_score">
+                <h3>Mon avancée :</h3>
+                <div class="score-total">
+                    <span><i class="fas fa-award"></i> {{user.score.total}}</span>
+                </div>
+                <div class="score-langs">
+                    {% for lang, score in user.score.langs %}
+                        <span class="score-{{lang}}"><i class="fas fa-medal"></i> {{score}}</span>           
+                    {% endfor %}
+                </div>
+            </div>
             <p class="">Exercices {{ user.type == "student" ? "réalisés" : "créés" }} : {{exos.length}}</p> 
             <p class="">Séries d'exercises {{ user.type == "student" ? "réalisées" : "créées" }} : {{series.length}}</p>                        
         </div>
     </div>
-    {% if user.type == "teacher" %}
+    {% if user.type == "teacher" or user.type == "admin" %}
         <div class="profile__actions">
             <a href="profile/create-exercise" class="button button--red" type="submit">Nouvel exercice</a>
             <a href="profile/create-exercises-set" class="button button--red" type="submit">Nouvelle série d'exercices</a>

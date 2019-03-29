@@ -104,7 +104,12 @@ exports.postExercise = (req, res) => {
                                     JSON.parse(stdout).passes.forEach(passe => {
                                         titles.push(passe.title);
                                     });
-
+                                    /*
+                                    if (JSON.parse(stdout).stats.tests <= titles.length) {
+                                        req.user.score.total += 1;
+                                        req.user.score.lang.js += 1;
+                                    }
+                                    */
                                     showExercice(query, req, res, titles);
                                 }
                             });

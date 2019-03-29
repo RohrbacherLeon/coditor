@@ -14,7 +14,11 @@ let UserSchema = mongoose.Schema({
         type: Object
     },
     urlImage: String,
-    pending: Boolean
+    pending: Boolean,
+    score: {
+        total: Number,
+        langs: Object
+    }
 });
 
 UserSchema.statics.createUser = function (data, callback) {
@@ -38,6 +42,14 @@ UserSchema.statics.createUser = function (data, callback) {
                 newUser.pending = data.pending;
             }
             newUser.urlImage = "/images/iconLocal.png";
+            newUser.score = {
+                total: 0,
+                langs: {
+                    js: 0,
+                    php: 0,
+                    java: 0
+                }
+            };
             newUser.save(callback);
         });
     });
