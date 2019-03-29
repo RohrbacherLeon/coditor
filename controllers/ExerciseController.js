@@ -5,7 +5,6 @@ const Generator = require("../class/Generator");
 const { exec } = require("child_process");
 const showdown = require("showdown");
 const { analysePHPUnit, analyseJS } = require("../class/Analyzer");
-var mongoose = require("mongoose");
 
 exports.getExoByLang = (req, res) => {
     Exercise.getAllValuesOf("language", function (err, languages) {
