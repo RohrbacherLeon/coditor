@@ -27,65 +27,104 @@ exports.getCreateExercise = (req, res) => {
         if (err) console.log(err);
         params.tags = tags;
         params.languages = ["js", "php"];
+        params.session = req.session.create;
+
         res.render("CreateExerciseView", params);
     });
 };
 
 exports.postCreateExercise = (req, res) => {
     var form = new formidable.IncomingForm();
+    let languages = ["js", "php"];
 
     form.parse(req, function (err, fields, files) {
         if (err) console.log(err);
-        let title = fields.title.split("+").join(" ");
-        let slug = slugify(title);
+        let slug = slugify(fields.title, {
+            replacement: "-",
+            remove: /[*+~.()'"!:@]/g,
+            lower: true
+        });
+        let errors = [];
 
-        let testFile = files["file_tests"];
-        let testFileData = fs.readFileSync(testFile.path);
+        fields.arrayTags = fields.tags.split(",");
+        req.session.create = fields;
 
-        let titles = Analyzer.analyseTeacher(testFileData.toString("utf8"), fields.language);
-        if (Array.isArray(titles) && titles.length) {
-            titles = titles.map(title => decamelize(title));
+        if (fields.tags === "") {
+            errors.push("Aucun tags n'a été associé à cet exercice.");
         }
-        Exercise.createExercise({
-            title: title,
-            slug,
-            tags: fields.tags.split(","),
-            language: fields.language,
-            author: req.user.profile.email,
-            description: fields.description,
-            awaited: { titles }
-        }, function (err, exo) {
-            if (err) console.log(err);
 
-            // Enregistement des fichiers sur le serveurs
-            for (const file in files) {
-                let currentFile = files[file];
-                if (currentFile.size > 0) {
-                    let oldPath = currentFile.path;
-                    let fileExt = currentFile.name.split(".").pop();
+        if (!languages.includes(fields.language)) {
+            errors.push("Le langage selectionné n'est pas valide.");
+        }
 
-                    // Save test file to the folder tests
-                    let newPath = path.join(process.cwd(), "/" + file.split("_").pop() + "/" + fields.language + "/", slug + "." + fileExt);
-                    fs.readFile(oldPath, function (err, data) {
+        if (fields.description === "") {
+            errors.push("Veuillez entrer une description.");
+        }
+
+        if (files["file_tests"].size === 0) {
+            errors.push("Aucun fichier de test n'a été choisis.");
+        }
+
+        if (errors.length > 0) {
+            req.flash("error", errors[0]);
+            res.redirect(req.originalUrl);
+        } else {
+            Exercise.find({ slug, language: fields.language }).then((exo, err) => {
+                if (err) console.log(err);
+
+                if (exo.length > 0) {
+                    req.flash("error", "Le titre de l'exercice est déjà utilisé.");
+                    res.redirect(req.originalUrl);
+                } else {
+                    let testFile = files["file_tests"];
+                    let testFileData = fs.readFileSync(testFile.path);
+
+                    let titles = Analyzer.analyseTeacher(testFileData.toString("utf8"), fields.language);
+                    if (Array.isArray(titles) && titles.length) {
+                        titles = titles.map(title => decamelize(title));
+                    }
+                    Exercise.createExercise({
+                        title: fields.title,
+                        slug,
+                        tags: fields.tags.split(","),
+                        language: fields.language,
+                        author: req.user.profile.email,
+                        description: fields.description,
+                        awaited: { titles }
+                    }, function (err, exo) {
                         if (err) console.log(err);
-                        fs.writeFile(newPath, data, function (err) {
+
+                        // Enregistement des fichiers sur le serveurs
+                        for (const file in files) {
+                            let currentFile = files[file];
+                            if (currentFile.size > 0) {
+                                let oldPath = currentFile.path;
+                                let fileExt = currentFile.name.split(".").pop();
+
+                                // Save test file to the folder tests
+                                let newPath = path.join(process.cwd(), "/" + file.split("_").pop() + "/" + fields.language + "/", slug + "." + fileExt);
+                                fs.readFile(oldPath, function (err, data) {
+                                    if (err) console.log(err);
+                                    fs.writeFile(newPath, data, function (err) {
+                                        if (err) console.log(err);
+                                        fs.unlink(oldPath, function (err) {
+                                            if (err) {
+                                                res.render("CreateExerciseView", { message: "Erreur lors de la création de l'exercice." });
+                                            }
+                                        });
+                                    });
+                                });
+                            }
+                        }
+                        Exercise.getAllValuesOf("tags", (err, tags) => {
                             if (err) console.log(err);
-                            fs.unlink(oldPath, function (err) {
-                                if (err) {
-                                    res.render("CreateExerciseView", { message: "Erreur lors de la création de l'exercice." });
-                                }
-                            });
+                            req.flash("success", "L'exercice a bien été ajouté !");
+                            res.redirect("/profile/create-exercise");
                         });
                     });
                 }
-            }
-
-            Exercise.getAllValuesOf("tags", (err, tags) => {
-                if (err) console.log(err);
-                req.flash("success", "L'exercice a bien été ajouté !");
-                res.redirect("/profile/create-exercise");
             });
-        });
+        }
     });
 };
 
