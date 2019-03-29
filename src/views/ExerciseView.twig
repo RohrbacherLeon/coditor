@@ -63,7 +63,6 @@
         
 
 {% block scripts %}
-        
     <script>
         let editor = CodeMirror.fromTextArea(document.getElementById('js-textarea'), {
             value: "",
@@ -71,6 +70,8 @@
             mode:  "javascript",
             theme: 'ambiance',
             extraKeys: {"Ctrl-Space": "autocomplete"},
+            gutters: ["CodeMirror-lint-markers"],
+            lint: true
         });
     </script>
 
@@ -108,28 +109,6 @@
     </script>
 
     <div id="ex_id" data-exercise-id="{{exercise._id}}"></div>
-    <script>
-        $(document).ready(function(){
-            $(".button--delete").click(function(event) {
-                if (confirm("Etes vous sûr de vouloir supprimer cet exercice ?")) {
-                    $.ajax({
-                        url: `/exercises/${$("#ex_id").data("exerciseId")}`,
-                        method: "DELETE",
-                        success: (data) => {
-                            window.location.href = "/exercises";
-                        }
-                    });
-                }
-            });
-        });
-        $(document).ready(function(){
-            $(".button--modify").click(function(event){
-                $.ajax({
-                    url: `/profile/update-exercise`,
-                    method: "GET"
-                });
-            });
-        });
-    </script>
+    <script src="/js/admin_handlers.js"></script>
 
 {% endblock %}
