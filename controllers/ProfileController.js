@@ -57,6 +57,10 @@ exports.postCreateExercise = (req, res) => {
             errors.push("Le langage selectionné non valide.");
         }
 
+        if (fields.description === "") {
+            errors.push("Veuillez entrer une description.");
+        }
+
         if (files["file_tests"].size === 0) {
             errors.push("Aucun fichier de test n'a été choisis.");
         }
