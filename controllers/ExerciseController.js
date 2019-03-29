@@ -136,12 +136,14 @@ exports.postExercise = (req, res) => {
 };
 
 exports.deleteExercise = (req, res) => {
-    Exercise.findOneAndDelete({ _id: req.params.id }, (err, doc) => {
-        if (err) {
-            res.sendStatus(404);
-        } else {
+    Exercise.findById(req.params.id, (err, exo) => {
+        if (err) res.sendStatus(404);
+        if (exo.author === req.user.profile.email || req.user.type === "admin") {
             res.status(200);
-            res.json(doc);
+            res.json(exo);
+            exo.remove();
+        } else {
+            res.sendStatus(403);
         }
     });
 };
