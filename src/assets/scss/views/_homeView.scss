@@ -1,12 +1,12 @@
 .home{
     .banner{
-        height: 300px;
-
-        img{
-            object-fit: cover;
-            height: 100%;
-            width: 100%;
-        }
+        position: relative;
+        height: 50vh;
+        background-attachment: fixed;
+		background-image: url('/images/banner.jpg');
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
     }
 
     .row{

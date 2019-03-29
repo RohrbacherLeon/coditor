@@ -1,0 +1,18 @@
+.setBegin {
+    display: flex;
+    flex-direction: column;
+
+    .setExercises {
+        display: flex;
+        flex-direction: column;
+
+        .exercise {
+            margin: 15px 20px;
+        }
+    }
+
+    a {
+        margin: 0 auto;
+        
+    }
+}

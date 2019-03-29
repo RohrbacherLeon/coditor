@@ -7,7 +7,11 @@ let SetSchema = mongoose.Schema({
         required: true,
         index: true
     },
-
+    slug: {
+        type: String,
+        required: true,
+        index: true
+    },
     exercises: {
         type: Array,
         required: true,
@@ -23,5 +27,11 @@ SetSchema.statics.ByAuthor = function (author, callback) {
     let query = { author };
     Set.find(query, callback);
 };
+
+SetSchema.statics.getSetBySlug = function (slug, callback) {
+    let query = { slug };
+    Set.find(query, callback);
+};
+
 var Set = mongoose.model("Set", SetSchema);
 module.exports = Set;
