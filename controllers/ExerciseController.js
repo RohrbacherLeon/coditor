@@ -147,18 +147,3 @@ exports.deleteExercise = (req, res) => {
         }
     });
 };
-
-    /*
-    Exercise.findOneAndDelete({ _id: req.params.id }, (err, doc) => {
-        if (err) {
-            res.sendStatus(404);
-        } else {
-            if (doc.author === req.user.profile.email || req.user.type === "admin") {
-                res.status(200);
-                res.json(doc);
-            } else {
-                res.sendStatus(403);
-            }
-        }
-    });
-    */
