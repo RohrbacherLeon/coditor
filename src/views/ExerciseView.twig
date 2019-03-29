@@ -46,6 +46,7 @@
         <div class="exercise__opened__bottom">
             {% if user.type == "admin" %}
                 <button class="button button--red button--delete" type="button">Supprimer l'exercice</button>
+                <button class="button button--green button--modify" type="button">Modifier l'exercice</button>
             {% endif %}
             <div id="openCorrection" class="button button--green">Afficher la correction</div>
             <button type='submit' class="button button--green">Valider le code</button>
@@ -120,7 +121,15 @@
                     });
                 }
             });
-        });   
+        });
+        $(document).ready(function(){
+            $(".button--modify").click(function(event){
+                $.ajax({
+                    url: `/profile/update-exercise`,
+                    method: "GET"
+                });
+            });
+        });
     </script>
 
 {% endblock %}

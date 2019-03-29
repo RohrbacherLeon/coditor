@@ -38,12 +38,9 @@ exports.register_post = (req, res) => {
             } else {
                 // si email pas utilisé, on créé l'utilisateur et on le redirige vers le login
                 User.createUser(req.body, (err, user) => {
-                    if (err) {
-                        throw err;
-                    } else {
-                        req.flash("success", "Votre compte a bien été créé !");
-                        res.redirect("/login");
-                    }
+                    if (err) throw err;
+                    req.flash("success", "Votre compte a bien été créé !");
+                    res.redirect("/login");
                 });
             }
         });
