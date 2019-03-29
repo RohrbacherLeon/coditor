@@ -136,12 +136,18 @@ exports.postExercise = (req, res) => {
 };
 
 exports.deleteExercise = (req, res) => {
+    console.log(req.user);
     Exercise.findOneAndDelete({ _id: req.params.id }, (err, doc) => {
+        console.log(doc);
         if (err) {
             res.sendStatus(404);
         } else {
-            res.status(200);
-            res.json(doc);
+            if (doc.author === req.user.profile.email || req.user.type === "admin") {
+                res.status(200);
+                res.json(doc);
+            } else {
+                res.sendStatus(403);
+            }
         }
     });
 };

@@ -20,8 +20,8 @@ getExercisesHtml = function(data) {
     data.forEach(exercise => {
         if ($.inArray(exercise._id, exercises_selected) == -1) {
             exercises += `
-            <div class="exercise-container">
-                <a href="/exercises/${exercise.language}/${exercise.slug}" id="${exercise._id}" class="exercise ${exercise.language} draggable">
+            <div class="exercise-container" draggable>
+                <a href="/exercises/${exercise.language}/${exercise.slug}" id="${exercise._id}" class="exercise ${exercise.language}">
                     <h4>${exercise.title}</h4>
                     <p>${exercise.author}</p>
                 </a>
