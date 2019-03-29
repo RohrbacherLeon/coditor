@@ -136,9 +136,7 @@ exports.postExercise = (req, res) => {
 };
 
 exports.deleteExercise = (req, res) => {
-    console.log(req.user);
     Exercise.findOneAndDelete({ _id: req.params.id }, (err, doc) => {
-        console.log(doc);
         if (err) {
             res.sendStatus(404);
         } else {
