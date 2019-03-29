@@ -28,7 +28,7 @@ exports.getCreateExercise = (req, res) => {
         params.tags = tags;
         params.languages = ["js", "php"];
         params.session = req.session.create;
-        console.log(params);
+
         res.render("CreateExerciseView", params);
     });
 };
@@ -39,14 +39,14 @@ exports.postCreateExercise = (req, res) => {
 
     form.parse(req, function (err, fields, files) {
         if (err) console.log(err);
-        let title = fields.title.split("+").join(" ");
-        let slug = slugify(title, {
+        let slug = slugify(fields.title, {
             replacement: "-",
             remove: /[*+~.()'"!:@]/g,
             lower: true
         });
         let errors = [];
 
+        fields.arrayTags = fields.tags.split(",");
         req.session.create = fields;
 
         if (fields.tags === "") {
@@ -73,7 +73,7 @@ exports.postCreateExercise = (req, res) => {
                 titles = titles.map(title => decamelize(title));
             }
             Exercise.createExercise({
-                title: title,
+                title: fields.title,
                 slug,
                 tags: fields.tags.split(","),
                 language: fields.language,
