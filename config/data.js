@@ -10,6 +10,19 @@ db.users.insert({
     },
     "urlImage": "/images/iconLocal.png"
 });
+
+db.users.insert({
+    "type": "admin",
+    "account": "local",
+    "profile": {
+        "password": "$2a$10$ILZz2SZXeYkBamjqsSpgS.rY3gtewf6paFxWSzjCJolCFMQJOr3Fi",
+        "first_name": "admin",
+        "last_name": "admin",
+        "email": "admin@admin.fr"
+    },
+    "urlImage": "/images/iconLocal.png"
+});
+
 db.exercises.insert({
     "stats": {
         "fails": 0,
