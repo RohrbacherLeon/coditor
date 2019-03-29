@@ -123,9 +123,7 @@ exports.postCreateExercise = (req, res) => {
                         });
                     });
                 }
-                
             });
-
         }
     });
 };
