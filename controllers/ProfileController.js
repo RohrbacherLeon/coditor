@@ -43,8 +43,9 @@ exports.postCreateExercise = (req, res) => {
         let testFileData = fs.readFileSync(testFile.path);
 
         let titles = Analyzer.analyseTeacher(testFileData.toString("utf8"), fields.language);
-        titles = titles.map(title => decamelize(title));
-
+        if (Array.isArray(titles) && titles.length) {
+            titles = titles.map(title => decamelize(title));
+        }
         Exercise.createExercise({
             title: title,
             slug,
