@@ -1,4 +1,5 @@
 const Exercise = require("../models/Exercise");
+const Set = require("../models/Set");
 const User = require("../models/User");
 const fs = require("fs");
 const Generator = require("../class/Generator");
@@ -150,6 +151,30 @@ exports.deleteExercise = (req, res) => {
     Exercise.findById(req.params.id, (err, exo) => {
         if (err) res.sendStatus(404);
         if (exo.author === req.user.profile.email || req.user.type === "admin") {
+            // si l'exo est dans une ou des séries on le supprime
+            // si le set ne contenait que 2 exos on supprime le set
+            exo.inSets.forEach(setId => {
+                Set.findById(setId, (err, set) => {
+                    if (err) res.sendStatus(404);
+                    var index = set.exercises.indexOf(exo.id);
+                    if (index > -1) {
+                        set.exercises.splice(index, 1);
+                    }
+                    if (set.exercises.length < 2) {
+                        Exercise.findById(set.exercises[0], (err, exo) => {
+                            if (err) res.sendStatus(404);
+                            var indexInSet = exo.inSets.indexOf(set.id);
+                            if (indexInSet > -1) {
+                                exo.inSets.splice(indexInSet, 1);
+                            }
+                            exo.save();
+                            set.remove();
+                        });
+                    } else {
+                        set.save();
+                    }
+                });
+            });
             res.status(200);
             res.json(exo);
             exo.remove();
