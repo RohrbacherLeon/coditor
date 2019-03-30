@@ -147,6 +147,13 @@ exports.postCreateExercisesSet = (req, res) => {
             author: req.user.profile.email
         }, function (err, set) {
             if (err) console.log(err);
+            exSelected.forEach(exercise => {
+                Exercise.findById({ _id: exercise }, function (err, data) {
+                    if (err) console.log(err);
+                    data.inSets.push(set.id);
+                    data.save();
+                });
+            });
             req.flash("success", "Série d'exercices créée avec succès");
             res.redirect("/profile");
         });

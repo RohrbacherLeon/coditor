@@ -42,6 +42,10 @@ let ExerciseSchema = mongoose.Schema({
             type: Array,
             default: []
         }
+    },
+    inSets: {
+        type: Array,
+        default: []
     }
 });
 
