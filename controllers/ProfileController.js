@@ -69,6 +69,7 @@ exports.postCreateExercise = (req, res) => {
             req.flash("error", errors[0]);
             res.redirect(req.originalUrl);
         } else {
+            req.session.create = {};
             Exercise.find({ slug, language: fields.language }).then((exo, err) => {
                 if (err) console.log(err);
 
