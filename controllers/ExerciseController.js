@@ -6,7 +6,6 @@ const Generator = require("../class/Generator");
 const { exec } = require("child_process");
 const showdown = require("showdown");
 const { analysePHPUnit, analyseJS } = require("../class/Analyzer");
-var mongoose = require("mongoose");
 
 exports.getExoByLang = (req, res) => {
     Exercise.getAllValuesOf("language", function (err, languages) {
@@ -92,12 +91,12 @@ exports.postExercise = (req, res) => {
                         // // Génére un fichier nameFile de test (ajoute la fonction étudiante dans le fichier test du prof)
                         nameFile = Generator.generateJS(data, fct, req.params.slug);
                         dockerCommande = `docker run --rm -v $(pwd)/tmp:/app/tmp coditor-js node nodescript.js tmp/${nameFile}`;
-                        executeDocker(req, res, nameFile, dockerCommande, exo.language);
+                        executeDocker(req, res, nameFile, dockerCommande, exo);
                         break;
                     case "php":
                         nameFile = Generator.generatePHP(data, fct, req.params.slug);
                         dockerCommande = `docker run --rm -v $(pwd)/tmp:/app/tests/ coditor-php vendor/bin/phpunit --testdox tests/${nameFile}`;
-                        executeDocker(req, res, nameFile, dockerCommande, exo.language);
+                        executeDocker(req, res, nameFile, dockerCommande, exo);
                         break;
                     default:
                         break;
@@ -107,20 +106,19 @@ exports.postExercise = (req, res) => {
     }
 };
 
-function executeDocker (req, res, nameFile, commande, lang) {
+function executeDocker (req, res, nameFile, commande, exo) {
     exec(commande, (error, stdout, stderr) => {
+        Generator.remove(nameFile);
         if (error) {
-            fs.unlinkSync(process.cwd() + `/tmp/${nameFile}`);
             req.flash("error", "Une erreur est survenue.");
             res.redirect(req.originalUrl);
         } else {
-            fs.unlinkSync(process.cwd() + `/tmp/${nameFile}`);
             let query = {
                 slug: req.params.slug,
                 language: req.params.lang
             };
             let analyse = {};
-            switch (lang) {
+            switch (exo.language) {
                 case "js":
                     analyse = analyseJS(stdout);
                     break;
@@ -130,7 +128,22 @@ function executeDocker (req, res, nameFile, commande, lang) {
             }
 
             if (analyse.total === analyse.success.length) {
-                updateScore(req, lang);
+                updateScore(req, exo.language);
+                let stat = {
+                    success: exo.stats.success + 1,
+                    fails: exo.stats.fails
+                };
+                Exercise.findOneAndUpdate(exo._id, { $set: { stats: stat } }, function (err, res) {
+                    if (err) console.log(err);
+                });
+            } else {
+                let stat = {
+                    success: exo.stats.success,
+                    fails: exo.stats.fails + 1
+                };
+                Exercise.findOneAndUpdate(exo._id, { $set: { stats: stat } }, function (err, res) {
+                    if (err) console.log(err);
+                });
             }
 
             showExercice(query, req, res, analyse.success);

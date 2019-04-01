@@ -31,6 +31,22 @@ db.users.insert({
     }
 });
 
+db.users.insert({
+    "type": "student",
+    "account": "local",
+    "profile": {
+        "password": "$2a$10$Y13Lqgk958jTlDlD.46DfunfUnswI2p1oCL5wxcF3Ck5mIsHCDceC",
+        "first_name": "student",
+        "last_name": "student",
+        "email": "student@student.fr"
+    },
+    "urlImage": "/images/iconLocal.png",
+    "score": {
+        "total": 0,
+        "langs": {}
+    }
+});
+
 db.exercises.insert({
     "stats": {
         "fails": 0,
