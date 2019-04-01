@@ -41,6 +41,15 @@
         }
     }
 
+    &--blue{
+        background-color: rgb(68, 139, 245);
+        color: white;
+        transition: all 0.3s ease 0s;
+        &:hover{
+            background-color: #4e73df;
+        }
+    }
+
     &--white{
         background-color: white;
         color: black;

@@ -15,7 +15,7 @@
             <input type='hidden' name='exercises_selected' id="exercises_selected">
             <div class="form-inputs">
                 <input type='text' name='title' id="title" placeholder="Titre de la série" required>
-                <button class="button button--green" type="submit">Créer la série d'exercice</button>
+                <button class="button button--blue" type="submit">Créer la série d'exercice</button>
             </div>
         </div>
 
@@ -23,7 +23,9 @@
             <div id="drop_zone">
                 <img src="/images/plus_button.png" id="plus_button">
             </div>
+            <div class="setBrowser">
             {% include "partials/browser.twig" with tags %}
+            </div>
         </div>
     </form>
 
