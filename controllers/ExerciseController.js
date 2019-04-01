@@ -129,15 +129,15 @@ function executeDocker (req, res, nameFile, commande, exo) {
 
             if (analyse.total === analyse.success.length) {
                 updateScore(req, exo.language);
-                exo.success = exo.stats.success + 1;
-                exo.hasSucceeded.push(req.user.email);
+                exo.stats.success = exo.stats.success + 1;
+                exo.stats.hasSucceeded.push(req.user.profile.email);
                 exo.save();
 
                 if (req.params.setParams) {
                     req.params.setParams.success = true;
                 }
             } else {
-                exo.success = exo.stats.fails + 1;
+                exo.stats.success = exo.stats.fails + 1;
                 exo.save();
             }
 
