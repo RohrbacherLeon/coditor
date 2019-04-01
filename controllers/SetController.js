@@ -34,7 +34,7 @@ exports.getExerciseInSet = (req, res) => {
                         if (err) console.log(err);
                         req.params.setParams = {
                             next: data,
-                            sucess: false
+                            success: false
                         };
                         ExerciseController.getExercise(req, res);
                     });
