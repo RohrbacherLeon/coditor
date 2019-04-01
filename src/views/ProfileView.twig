@@ -47,6 +47,9 @@
         <div class="data-container">
             <h2 class="title">Mes exercices {{ user.type == "student" ? "réalisés" : "créés" }}</h2>
             <div class="profile__exercises">
+                {% if exos|length == 0 %}
+                    <h2>Aucun exercice {{ user.type == "student" ? "réalisé" : "créé" }}.</h2>
+                {% endif %}
                 {% for exo in exos %}
                     <div class="exercise-container" id="{{ exo._id }}">
                         <a href="/exercises/{{exo.language}}/{{exo.slug}}" class="exercise {{exo.language}}">
@@ -65,6 +68,9 @@
         <div class="data-container">
             <h2 class="title">Mes séries d'exercices {{ user.type == "student" ? "réalisées" : "créées" }}</h2>
             <div class="profile__series">
+                {% if series|length == 0 %}
+                    <h2>Aucune série {{ user.type == "student" ? "réalisée" : "créée" }}.</h2>
+                {% endif %}
                 {% for serie in series %}
                     <a href="/sets/{{serie.slug}}" class="serie">
                         <h4>{{serie.title}}</h4>
