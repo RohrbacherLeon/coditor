@@ -129,25 +129,16 @@ function executeDocker (req, res, nameFile, commande, exo) {
 
             if (analyse.total === analyse.success.length) {
                 updateScore(req, exo.language);
-                let stat = {
-                    success: exo.stats.success + 1,
-                    fails: exo.stats.fails
-                };
-                Exercise.findOneAndUpdate(exo._id, { $set: { stats: stat } }, function (err, res) {
-                    if (err) console.log(err);
-                });
+                exo.success = exo.stats.success + 1;
+                exo.hasSucceeded.push(req.user.email);
+                exo.save();
 
                 if (req.params.setParams) {
                     req.params.setParams.success = true;
                 }
             } else {
-                let stat = {
-                    success: exo.stats.success,
-                    fails: exo.stats.fails + 1
-                };
-                Exercise.findOneAndUpdate(exo._id, { $set: { stats: stat } }, function (err, res) {
-                    if (err) console.log(err);
-                });
+                exo.success = exo.stats.fails + 1;
+                exo.save();
             }
 
             showExercice(query, req, res, analyse.success);
