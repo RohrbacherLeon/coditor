@@ -165,8 +165,8 @@ exports.postCreateExercisesSet = (req, res) => {
 
 exports.getUpdateExercise = (req, res) => {
     let data = {
-        slug: req.query.slug,
-        language: req.query.lang
+        slug: req.params.slug,
+        language: req.params.lang
     };
     // Get exercise data
     Exercise.getExo(data, function (err, exercise) {
@@ -192,7 +192,7 @@ exports.postUpdateExercise = (req, res) => {
         fields.title = fields.title.split("+").join(" ");
         let lastTitle, lastSlug, lastExtFile;
         // Get last exo
-        Exercise.getExo({ slug: req.query.slug, language: req.query.lang }, function (err, exercise) {
+        Exercise.getExo({ slug: req.params.slug, language: req.params.lang }, function (err, exercise) {
             if (err) console.log(err);
             lastTitle = exercise.title;
             lastSlug = exercise.slug;
@@ -207,7 +207,7 @@ exports.postUpdateExercise = (req, res) => {
                 description: fields.description
             };
             // Update exercise
-            Exercise.updateOne({ slug: req.query.slug, language: req.query.lang }, { $set: update }, function (err, exo) {
+            Exercise.updateOne({ slug: req.params.slug, language: req.params.lang }, { $set: update }, function (err, exo) {
                 if (err) {
                     console.log(err);
                     res.render("UpdateExerciseView", { message: "Erreur lors de la création de l'exercice." });
@@ -218,12 +218,12 @@ exports.postUpdateExercise = (req, res) => {
                         // If new file
                         if (currentFile.size > 0) {
                             // Remove old file
-                            fs.unlink(path.join(process.cwd(), "/" + file.split("_").pop() + "/" + lastSlug + "." + lastExtFile), function (err) {
+                            fs.unlink(path.join(process.cwd(), "/" + file.split("_").pop() + "/" + req.params.lang + "/" + lastSlug + "." + lastExtFile), function (err) {
                                 if (err) console.log(err);
                                 // Create new file and save it to the folder
                                 fs.readFile(currentFile.path, function (err, data) {
                                     if (err) console.log(err);
-                                    fs.writeFile(path.join(process.cwd(), "/" + file.split("_").pop() + "/", slug + "." + currentFile.name.split(".").pop()), data, function (err) {
+                                    fs.writeFile(path.join(process.cwd(), "/" + file.split("_").pop() + "/" + req.params.lang + "/", slug + "." + currentFile.name.split(".").pop()), data, function (err) {
                                         if (err) console.log(err);
                                         fs.unlink(currentFile.path, function (err) {
                                             if (err) {
@@ -235,8 +235,8 @@ exports.postUpdateExercise = (req, res) => {
                             });
                             // if it's not a new file, update file name (if title has changed and no file is given)
                         } else if (lastTitle !== fields.title) {
-                            let oldFile = path.join(process.cwd(), "/" + file.split("_").pop() + "/" + lastSlug + "." + lastExtFile);
-                            let newFile = path.join(process.cwd(), "/" + file.split("_").pop() + "/" + slug + "." + lastExtFile);
+                            let oldFile = path.join(process.cwd(), "/" + file.split("_").pop() + "/" + req.params.lang + "/" + lastSlug + "." + lastExtFile);
+                            let newFile = path.join(process.cwd(), "/" + file.split("_").pop() + "/" + req.params.lang + "/" + slug + "." + lastExtFile);
                             fs.rename(oldFile, newFile, function () {
                                 if (err) {
                                     console.log(err);

@@ -55,7 +55,7 @@
                     </a>
                     {% if user.type == "teacher" or user.type == "admin" %}
                         <button class="link-delete" type="button"><i class="fas fa-trash-alt"></i></button>                     
-                        <a href="/profile/update-exercise?lang={{exo.language}}&slug={{exo.slug}}" class="link-modify"><i class="fas fa-cog"></i></a>
+                        <a href="/profile/update-exercise/{{exo.language}}/{{exo.slug}}" class="link-modify"><i class="fas fa-cog"></i></a>
                     {% endif %}
                 </div>
             {% endfor %}
