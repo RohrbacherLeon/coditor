@@ -108,12 +108,11 @@ exports.postExercise = (req, res) => {
 
 function executeDocker (req, res, nameFile, commande, exo) {
     exec(commande, (error, stdout, stderr) => {
+        Generator.remove(nameFile);
         if (error) {
-            fs.unlinkSync(process.cwd() + `/tmp/${nameFile}`);
             req.flash("error", "Une erreur est survenue.");
             res.redirect(req.originalUrl);
         } else {
-            fs.unlinkSync(process.cwd() + `/tmp/${nameFile}`);
             let query = {
                 slug: req.params.slug,
                 language: req.params.lang
