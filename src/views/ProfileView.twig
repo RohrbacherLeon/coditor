@@ -39,36 +39,40 @@
     </div>
     {% if user.type == "teacher" or user.type == "admin" %}
         <div class="profile__actions">
-            <a href="profile/create-exercise" class="button button--red" type="submit">Nouvel exercice</a>
-            <a href="profile/create-exercises-set" class="button button--red" type="submit">Nouvelle série d'exercices</a>
+            <a href="profile/create-exercise" class="button button--blue" type="submit">Nouvel exercice</a>
+            <a href="profile/create-exercises-set" class="button button--blue" type="submit">Nouvelle série d'exercices</a>
         </div>
     {% endif %}
     <div class="profile__data">
-        <h2 class="title">Mes exercices {{ user.type == "student" ? "réalisés" : "créés" }}</h2>
-        <div class="profile__exercises">
-            {% for exo in exos %}
-                <div class="exercise-container" id="{{ exo._id }}">
-                    <a href="/exercises/{{exo.language}}/{{exo.slug}}" class="exercise {{exo.language}}">
-                        <h4>{{exo.title}}</h4>
-                        <p>{{exo.author}}</p>
-                        <p>{{exo.description}}</p>                    
-                    </a>
-                    {% if user.type == "teacher" or user.type == "admin" %}
-                        <button class="link-delete" type="button"><i class="fas fa-trash-alt"></i></button>                     
-                        <a href="/profile/update-exercise/{{exo.language}}/{{exo.slug}}" class="link-modify"><i class="fas fa-cog"></i></a>
-                    {% endif %}
-                </div>
-            {% endfor %}
+        <div class="data-container">
+            <h2 class="title">Mes exercices {{ user.type == "student" ? "réalisés" : "créés" }}</h2>
+            <div class="profile__exercises">
+                {% for exo in exos %}
+                    <div class="exercise-container" id="{{ exo._id }}">
+                        <a href="/exercises/{{exo.language}}/{{exo.slug}}" class="exercise {{exo.language}}">
+                            <h4>{{exo.title}}</h4>
+                            <p>{{exo.author}}</p>
+                            <p>{{exo.description}}</p>                    
+                        </a>
+                        {% if user.type == "teacher" or user.type == "admin" %}
+                            <button class="link-delete" type="button"><i class="fas fa-trash-alt"></i></button>                     
+                            <a href="/profile/update-exercise/{{exo.language}}/{{exo.slug}}" class="link-modify"><i class="fas fa-cog"></i></a>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
         </div>
-        <h2 class="title">Mes séries d'exercices {{ user.type == "student" ? "réalisées" : "créées" }}</h2>
-        <div class="profile__series">
-            {% for serie in series %}
-                <a href="/sets/{{serie.slug}}" class="serie">
-                    <h4>{{serie.title}}</h4>
-                    <p>{{serie.author}}</p>
-                    <p>{{serie.description}}</p>
-                </a>
-            {% endfor %}
+        <div class="data-container">
+            <h2 class="title">Mes séries d'exercices {{ user.type == "student" ? "réalisées" : "créées" }}</h2>
+            <div class="profile__series">
+                {% for serie in series %}
+                    <a href="/sets/{{serie.slug}}" class="serie">
+                        <h4>{{serie.title}}</h4>
+                        <p>{{serie.author}}</p>
+                        <p>{{serie.description}}</p>
+                    </a>
+                {% endfor %}
+            </div>
         </div>
     </div>
 </div>
