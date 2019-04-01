@@ -65,6 +65,10 @@ exports.postCreateExercise = (req, res) => {
             errors.push("Aucun fichier de test n'a été choisis.");
         }
 
+        if (!languages.includes(files["file_tests"].name.split(".").pop()) || files["file_tests"].name.split(".").pop() !== fields.language) {
+            errors.push("L'extension du fichier de test choisis ne correspond pas avec le language de l'exercice selectonné.");
+        }
+
         if (errors.length > 0) {
             req.flash("error", errors[0]);
             res.redirect(req.originalUrl);
