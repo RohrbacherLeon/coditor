@@ -46,8 +46,7 @@ UserSchema.statics.createUser = function (data, callback) {
                 total: 0,
                 langs: {
                     js: 0,
-                    php: 0,
-                    java: 0
+                    php: 0
                 }
             };
             newUser.save(callback);
