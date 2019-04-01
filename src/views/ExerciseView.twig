@@ -45,13 +45,17 @@
                 <a href="/profile/update-exercise/{{exercise.language}}/{{exercise.slug}}"><button class="button button--green" type="button">Modifier l'exercice</button></a>
             {% endif %}
             <div id="openCorrection" class="button button--green">Afficher la correction</div>
-            <button type='submit' class="button button--green">Valider le code</button>
+            
+            
+            
             {% if setParams.success %}
                 {% if setParams.next %}
                     <a href="../{{ setParams.next.language }}/{{ setParams.next.slug }}" class="button button--green">Exercice suivant</a>
-                {% elseif setParams.setslug %}
-                    <a href="/sets/{{ setParams.setslug }}" class="button button--green">Terminer série</a>
+                {% else %}
+                    <a href="/sets/{{ setslug }}" class="button button--green">Terminer série</a>
                 {% endif %}
+            {% else %}
+                <button type='submit' class="button button--green">Valider le code</button>
             {% endif %}
         </div>
     </form>
