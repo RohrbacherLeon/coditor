@@ -4,5 +4,6 @@ const SetController = require("../controllers/SetController");
 
 router.get("/:slug", SetController.getSet);
 router.get("/:setslug/exercises/:lang/:slug", SetController.getExerciseInSet);
+router.post("/:setslug/exercises/:lang/:slug", SetController.postExerciseInSet);
 
 module.exports = router;

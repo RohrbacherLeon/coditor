@@ -25,7 +25,6 @@ exports.getExoByLang = (req, res) => {
  * @param {*} res
  */
 function showExercice (query, req, res, results) {
-    console.log(req);
     Exercise.getExo(query, function (err, exercise) {
         if (err) console.log(err);
 
@@ -52,7 +51,7 @@ function showExercice (query, req, res, results) {
             results = results.map(result => result.toLowerCase());
         }
 
-        res.render("ExerciseView", { exercise, results, menu: "exercises", correctionText, skeletonText, markdown, content: req.session.content, setParams: req.params.setParams });
+        res.render("ExerciseView", { exercise, results, menu: "exercises", correctionText, skeletonText, markdown, content: req.session.content, setParams: req.params.setParams, setslug: req.params.setslug });
     });
 }
 
@@ -137,6 +136,7 @@ function executeDocker (req, res, nameFile, commande, exo) {
                 Exercise.findOneAndUpdate(exo._id, { $set: { stats: stat } }, function (err, res) {
                     if (err) console.log(err);
                 });
+
                 req.params.setParams.success = true;
             } else {
                 let stat = {
