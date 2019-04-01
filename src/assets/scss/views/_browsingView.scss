@@ -71,6 +71,12 @@
         flex-basis: 100%;
         width: calc(100% - 350px);
 
+        .title{
+            i{
+                color:gold;
+            }
+        }
+
         .popular{
             display: flex;
             flex-direction: column;

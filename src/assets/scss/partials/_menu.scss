@@ -28,6 +28,10 @@
                 a{
                     padding: 10px 14px;
 
+                    i{
+                        color:red;
+                    }
+
                     &:hover{
                         border-bottom: 2px solid $primary-color;
                     }
