@@ -137,7 +137,9 @@ function executeDocker (req, res, nameFile, commande, exo) {
                     if (err) console.log(err);
                 });
 
-                req.params.setParams.success = true;
+                if (req.params.setParams) {
+                    req.params.setParams.success = true;
+                }
             } else {
                 let stat = {
                     success: exo.stats.success,
