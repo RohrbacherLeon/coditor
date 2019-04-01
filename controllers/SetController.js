@@ -32,7 +32,10 @@ exports.getExerciseInSet = (req, res) => {
                     // on get l'exo next
                     Exercise.findById(set.exercises[index + 1], function (err, data) {
                         if (err) console.log(err);
-                        req.params.next = data;
+                        req.params.setParams = {
+                            next: data,
+                            sucess: false
+                        };
                         ExerciseController.getExercise(req, res);
                     });
                 }
