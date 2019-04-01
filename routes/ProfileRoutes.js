@@ -21,12 +21,12 @@ router.post("/create-exercise", isTeacher, ProfileController.postCreateExercise)
 /**
  * Get the page to update an exercise
  */
-router.get("/update-exercise", isTeacher, ProfileController.getUpdateExercise);
+router.get("/update-exercise/:lang/:slug", isTeacher, ProfileController.getUpdateExercise);
 
 /**
  * When teacher updated an exercise
  */
-router.post("/update-exercise", isTeacher, ProfileController.postUpdateExercise);
+router.post("/update-exercise/:lang/:slug", isTeacher, ProfileController.postUpdateExercise);
 
 /**
  * Get the page to create an exercise set
