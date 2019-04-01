@@ -24,8 +24,10 @@ $(document).ready(function() {
                 top: 0,
                 left: 0
             }).appendTo(droppedOn).draggable( "disable" ).addClass("selected");
+            // Remove/Add + button
+
             $(delete_arrow+arrow_right).appendTo(droppedOn);
-            $('#plus_button').appendTo(droppedOn);
+            $('#plus_button').css("display","none");
             
         },
         over: function(event, elem) {
@@ -46,5 +48,9 @@ $(document).ready(function() {
             refreshExercises(getExercisesHtml(data));
             setDraggable();
         });
+
+        if(exercises_selected.length === 0){
+            $('#plus_button').css("display","block");
+        }
     });
 });
