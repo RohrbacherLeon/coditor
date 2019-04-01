@@ -17,7 +17,10 @@
 <div class="exercise__opened">
     <form class="exercise__opened__top" method='post'>
         <div class="exercise__opened__top__subject">
-            <h1>{{ exercise.title }}</h1>
+            <div>
+                <h1>{{ exercise.title }}</h1>
+                <p>{{ exercise.stats.success }}</p>
+            </div>
             <div class="description">
                 {{ markdown }}
             </div>
