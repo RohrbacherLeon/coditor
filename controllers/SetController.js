@@ -84,7 +84,7 @@ exports.postExerciseInSet = (req, res) => {
                             next: data,
                             success: false
                         };
-                        
+
                         ExerciseController.postExercise(req, res);
                     });
                 }
@@ -116,5 +116,4 @@ exports.postExerciseInSet = (req, res) => {
             }
         });
     });
-
 };
