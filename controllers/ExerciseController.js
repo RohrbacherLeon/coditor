@@ -51,6 +51,12 @@ function showExercice (query, req, res, results) {
             results = results.map(result => result.toLowerCase());
         }
 
+        if (exercise.stats.fails) {
+            exercise.difficulty = ((exercise.stats.fails / (exercise.stats.success + exercise.stats.fails)) * 100).toFixed(1);
+        } else {
+            exercise.difficulty = 100;
+        }
+
         res.render("ExerciseView", { exercise, results, menu: "exercises", correctionText, skeletonText, markdown, content: req.session.content, setParams: req.params.setParams, setslug: req.params.setslug });
     });
 }
