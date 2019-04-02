@@ -64,19 +64,6 @@
             grid-column: 2;
             height: 35px;
             margin-top: auto;
-            .button{
-                color: white;
-                font-size: 1em;
-                padding: 15px;
-                line-height: 0px;
-                text-align: center;
-                background-color: $primary-color;
-                transition: all 0.5s linear;
-
-                &:hover{
-                    background-color: #89a1eb;
-                }
-            }
         }
     }
 }
