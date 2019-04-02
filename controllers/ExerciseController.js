@@ -11,9 +11,14 @@ exports.getExoByLang = (req, res) => {
     Exercise.getAllValuesOf("language", function (err, languages) {
         if (err) console.log(err);
         Exercise.getAllValuesOf("tags", (err, tags) => {
+        if (err) console.log(err);
+            Exercise.find({}, function (err, exos) {
             if (err) console.log(err);
-            let locale = req.params.lang;
-            res.render("BrowsingView", { languages, locale, tags, menu: "exercises" });
+                let locale = req.params.lang;
+                let popularExos = exos.sort((a, b) => (a.success + a.fails > b.success + b.fails)).slice(0, 4);
+
+                res.render("BrowsingView", { languages, locale, tags, menu: "exercises", popularExos });
+            });
         });
     });
 };
@@ -56,7 +61,6 @@ function showExercice (query, req, res, results) {
         } else {
             exercise.difficulty = 100;
         }
-
         res.render("ExerciseView", { exercise, results, menu: "exercises", correctionText, skeletonText, markdown, content: req.session.content, setParams: req.params.setParams, setslug: req.params.setslug });
     });
 }
