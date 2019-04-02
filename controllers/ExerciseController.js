@@ -50,7 +50,6 @@ function showExercice (query, req, res, results) {
         if (results) {
             results = results.map(result => result.toLowerCase());
         }
-
         res.render("ExerciseView", { exercise, results, menu: "exercises", correctionText, skeletonText, markdown, content: req.session.content, setParams: req.params.setParams, setslug: req.params.setslug });
     });
 }
