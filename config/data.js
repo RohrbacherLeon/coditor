@@ -60,7 +60,8 @@ db.exercises.insert({
     "slug": "soustraction",
     "language": "js",
     "author": "test@test.fr",
-    "description": "## Soustraction\r\n\r\nEcrire une fonction nommée *sub* qui soustrait deux nombres."
+    "description": "## Soustraction\r\n\r\nEcrire une fonction nommée *sub* qui soustrait deux nombres.",
+    "hasSucceeded": []
 });
 
 db.exercises.insert({
@@ -76,5 +77,6 @@ db.exercises.insert({
     "slug": "addition",
     "language": "php",
     "author": "test@test.fr",
-    "description": "## Addition\r\n\r\nEcrire une fonction nommée *add* qui additionne deux nombres."
+    "description": "## Addition\r\n\r\nEcrire une fonction nommée *add* qui additionne deux nombres.",
+    "hasSucceeded": []
 });

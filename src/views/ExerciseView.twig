@@ -17,7 +17,14 @@
 <div class="exercise__opened">
     <form class="exercise__opened__top" method='post'>
         <div class="exercise__opened__top__subject">
-            <h1>{{ exercise.title }}</h1>
+            <div>
+                <h1>{{ exercise.title }}</h1>
+                {% if exercise.stats.fails %}
+                    <p>{{ exercise.stats.fails/(exercise.stats.success+exercise.stats.fails) }}%</p>
+                {% else %}
+                    <p>100%</p>
+                {% endif %}
+            </div>
             <div class="description">
                 {{ markdown }}
             </div>
@@ -44,18 +51,24 @@
                 {#<button class="button button--green button--modify" type="button" data-exercise-lang="{{exercise.language}}" data-exercise-slug="{{exercise.slug}}">Modifier l'exercice</button>#}
                 <a href="/profile/update-exercise/{{exercise.language}}/{{exercise.slug}}"><button class="button button--green" type="button">Modifier l'exercice</button></a>
             {% endif %}
-            <div id="openCorrection" class="button button--green">Afficher la correction</div>
+            {% if user %}
+                <div id="openCorrection" class="button button--green">Afficher la correction</div>
+            {% endif %}
             
             
             
-            {% if setParams.success %}
-                {% if setParams.next %}
-                    <a href="../{{ setParams.next.language }}/{{ setParams.next.slug }}" class="button button--green">Exercice suivant</a>
-                {% else %}
-                    <a href="/sets/{{ setslug }}" class="button button--green">Terminer série</a>
-                {% endif %}
+            {% if not user %}
+                <a href="/login" class="button button--green">Se connecter</a>
             {% else %}
-                <button type='submit' class="button button--green">Valider le code</button>
+                {% if setParams.success %}
+                    {% if setParams.next %}
+                        <a href="../{{ setParams.next.language }}/{{ setParams.next.slug }}" class="button button--green">Exercice suivant</a>
+                    {% else %}
+                        <a href="/sets/{{ setslug }}" class="button button--green">Terminer série</a>
+                    {% endif %}
+                {% else %}
+                    <button type='submit' class="button button--green">Valider le code</button>
+                {% endif %}
             {% endif %}
         </div>
     </form>
@@ -78,7 +91,8 @@
             theme: 'ambiance',
             extraKeys: {"Ctrl-Space": "autocomplete"},
             gutters: ["CodeMirror-lint-markers"],
-            lint: { esversion: 6 }
+            lint: { esversion: 6 },
+            autofocus: true
         });
     </script>
     <script src="/js/correction_popup.js"></script>

@@ -35,7 +35,8 @@ let ExerciseSchema = mongoose.Schema({
         success: {
             type: Number,
             default: 0
-        }
+        },
+        hasSucceeded: []
     },
     awaited: {
         titles: {

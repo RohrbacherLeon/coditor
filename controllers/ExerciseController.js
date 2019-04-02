@@ -11,9 +11,14 @@ exports.getExoByLang = (req, res) => {
     Exercise.getAllValuesOf("language", function (err, languages) {
         if (err) console.log(err);
         Exercise.getAllValuesOf("tags", (err, tags) => {
+        if (err) console.log(err);
+            Exercise.find({}, function (err, exos) {
             if (err) console.log(err);
-            let locale = req.params.lang;
-            res.render("BrowsingView", { languages, locale, tags, menu: "exercises" });
+                let locale = req.params.lang;
+                let popularExos = exos.sort((a, b) => (a.success + a.fails > b.success + b.fails)).slice(0, 4);
+
+                res.render("BrowsingView", { languages, locale, tags, menu: "exercises", popularExos });
+            });
         });
     });
 };
@@ -109,6 +114,8 @@ function executeDocker (req, res, nameFile, commande, exo) {
     exec(commande, (error, stdout, stderr) => {
         Generator.remove(nameFile);
         if (error) {
+            exo.stats.fails = exo.stats.fails + 1;
+            exo.save();
             req.flash("error", "Une erreur est survenue.");
             res.redirect(req.originalUrl);
         } else {
@@ -128,23 +135,18 @@ function executeDocker (req, res, nameFile, commande, exo) {
 
             if (analyse.total === analyse.success.length) {
                 updateScore(req, exo.language);
-                let stat = {
-                    success: exo.stats.success + 1,
-                    fails: exo.stats.fails
-                };
-                Exercise.findOneAndUpdate(exo._id, { $set: { stats: stat } }, function (err, res) {
-                    if (err) console.log(err);
-                });
+                exo.stats.success = exo.stats.success + 1;
+                if (exo.stats.hasSucceeded.includes(req.user.profile.email)) {
+                    exo.stats.hasSucceeded.push(req.user.profile.email);
+                }
+                exo.save();
 
-                req.params.setParams.success = true;
+                if (req.params.setParams) {
+                    req.params.setParams.success = true;
+                }
             } else {
-                let stat = {
-                    success: exo.stats.success,
-                    fails: exo.stats.fails + 1
-                };
-                Exercise.findOneAndUpdate(exo._id, { $set: { stats: stat } }, function (err, res) {
-                    if (err) console.log(err);
-                });
+                exo.stats.fails = exo.stats.fails + 1;
+                exo.save();
             }
 
             showExercice(query, req, res, analyse.success);
