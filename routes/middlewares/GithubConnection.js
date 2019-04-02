@@ -32,6 +32,12 @@ passport.use(new GitHubStrategy({
           username: profileGithub.username,
           email: profileGithub._json.email
         };
+        newUser.score = {
+          total: 0,
+          langs: {
+            js: 0
+          }
+        };
 
         newUser.urlImage = profileGithub.photos[0].value;
         newUser.save(function (err) {

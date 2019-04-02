@@ -11,7 +11,7 @@ passport.use(new GoogleStrategy({
     callbackURL: url + "/auth/google/callback"
   },
   function (token, tokenSecret, profileGoogle, done) {
-      User.findOne({ "google.id": profileGoogle.id }, function (err, user) {
+      User.findOne({ "remote_id": profileGoogle.id }, function (err, user) {
         if (err) {
           return done(err);
         }
@@ -27,6 +27,12 @@ passport.use(new GoogleStrategy({
             last_name: profileGoogle.name.familyName
           };
           newUser.urlImage = profileGoogle.photos[0].value;
+          newUser.score = {
+            total: 0,
+            langs: {
+              js: 0
+            }
+          };
 
           newUser.save(function (err) {
             if (err) {
