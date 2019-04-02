@@ -20,7 +20,9 @@
             <div>
                 <h1>{{ exercise.title }}</h1>
                 {% if exercise.stats.fails %}
-                    <p>{{ exercise.stats.success/exercise.stats.fails }}%</p>
+                    <p>{{ exercise.stats.fails/(exercise.stats.success+exercise.stats.fails) }}%</p>
+                {% else %}
+                    <p>100%</p>
                 {% endif %}
             </div>
             <div class="description">
