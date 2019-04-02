@@ -110,6 +110,8 @@ function executeDocker (req, res, nameFile, commande, exo) {
     exec(commande, (error, stdout, stderr) => {
         Generator.remove(nameFile);
         if (error) {
+            exo.stats.fails = exo.stats.fails + 1;
+            exo.save();
             req.flash("error", "Une erreur est survenue.");
             res.redirect(req.originalUrl);
         } else {
@@ -139,7 +141,7 @@ function executeDocker (req, res, nameFile, commande, exo) {
                     req.params.setParams.success = true;
                 }
             } else {
-                exo.stats.success = exo.stats.fails + 1;
+                exo.stats.fails = exo.stats.fails + 1;
                 exo.save();
             }
 
