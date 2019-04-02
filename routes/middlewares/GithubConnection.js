@@ -15,14 +15,6 @@ passport.use(new GitHubStrategy({
       }
       // If user already exist, use it
       if (user) {
-        user.profile = {
-          username: profileGithub.username,
-          email: profileGithub._json.email
-        };
-
-        user.urlImage = profileGithub.photos[0].value;
-        user.save();
-
         return done(null, user);
       } else {
         let newUser = new User();
