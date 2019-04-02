@@ -19,11 +19,7 @@
         <div class="exercise__opened__top__subject">
             <div>
                 <h1>{{ exercise.title }}</h1>
-                {% if exercise.stats.fails %}
-                    <p>{{ exercise.stats.fails/(exercise.stats.success+exercise.stats.fails) }}%</p>
-                {% else %}
-                    <p>100%</p>
-                {% endif %}
+                <p>{{ exercise.difficulty }}%</p>
             </div>
             <div class="description">
                 {{ markdown }}
@@ -48,7 +44,8 @@
         <div class="exercise__opened__bottom">
             {% if user.type == "admin" %}
                 <button class="button button--red button--delete" type="button" data-exercise-id="{{exercise._id}}">Supprimer l'exercice</button>
-                <button class="button button--green button--modify" type="button">Modifier l'exercice</button>
+                {#<button class="button button--green button--modify" type="button" data-exercise-lang="{{exercise.language}}" data-exercise-slug="{{exercise.slug}}">Modifier l'exercice</button>#}
+                <a href="/profile/update-exercise/{{exercise.language}}/{{exercise.slug}}"><button class="button button--green" type="button">Modifier l'exercice</button></a>
             {% endif %}
             {% if user %}
                 <div id="openCorrection" class="button button--green">Afficher la correction</div>

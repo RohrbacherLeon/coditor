@@ -143,28 +143,33 @@ exports.getCreateExercisesSet = (req, res) => {
 
 exports.postCreateExercisesSet = (req, res) => {
     let exSelected = req.body.exercises_selected.split(",");
-    let slug = slugify(req.body.title);
-    if (req.user.profile.email) {
-        Set.create({
-            title: req.body.title,
-            slug: slug,
-            exercises: exSelected,
-            author: req.user.profile.email
-        }, function (err, set) {
-            if (err) console.log(err);
-            exSelected.forEach(exercise => {
-                Exercise.findById({ _id: exercise }, function (err, data) {
-                    if (err) console.log(err);
-                    data.inSets.push(set.id);
-                    data.save();
-                });
-            });
-            req.flash("success", "Série d'exercices créée avec succès");
-            res.redirect("/profile");
-        });
-    } else {
-        req.flash("error", "Une erreur est survenue.");
+    if (exSelected.length < 2) {
+        req.flash("error", "La série doit comporter au moins 2 exercices.");
         res.redirect(req.originalUrl);
+    } else {
+        let slug = slugify(req.body.title);
+        if (req.user.profile.email) {
+            Set.create({
+                title: req.body.title,
+                slug: slug,
+                exercises: exSelected,
+                author: req.user.profile.email
+            }, function (err, set) {
+                if (err) console.log(err);
+                exSelected.forEach(exercise => {
+                    Exercise.findById({ _id: exercise }, function (err, data) {
+                        if (err) console.log(err);
+                        data.inSets.push(set.id);
+                        data.save();
+                    });
+                });
+                req.flash("success", "Série d'exercices créée avec succès");
+                res.redirect("/profile");
+            });
+        } else {
+            req.flash("error", "Une erreur est survenue.");
+            res.redirect(req.originalUrl);
+        }
     }
 };
 
