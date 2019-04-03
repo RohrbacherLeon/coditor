@@ -118,8 +118,9 @@ exports.postExercise = (req, res) => {
 
 function executeDocker (req, res, nameFile, commande, exo) {
     exec(commande, (error, stdout, stderr) => {
+        if (error) console.log(error);
         Generator.remove(nameFile);
-        if (error) {
+        if (stderr) {
             exo.stats.fails = exo.stats.fails + 1;
             exo.save();
             req.flash("error", "Une erreur est survenue.");
