@@ -39,10 +39,11 @@
                 </div>
             </div>
         </div>
-        {% if skeletonText %} <textarea name="function" id="js-textarea" cols="30" rows="10">{{skeletonText}}</textarea>
-        {% else %}<textarea name="function" id="js-textarea" cols="30" rows="10">{{content.fct}}</textarea>
+        {% if skeletonText %}
+            <textarea name="function" id="js-textarea" cols="30" rows="10">{{skeletonText}}</textarea>
+        {% else %}
+            <textarea name="function" id="js-textarea" cols="30" rows="10">{{content.fct}}</textarea>
         {% endif %}
-        </div>
         <div class="exercise__opened__bottom">
             {% if user.type == "admin" %}
                 <button class="button button--red button--delete" type="button" data-exercise-id="{{exercise._id}}">Supprimer l'exercice</button>
