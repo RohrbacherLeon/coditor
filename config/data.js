@@ -53,9 +53,9 @@ db.exercises.insert({
         "success": 0
     },
     "awaited": {
-        "titles": [ "la fonction doit être définie", "une fonction est attendue", "la fonction doit avoir deux arguments", "3-1", "6-6" ]
+        "titles": ["la fonction doit être définie", "une fonction est attendue", "la fonction doit avoir deux arguments", "3-1", "6-6"]
     },
-    "tags": [ "function" ],
+    "tags": ["function"],
     "title": "soustraction",
     "slug": "soustraction",
     "language": "js",
@@ -65,18 +65,72 @@ db.exercises.insert({
 });
 
 db.exercises.insert({
-     "stats": {
+    "stats": {
         "fails": 0,
         "success": 0
     },
     "awaited": {
-        "titles": [ "la methode soustrait", "fausse methode" ]
+        "titles": ["la methode soustrait", "fausse methode"]
     },
-    "tags": [ "function" ],
+    "tags": ["function"],
     "title": "addition",
     "slug": "addition",
     "language": "php",
     "author": "test@test.fr",
     "description": "## Addition\r\n\r\nEcrire une fonction nommée *add* qui additionne deux nombres.",
     "hasSucceeded": []
+});
+
+db.exercises.insert({
+    "stats": {
+        "fails": 2,
+        "success": 0,
+        "hasSucceeded": [ ]
+    },
+    "awaited": {
+        "titles": [ "filtre tab" ]
+    },
+    "tags": [ "filtre", "tableau", "fonction" ],
+    "inSets": [ ],
+    "title": "Filtrer un tableau",
+    "slug": "filtrer-un-tableau",
+    "language": "php",
+    "author": "admin@admin.fr",
+    "description": "Ecrire une fonction qui filtre un tableau donné en paramètre. La fonction doit se nommer *filtretab*."
+});
+
+db.exercises.insert({
+    "stats": {
+        "fails": 0,
+        "success": 1,
+        "hasSucceeded": [ ]
+    },
+    "awaited": {
+        "titles": [ "somme tab" ]
+    },
+    "tags": [ "fonction", "somme" ],
+    "inSets": [ ],
+    "title": "Calculer la somme d'un tableau",
+    "slug": "calculer-la-somme-dun-tableau",
+    "language": "php",
+    "author": "admin@admin.fr",
+    "description": "Calculer la somme d'un tableau passé en paramètre de la fonction nommée *sommetab*."
+});
+
+db.exercises.insert({
+    "stats": {
+        "fails": 0,
+        "success": 0,
+        "hasSucceeded": [ ]
+    },
+    "awaited": {
+        "titles": [ "factoriel" ]
+    },
+    "tags": [ "fonction" ],
+    "inSets": [ ],
+    "title": "Factoriel",
+    "slug": "factoriel",
+    "language": "php",
+    "author": "admin@admin.fr",
+    "description": "Ecrire une fonction factorielle d'un nombre nommée *factoriel*."
 });

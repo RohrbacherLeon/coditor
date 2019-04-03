@@ -14,11 +14,8 @@ exports.getExoByLang = (req, res) => {
         if (err) console.log(err);
             Exercise.find({}, function (err, exos) {
             if (err) console.log(err);
-                let locale = req.params.lang;
-                let popularExos = exos.sort((a, b) => (a.success + a.fails > b.success + b.fails)).slice(0, 4);
-
-                res.render("BrowsingView", { languages, locale, tags, menu: "exercises", popularExos });
-            });
+            let popularExos = exos.sort((a, b) => (a.success + a.fails > b.success + b.fails)).slice(0, 4);
+            res.render("BrowsingView", { languages, locale: req.params.lang, tags, menu: "exercises", popularExos });
         });
     });
 };
@@ -118,8 +115,9 @@ exports.postExercise = (req, res) => {
 
 function executeDocker (req, res, nameFile, commande, exo) {
     exec(commande, (error, stdout, stderr) => {
+        if (error) console.log(error);
         Generator.remove(nameFile);
-        if (error) {
+        if (stderr) {
             exo.stats.fails = exo.stats.fails + 1;
             exo.save();
             req.flash("error", "Une erreur est survenue.");
@@ -141,9 +139,11 @@ function executeDocker (req, res, nameFile, commande, exo) {
 
             if (analyse.total === analyse.success.length) {
                 updateScore(req, exo.language);
-                exo.stats.success = exo.stats.success + 1;
-                if (exo.stats.hasSucceeded.includes(req.user.profile.email)) {
-                    exo.stats.hasSucceeded.push(req.user.profile.email);
+                if (req.user.type === "student") {
+                    exo.stats.success = exo.stats.success + 1;
+                    if (!exo.stats.hasSucceeded.includes(req.user.profile.email)) {
+                        exo.stats.hasSucceeded.push(req.user.profile.email);
+                    }
                 }
                 exo.save();
 
@@ -151,7 +151,9 @@ function executeDocker (req, res, nameFile, commande, exo) {
                     req.params.setParams.success = true;
                 }
             } else {
-                exo.stats.fails = exo.stats.fails + 1;
+                if (req.user.type === "student") {
+                    exo.stats.fails = exo.stats.fails + 1;
+                }
                 exo.save();
             }
 

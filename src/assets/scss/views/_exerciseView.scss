@@ -2,100 +2,104 @@
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    height: 85vh;
 
-    &__top{
+    .exercise-container{
+        height: 100%;
 
-        display: flex;
-        flex-grow: 1;
-        height: calc(100vh - 214px);
-
-        &__subject{
-            background-color: lightgray;
-            width: 100%;
-            padding: 15px;
-            flex: 1;
+        .exercise__opened__top{
             display: flex;
-            flex-direction: column;
+            height: 90%;
     
-            .exercise-header{
-                border-bottom: 1px solid $primary-color !important;
-                box-shadow: 0 1.75rem 1.75rem -1.75rem rgba(58,59,69,.25)!important;
-                border-radius: 10px;
-                padding: 0;
-                margin: 0;
-                text-align: center;
-            }
-
-            .exercise-bottom{
+            &__subject{
+                background-color: lightgray;
+                width: 100%;
+                padding: 15px;
+                flex: 1;
                 display: flex;
                 flex-direction: column;
-                height: 100%;
-                overflow: auto;
-
-                .description{
-                    flex-grow: 1;
-                }
         
-                .waitings{
-                    .waiting{
-                        background-color: whitesmoke;
-                        margin-bottom: 5px;
-                        padding: 10px 15px;
-                        border-radius: 5px;
+                .exercise-header{
+                    border-bottom: 1px solid $primary-color !important;
+                    box-shadow: 0 1.75rem 1.75rem -1.75rem rgba(58,59,69,.25)!important;
+                    border-radius: 10px;
+                    padding: 0;
+                    margin: 0;
+                    text-align: center;
+                }
     
-                        &.success{
-                            border: 1px solid green;
-                            i{
-                                color: green;
+                .exercise-bottom{
+                    display: flex;
+                    flex-direction: column;
+                    height: 100%;
+                    overflow: auto;
+    
+                    .description{
+                        flex-grow: 1;
+                    }
+            
+                    .waitings{
+                        .waiting{
+                            background-color: whitesmoke;
+                            margin-bottom: 5px;
+                            padding: 10px 15px;
+                            border-radius: 5px;
+        
+                            &.success{
+                                border: 1px solid green;
+                                i{
+                                    color: green;
+                                }
                             }
-                        }
-    
-                        &.error{
-                            border: 1px solid red;
-                            i{
-                                color: red;
+        
+                            &.error{
+                                border: 1px solid red;
+                                i{
+                                    color: red;
+                                }
                             }
                         }
                     }
                 }
             }
-        }
-    
-        .CodeMirror{
-            flex: 1;
-            height: auto;
-            overflow: auto;
-        }
-    }
-
-    &__bottom{
-        background-color: #333;
-        display: flex;
-        justify-content: space-between;
-        padding: 20px;
-
-        .feedback{
-            li{
-                &.success{
-                    color: green;
-                }
-
-                &.fail{
-                    color: red;
-                }
-                margin-bottom: 5px;
+        
+            .CodeMirror{
+                flex: 1;
+                height: auto;
+                overflow: auto;
             }
         }
-
-        .button{
+    
+        .exercise__opened__bottom{
+            background-color: #333;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 7px;
+            justify-content: space-between;
+            padding: 15px;
+            height: 10%;
+            box-sizing: border-box;
+    
+            .feedback{
+                li{
+                    &.success{
+                        color: green;
+                    }
+    
+                    &.fail{
+                        color: red;
+                    }
+                    margin-bottom: 5px;
+                }
+            }
 
-            &.button--green{
-                background-color: green;
-                color: white;
+            a{
+                display: flex;
+            }
+    
+            .button{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 7px;
             }
         }
     }
