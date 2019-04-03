@@ -33,7 +33,7 @@ function (token, tokenSecret, profileGoogle, done) {
                     php: 0
                 }
             };
-			newUser.urlImage = profileGoogle.photos[0].value;
+      newUser.urlImage = profileGoogle.photos[0].value.replace("s50", "");
 			newUser.save(function (err) {
 				if (err) {
 					throw err;

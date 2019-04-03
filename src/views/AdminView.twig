@@ -23,7 +23,7 @@
             <td>{{request.profile.first_name}}</td>
             <td>{{request.profile.email}}</td>
             <td>{{request.documents}}</td>
-            <td><form action="/admin/{{request._id}}" method="POST"><button type="submit">Inscrire</button></form></td>
+            <td><form action="/admin/{{request._id}}" method="POST"><button class="button button--blue" type="submit">Inscrire</button></form></td>
         </tr>
     {% endfor %}
     </tbody>
