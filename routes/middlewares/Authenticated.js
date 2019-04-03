@@ -7,6 +7,14 @@ function ensureAuthenticated (req, res, next) {
     }
 };
 
+function notAuthenticated (req, res, next) {
+    if (req.isAuthenticated()) {
+        res.redirect("/exercises");
+    } else {
+        return next();
+    }
+};
+
 function isTeacher (req, res, next) {
     if ((req.user.type === "teacher" && !req.user.pending) || req.user.type === "admin") {
         return next();
@@ -30,6 +38,7 @@ function isConnectedWithLocalAccount (req, res, next) {
 
 module.exports = {
     ensureAuthenticated,
+    notAuthenticated,
     isTeacher,
     isAdmin,
     isConnectedWithLocalAccount

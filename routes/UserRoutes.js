@@ -4,17 +4,18 @@ const UserController = require("../controllers/UserController");
 const passport = require("./middlewares/LocalConnection");
 const googlePassport = require("./middlewares/GoogleConnection");
 const githubPassport = require("./middlewares/GithubConnection");
+const { notAuthenticated } = require("./middlewares/Authenticated");
 
 router.get("/", (req, res) => {
     res.render("HomeView", { menu: "accueil" });
 });
 
-router.get("/login", (req, res) => {
+router.get("/login", notAuthenticated, (req, res) => {
     res.render("LoginView", { menu: "login" });
 });
 router.post("/login", passport.authenticate("local", { successRedirect: "/exercises", failureRedirect: "/login", failureFlash: "Adresse email ou mot de passe incorrecte." }));
 
-router.get("/register", (req, res) => {
+router.get("/register", notAuthenticated, (req, res) => {
     res.render("RegisterView", { menu: "register" });
 });
 router.post("/register", UserController.register_post);
