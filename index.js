@@ -77,7 +77,7 @@ app.use(function (req, res, next) {
     next();
 });
 /*******************/
-const { ensureAuthenticated, isAdmin } = require("./routes/middlewares/Authenticated");
+const { ensureAuthenticated, isTeacher, isAdmin } = require("./routes/middlewares/Authenticated");
 
 /* **** Routes **** */
 app.use("/", require("./routes/UserRoutes"));
@@ -87,6 +87,7 @@ app.use("/profile", ensureAuthenticated, require("./routes/ProfileRoutes"));
 app.use("/profile/settings", ensureAuthenticated, require("./routes/SettingsRoutes"));
 app.use("/api", require("./routes/ApiRoutes"));
 app.use("/admin", isAdmin, require("./routes/AdminRoutes"));
+app.use("/doc", isTeacher, require("./routes/DocumentationRoutes"));
 /*******************/
 
 server.listen(config.app.port, () => {
