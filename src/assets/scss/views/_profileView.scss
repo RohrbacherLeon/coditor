@@ -100,9 +100,29 @@
         grid-gap: 10px;
 
         .serie{
-            border:1px solid black;
             padding: 10px;
             display: block;
+            overflow: auto;
+            box-shadow: 0 0 1px 1px lightgray;
+            border-radius: 4px;
+            background-color: whitesmoke; 
+            text-align: center;
+
+            &:hover{
+                background-color: lightgrey;
+                transition: background-color 0.5s linear;
+
+                h4{
+                    border-bottom: 1px solid gray;
+                }
+            }
+
+            h4{
+                border-bottom: 1px solid lightgray;
+                padding-bottom: 5px;
+                font-weight: bold;
+                font-size: 1.15em;
+            }
 
             .button{
                 margin-top: 15px;
