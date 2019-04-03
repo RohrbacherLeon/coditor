@@ -14,9 +14,6 @@
         <img src='/images/lang/js.png' id="lang_js">
         <img src='/images/lang/php.png' id="lang_php">
     </div>
-    {% if user.type == "teacher" and user.firsttime %}
-        {% include 'partials/instructions.twig' %}
-    {% else %}
     <div class="browsing__exercises">
         <div class="popular">
             <h2 class="title"><i class="fa fa-star" aria-hidden="true"></i> Les plus populaires</h2>
@@ -29,9 +26,7 @@
         </div>
         <h2 class="title">Tous les exercices :</h2>
         {% include "partials/browser.twig" with tags %}
-
     </div>
-    {% endif %}
 </div>
 
 {% endblock %}

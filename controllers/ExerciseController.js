@@ -12,8 +12,7 @@ exports.getExoByLang = (req, res) => {
         if (err) console.log(err);
         Exercise.getAllValuesOf("tags", (err, tags) => {
             if (err) console.log(err);
-            let locale = req.params.lang;
-            res.render("BrowsingView", { languages, locale, tags, menu: "exercises" });
+            res.render("BrowsingView", { languages, locale: req.params.lang, tags, menu: "exercises" });
         });
     });
 };
