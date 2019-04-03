@@ -14,7 +14,6 @@
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
         min-width: 260px;
-        height: 200px;
         overflow: scroll;
         grid-column-gap: 20px;
         grid-row-gap: 20px;
