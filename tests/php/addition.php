@@ -9,6 +9,6 @@ class SubTest extends \PHPUnit\Framework\TestCase
 
     public function testFausseMethode()
     {
-        $this->assertEquals(10, add(7,3));
+        $this->assertEquals(10, add(7,5));
     }
 }

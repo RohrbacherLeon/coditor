@@ -118,8 +118,9 @@ exports.postExercise = (req, res) => {
 
 function executeDocker (req, res, nameFile, commande, exo) {
     exec(commande, (error, stdout, stderr) => {
+        if (error) console.log(error);
         Generator.remove(nameFile);
-        if (error) {
+        if (stderr) {
             exo.stats.fails = exo.stats.fails + 1;
             exo.save();
             req.flash("error", "Une erreur est survenue.");
@@ -141,9 +142,11 @@ function executeDocker (req, res, nameFile, commande, exo) {
 
             if (analyse.total === analyse.success.length) {
                 updateScore(req, exo.language);
-                exo.stats.success = exo.stats.success + 1;
-                if (exo.stats.hasSucceeded.includes(req.user.profile.email)) {
-                    exo.stats.hasSucceeded.push(req.user.profile.email);
+                if (req.user.type === "student") {
+                    exo.stats.success = exo.stats.success + 1;
+                    if (!exo.stats.hasSucceeded.includes(req.user.profile.email)) {
+                        exo.stats.hasSucceeded.push(req.user.profile.email);
+                    }
                 }
                 exo.save();
 
@@ -151,7 +154,9 @@ function executeDocker (req, res, nameFile, commande, exo) {
                     req.params.setParams.success = true;
                 }
             } else {
-                exo.stats.fails = exo.stats.fails + 1;
+                if (req.user.type === "student") {
+                    exo.stats.fails = exo.stats.fails + 1;
+                }
                 exo.save();
             }
 
