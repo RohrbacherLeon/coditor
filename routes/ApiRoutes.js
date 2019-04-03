@@ -29,7 +29,6 @@ router.get("/exercises/:lang", (req, res) => {
 
 router.get("/tags/filter", (req, res) => {
     if (req.query.tags) {
-        console.log(req.query.tags);
         Exercise.byTags(req.query.tags, req.query.lang, (err, exercises) => {
             if (err) console.log(err);
             res.setHeader("Content-Type", "application/json");
