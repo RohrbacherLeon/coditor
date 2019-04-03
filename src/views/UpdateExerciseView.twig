@@ -14,7 +14,8 @@
             <div class="text-container">
                 <div class="form-group">
                     <label for="title">Titre</label>
-                    <input type='text' name='title' id="title" value="{{exercise.title}}">
+                    {{session.title }}
+                    <input type='text' name='title' id="title" value="{{session.title ?: exercise.title}}">
                 </div>
 
                 <div class="form-group">
@@ -29,9 +30,15 @@
                         <div class="autocomplete">
                             <div class="autocomplete-tags"></div>
                             <select class="createTag" multiple="multiple">
-                                {% for tag in exercise.tags %}
-                                    <option value="{{tag}}" selected>{{tag}}</option>
-                                {% endfor %}
+                                {% if session.arrayTags %}
+                                    {% for tag in session.arrayTags %}
+                                        <option value="{{tag}}" selected>{{tag}}</option>
+                                    {% endfor %}
+                                {% else %}
+                                    {% for tag in tags %}
+                                        <option value="{{tag}}" {{ tag in exercise.tags ? "selected" : "" }}>{{tag}}</option>
+                                    {% endfor %}
+                                {% endif %}
                             </select>
                         </div>
                     </div>
@@ -59,7 +66,7 @@
         <div class="bottom-container">
             <div class="form-group">
                 <label>Description de l'exercice</label>
-                <textarea id="md" name="description">{{exercise.description}}</textarea>
+                <textarea id="md" name="description">{{session.description ?: exercise.description}}</textarea>
             </div>
 
             <div class="button_layout button_layout--right">
