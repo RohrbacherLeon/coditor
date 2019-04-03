@@ -15,7 +15,7 @@
 {% include './partials/popup_correction.twig' %}
 
 <div class="exercise__opened">
-    <form method='post'>
+    <form class="exercise-container" method='post'>
         <div class="exercise__opened__top">
             <div class="exercise__opened__top__subject">
                 <div class="exercise-header">
@@ -51,7 +51,8 @@
 
             {% if user and correctionText %}
                 <div id="openCorrection" class="button button--green">Afficher la correction</div>
-            {% endif %}    
+            {% endif %}
+            
             {% if not user %}
                 <a href="/login" class="button button--blue">Se connecter</a>
             {% else %}
