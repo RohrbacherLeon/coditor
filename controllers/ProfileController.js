@@ -29,7 +29,6 @@ exports.getProfile = (req, res) => {
             Set.getAll(function (err, allSeries) {
                 if (err) console.log(err);
                 allSeries.forEach(serie => {
-                    console.log(serie);
                     if (serie.hasSucceeded.includes(req.user.profile.email)) {
                         series.push(serie);
                     }

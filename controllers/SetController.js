@@ -50,7 +50,10 @@ exports.getExerciseInSet = (req, res) => {
                             // on get l'exo next
                             Exercise.findById(set.exercises[index + 1], function (err, data) {
                                 if (err) console.log(err);
-                                req.params.next = data;
+                                req.params.setParams = {
+                                    next: data,
+                                    success: false
+                                };
                                 ExerciseController.getExercise(req, res);
                             });
                         } else {
@@ -116,4 +119,8 @@ exports.postExerciseInSet = (req, res) => {
             }
         });
     });
+};
+
+exports.postSetSuccess = (req, res) => {
+    console.log(req);
 };
