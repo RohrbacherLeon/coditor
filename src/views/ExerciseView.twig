@@ -47,7 +47,7 @@
                 {#<button class="button button--green button--modify" type="button" data-exercise-lang="{{exercise.language}}" data-exercise-slug="{{exercise.slug}}">Modifier l'exercice</button>#}
                 <a href="/profile/update-exercise/{{exercise.language}}/{{exercise.slug}}"><button class="button button--green" type="button">Modifier l'exercice</button></a>
             {% endif %}
-            {% if user %}
+            {% if user and correctionText %}
                 <div id="openCorrection" class="button button--green">Afficher la correction</div>
             {% endif %}
             
