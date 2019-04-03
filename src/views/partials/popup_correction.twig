@@ -10,19 +10,12 @@
 </div>
 
 
-{% block scripts %}
-        
+{% block scripts %} 
     <script>
         let editorCorrection = CodeMirror.fromTextArea(document.getElementById('js-correction'), {
             lineNumbers: true,
             mode:  "javascript",
             theme: 'ambiance'
         });
-    </script>
-
-    <script>
-            $('#js-dropdown-head').click(function(){
-                $('#js-dropdown').toggleClass('open')
-            });
     </script>
 {% endblock %}

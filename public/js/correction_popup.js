@@ -24,7 +24,3 @@ window.onclick = function(event) {
         popup.style.display = "none";
     }
 }
-
-$('#js-dropdown-head').click(function() {
-    $('#js-dropdown').toggleClass('open')
-})
