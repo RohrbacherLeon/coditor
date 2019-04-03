@@ -17,24 +17,26 @@
 <div class="exercise__opened">
     <form class="exercise__opened__top" method='post'>
         <div class="exercise__opened__top__subject">
-            <div>
+            <div class="exercise-header">
                 <h1>{{ exercise.title }}</h1>
-                <p>{{ exercise.difficulty }}%</p>
+                <p>Pourcentage de réussite : {{ exercise.difficulty }}%</p>
             </div>
-            <div class="description">
-                {{ markdown }}
-            </div>
-            <div class="waitings">
-                {% for title in exercise.awaited.titles %}
-                    <div class="waiting {{ title in results ? 'success' : 'error' }}">
-                        {% if title in results %}
-                            <i class="far fa-check-circle"></i>
-                        {% else %}
-                            <i class="far fa-times-circle"></i>
-                        {% endif %}
-                        {{title}}
-                    </div>
-                {% endfor %}
+            <div class="exercise-bottom">
+                <div class="description">
+                    {{ markdown }}
+                </div>
+                <div class="waitings">
+                    {% for title in exercise.awaited.titles %}
+                        <div class="waiting {{ title in results ? 'success' : 'error' }}">
+                            {% if title in results %}
+                                <i class="far fa-check-circle"></i>
+                            {% else %}
+                                <i class="far fa-times-circle"></i>
+                            {% endif %}
+                            {{title}}
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
         {% if skeletonText %} <textarea name="function" id="js-textarea" cols="30" rows="10">{{skeletonText}}</textarea>
