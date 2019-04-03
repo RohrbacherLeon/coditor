@@ -17,7 +17,7 @@ exports.getProfile = (req, res) => {
             });
         });
     } else {
-        res.render("ProfileView", { count: "xx", menu: "profile" });
+        res.render("ProfileView", { menu: "profile" });
     }
 };
 

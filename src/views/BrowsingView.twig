@@ -18,10 +18,14 @@
         <div class="popular">
             <h2 class="title"><i class="fa fa-star" aria-hidden="true"></i> Les plus populaires</h2>
             <div class="popular__list">
-                <a href="#" class="exercise"><p>Nom</p></a>
-                <a href="#" class="exercise"><p>Nom</p></a>
-                <a href="#" class="exercise"><p>Nom</p></a>
-                <a href="#" class="exercise"><p>Nom</p></a>
+                {% for popular in popularExos %}
+                    <div class="exercise-container" id="{{popular._id}}">
+                        <a href="/exercises/{{popular.language}}/{{popular.slug}}" class="exercise {{popular.language}}">
+                            <h4>{{popular.title}}</h4>
+                            <p>{{popular.author}}</p>
+                        </a>
+                    </div>
+                {% endfor %}
             </div>
         </div>
         <h2 class="title">Tous les exercices :</h2>
