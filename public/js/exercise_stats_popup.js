@@ -15,13 +15,17 @@ btns.each(function() {
                 <span class="close">&times;</span>
                 <h2>Succès : ${response.stats.success } <i class="far fa-check-circle"></i></h2>
                 <h2>Echecs : ${ response.stats.fails } <i class="far fa-times-circle"></i></h2>
-                <h2>Elèves ayant réussi cet exercice :</h2>
-                <ul>
              `;
-            $.each(response.stats.hasSucceeded, function( index, email ) {
-                stats += "<li>"+email+"</li>";
-            });
-            stats += "</ul></div>"
+            if (response.stats.hasSucceeded.length > 0) {
+                stats += "<h2>Elèves ayant réussi cet exercice :</h2><ul>";
+                $.each(response.stats.hasSucceeded, function( index, email ) {
+                    stats += "<li>"+email+"</li>";
+                });
+                stats += "</ul></div>"
+            } else {
+                stats += "</div>"
+            }
+
             popup.innerHTML = stats;
             let span = document.getElementsByClassName("close")[0];
             span.onclick = function() {

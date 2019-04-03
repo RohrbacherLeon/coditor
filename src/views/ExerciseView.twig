@@ -15,31 +15,32 @@
 {% include './partials/popup_correction.twig' %}
 
 <div class="exercise__opened">
-    <form class="exercise__opened__top" method='post'>
-        <div class="exercise__opened__top__subject">
-            <div>
-                <h1>{{ exercise.title }}</h1>
-                <p>{{ exercise.difficulty }}%</p>
+    <form method='post'>
+        <div class="exercise__opened__top">
+            <div class="exercise__opened__top__subject">
+                <div>
+                    <h1>{{ exercise.title }}</h1>
+                    <p>{{ exercise.difficulty }}%</p>
+                </div>
+                <div class="description">
+                    {{ markdown }}
+                </div>
+                <div class="waitings">
+                    {% for title in exercise.awaited.titles %}
+                        <div class="waiting {{ title in results ? 'success' : 'error' }}">
+                            {% if title in results %}
+                                <i class="far fa-check-circle"></i>
+                            {% else %}
+                                <i class="far fa-times-circle"></i>
+                            {% endif %}
+                            {{title}}
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
-            <div class="description">
-                {{ markdown }}
-            </div>
-            <div class="waitings">
-                {% for title in exercise.awaited.titles %}
-                    <div class="waiting {{ title in results ? 'success' : 'error' }}">
-                        {% if title in results %}
-                            <i class="far fa-check-circle"></i>
-                        {% else %}
-                            <i class="far fa-times-circle"></i>
-                        {% endif %}
-                        {{title}}
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
-        {% if skeletonText %} <textarea name="function" id="js-textarea" cols="30" rows="10">{{skeletonText}}</textarea>
-        {% else %}<textarea name="function" id="js-textarea" cols="30" rows="10">{{content.fct}}</textarea>
-        {% endif %}
+            {% if skeletonText %} <textarea name="function" id="js-textarea" cols="30" rows="10">{{skeletonText}}</textarea>
+            {% else %}<textarea name="function" id="js-textarea" cols="30" rows="10">{{content.fct}}</textarea>
+            {% endif %}
         </div>
         <div class="exercise__opened__bottom">
             {% if user.type == "admin" %}
@@ -47,8 +48,9 @@
                 {#<button class="button button--blue button--modify" type="button" data-exercise-lang="{{exercise.language}}" data-exercise-slug="{{exercise.slug}}">Modifier l'exercice</button>#}
                 <a href="/profile/update-exercise/{{exercise.language}}/{{exercise.slug}}"><button class="button button--blue" type="button">Modifier l'exercice</button></a>
             {% endif %}
-            {% if user %}
-                <div id="openCorrection" class="button button--blue">Afficher la correction</div>
+
+            {% if user and correctionText %}
+                <div id="openCorrection" class="button button--green">Afficher la correction</div>
             {% endif %}
             
             
