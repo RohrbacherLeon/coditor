@@ -3,11 +3,20 @@ const router = express.Router();
 const ExerciseController = require("../controllers/ExerciseController");
 const Exercise = require("../models/Exercise");
 const { ensureAuthenticated } = require("./middlewares/Authenticated");
+const User = require("../models/User");
 
 router.get("/", (req, res) => {
     Exercise.getAllValuesOf("tags", (err, tags) => {
-        if (err) console.log(err);
-        res.render("BrowsingView", { tags, menu: "exercises" });
+        if (err) throw (err);
+        if (typeof req.user !== "undefined" && req.user.type === "teacher" && req.user.firsttime === true) {
+            req.user.firsttime = false;
+            User.findOneAndUpdate(req.user._id, { $set: { firsttime: req.user.firsttime } }, (err) => {
+                if (err) throw err;
+                res.render("BrowsingView", { tags, menu: "exercises", firsttime: true });
+            });
+        } else {
+            res.render("BrowsingView", { tags, menu: "exercises", firsttime: false });
+        }
     });
 });
 

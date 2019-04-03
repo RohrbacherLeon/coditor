@@ -18,7 +18,8 @@ let UserSchema = mongoose.Schema({
     score: {
         total: Number,
         langs: Object
-    }
+    },
+    firsttime: Boolean
 });
 
 UserSchema.statics.createUser = function (data, callback) {
@@ -50,6 +51,9 @@ UserSchema.statics.createUser = function (data, callback) {
                     java: 0
                 }
             };
+            if (typeof data.firsttime !== "undefined" && data.type === "teacher") {
+                newUser.firsttime = data.firsttime;
+            }
             newUser.save(callback);
         });
     });

@@ -53,9 +53,9 @@ db.exercises.insert({
         "success": 0
     },
     "awaited": {
-        "titles": [ "la fonction doit être définie", "une fonction est attendue", "la fonction doit avoir deux arguments", "3-1", "6-6" ]
+        "titles": ["la fonction doit être définie", "une fonction est attendue", "la fonction doit avoir deux arguments", "3-1", "6-6"]
     },
-    "tags": [ "function" ],
+    "tags": ["function"],
     "title": "soustraction",
     "slug": "soustraction",
     "language": "js",
@@ -64,14 +64,14 @@ db.exercises.insert({
 });
 
 db.exercises.insert({
-     "stats": {
+    "stats": {
         "fails": 0,
         "success": 0
     },
     "awaited": {
-        "titles": [ "la methode soustrait", "fausse methode" ]
+        "titles": ["la methode soustrait", "fausse methode"]
     },
-    "tags": [ "function" ],
+    "tags": ["function"],
     "title": "addition",
     "slug": "addition",
     "language": "php",
