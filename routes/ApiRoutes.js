@@ -11,12 +11,19 @@ router.get("/tags", (req, res) => {
 });
 
 router.get("/exercises", (req, res) => {
-    Exercise.find({}, (err, exercises) => {
-        if (err) console.log(err);
-
-        res.setHeader("Content-Type", "application/json");
-        res.send(JSON.stringify(exercises));
-    });
+    if (req.query.id) {
+        Exercise.findById(req.query.id, (err, exercice) => {
+            if (err) console.log(err);
+            res.setHeader("Content-Type", "application/json");
+            res.send(JSON.stringify(exercice));
+        });
+    } else {
+        Exercise.find({}, (err, exercises) => {
+            if (err) console.log(err);
+            res.setHeader("Content-Type", "application/json");
+            res.send(JSON.stringify(exercises));
+        });
+    }
 });
 
 router.get("/exercises/:lang", (req, res) => {

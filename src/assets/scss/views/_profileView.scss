@@ -178,6 +178,27 @@
                     background-color: gray;
                 }
             }
+            .link-stats{
+                height: 28px;
+                width: 46px;
+                position: absolute;
+                top: 0;
+                right: 0;
+                color: black;
+                background-color: lightgrey;
+                border-right: 2px gray solid;
+                transition: all 0.5s linear;
+                padding: 3px;
+                padding-left: 15px;
+                padding-right: 15px;
+                border-radius: 0 0 4px 4px;
+                margin-right: 92px;
+                cursor: pointer;
+
+                &:hover{
+                    background-color: gray;
+                }
+            }
         }
     }
 }
