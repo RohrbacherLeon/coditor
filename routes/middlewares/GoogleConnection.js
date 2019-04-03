@@ -26,7 +26,7 @@ passport.use(new GoogleStrategy({
             first_name: profileGoogle.name.givenName,
             last_name: profileGoogle.name.familyName
           };
-          newUser.urlImage = profileGoogle.photos[0].value;
+          newUser.urlImage = profileGoogle.photos[0].value.replace("s50", "");
 
           newUser.save(function (err) {
             if (err) {
