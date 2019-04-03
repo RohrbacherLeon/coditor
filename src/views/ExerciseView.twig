@@ -57,7 +57,9 @@
 
 {% block scripts %}
 
+    <script src="/js/codemirror/mode/clike/clike.js"></script>
     <script src="/js/codemirror/mode/javascript/javascript.js"></script>
+    <script src="/js/codemirror/mode/php/php.js"></script>
     <script src="/js/codemirror/addon/lint/lint.js"></script>
     <script src="/js/codemirror/addon/lint/javascript-lint.js"></script>
     <script src="/js/codemirror/addon/hint/show-hint.js"></script>
@@ -71,7 +73,7 @@
                 linter = { esversion: 6 };
                 break;
             case "php":
-                lang = "php";
+                lang = "text/x-php";
                 linter = false;
                 break;
             default:
