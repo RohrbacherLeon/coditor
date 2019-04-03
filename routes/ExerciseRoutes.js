@@ -9,13 +9,13 @@ router.get("/", (req, res) => {
     Exercise.getAllValuesOf("tags", (err, tags) => {
         if (err) throw (err);
         if (typeof req.user !== "undefined" && req.user.type === "teacher" && req.user.firsttime === true) {
-            req.user.firsttime = false;
-            User.findOneAndUpdate(req.user._id, { $set: { firsttime: req.user.firsttime } }, (err) => {
+            User.updateOne({ _id: req.user._id }, { $set: { firsttime: false } }, (err, user) => {
                 if (err) throw err;
-                res.render("BrowsingView", { tags, menu: "exercises", firsttime: true });
+                req.user = user;
+                res.render("BrowsingView", { tags, menu: "exercises" });
             });
         } else {
-            res.render("BrowsingView", { tags, menu: "exercises", firsttime: false });
+            res.render("BrowsingView", { tags, menu: "exercises" });
         }
     });
 });

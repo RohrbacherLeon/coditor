@@ -14,7 +14,7 @@
         <img src='/images/lang/js.png' id="lang_js">
         <img src='/images/lang/php.png' id="lang_php">
     </div>
-    {% if user.type == "teacher" and firsttime %}
+    {% if user.type == "teacher" and user.firsttime %}
         {% include 'partials/instructions.twig' %}
     {% else %}
     <div class="browsing__exercises">
