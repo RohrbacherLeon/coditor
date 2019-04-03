@@ -17,6 +17,11 @@ let SetSchema = mongoose.Schema({
         required: true,
         default: []
     },
+    hasSucceeded: {
+        type: Array,
+        required: true,
+        default: []
+    },
     author: {
         type: String,
         required: true
@@ -31,6 +36,10 @@ SetSchema.statics.ByAuthor = function (author, callback) {
 SetSchema.statics.getSetBySlug = function (slug, callback) {
     let query = { slug };
     Set.find(query, callback);
+};
+
+SetSchema.statics.getAll = function (callback) {
+    Set.find({}, callback);
 };
 
 var Set = mongoose.model("Set", SetSchema);
