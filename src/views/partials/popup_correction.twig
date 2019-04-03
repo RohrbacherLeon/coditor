@@ -3,19 +3,6 @@
     <div class="correction-content">
         <span class="close">&times;</span>
             {# If correction exist, print it #}
-        {% if correctionText %} <textarea name="function" id="js-correction" cols="30" rows="10">{{correctionText}}</textarea>
-        {% else %}<textarea name="function" id="js-correction" cols="30" rows="10">Aucune correction proposée.</textarea>
-        {% endif %}
+        <textarea name="function" id="js-correction" cols="30" rows="10">{{correctionText ?:"Aucune correction proposée."}}</textarea>
     </div>
 </div>
-
-
-{% block scripts %} 
-    <script>
-        let editorCorrection = CodeMirror.fromTextArea(document.getElementById('js-correction'), {
-            lineNumbers: true,
-            mode:  "javascript",
-            theme: 'ambiance'
-        });
-    </script>
-{% endblock %}

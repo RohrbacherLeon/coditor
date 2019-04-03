@@ -6,21 +6,30 @@ let btn = document.getElementById("openCorrection");
 
 // Get the <span> element that closes the popup
 let span = document.getElementsByClassName("close")[0];
+if(btn){
 
-// When the user clicks on the button, open the popup 
-btn.onclick = function() {
-    popup.style.display = "block";
-    editorCorrection.refresh()
-}
+    let editorCorrection = CodeMirror.fromTextArea(document.getElementById('js-correction'), {
+        lineNumbers: true,
+        mode:  "javascript",
+        theme: 'ambiance',
+        readOnly: true
+    });
 
-// When the user clicks on <span> (x), close the popup
-span.onclick = function() {
-    popup.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the popup, close it
-window.onclick = function(event) {
-    if (event.target == popup) {
+    // When the user clicks on the button, open the popup 
+    btn.onclick = function() {
+        popup.style.display = "block";
+        editorCorrection.refresh()
+    }
+    
+    // When the user clicks on <span> (x), close the popup
+    span.onclick = function() {
         popup.style.display = "none";
+    }
+    
+    // When the user clicks anywhere outside of the popup, close it
+    window.onclick = function(event) {
+        if (event.target == popup) {
+            popup.style.display = "none";
+        }
     }
 }

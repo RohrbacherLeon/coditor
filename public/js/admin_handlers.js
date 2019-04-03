@@ -11,11 +11,3 @@ $(document).ready(function() {
         }
     });
 });
-$(document).ready(function() {
-    $(".button--modify").click(function(event) {
-        $.ajax({
-            url: `/profile/update-exercise`,
-            method: "GET"
-        });
-    });
-});
