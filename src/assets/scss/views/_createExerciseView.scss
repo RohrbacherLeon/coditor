@@ -6,7 +6,7 @@
     
     h1{
         margin: 0 auto;
-        color: #4e73df;
+        color: $primary-color;
     }
 
     .createExo__form{
@@ -22,10 +22,10 @@
 
         .text-container{
             border-radius: 15px;
-            border-left: .25rem solid #4e73df!important;
+            border-left: .25rem solid $primary-color !important;
             box-shadow: 0 .15rem 1.75rem 0 rgba(58,59,69,.25)!important;
 
-            background-color: #f0f4fa;
+            background-color: $background-blue;
             padding: 10px;
 
             .selectLanguage{
@@ -43,9 +43,9 @@
 
         .files-container{
             border-radius: 15px;
-            border-right: .25rem solid #4e73df!important;
+            border-right: .25rem solid $primary-color !important;
             box-shadow: 0 .15rem 1.75rem 0 rgba(58,59,69,.25)!important;
-            background-color: #f0f4fa;
+            background-color: $background-blue;
             padding: 10px;
         }
     }
@@ -64,19 +64,6 @@
             grid-column: 2;
             height: 35px;
             margin-top: auto;
-            .button{
-                color: white;
-                font-size: 1em;
-                padding: 15px;
-                line-height: 0px;
-                text-align: center;
-                background-color: #4e73df;
-                transition: all 0.5s linear;
-
-                &:hover{
-                    background-color: #89a1eb;
-                }
-            }
         }
     }
 }

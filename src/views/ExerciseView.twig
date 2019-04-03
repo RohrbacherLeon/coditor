@@ -15,40 +15,55 @@
 {% include './partials/popup_correction.twig' %}
 
 <div class="exercise__opened">
-    <form class="exercise__opened__top" method='post'>
-        <div class="exercise__opened__top__subject">
-            <h1>{{ exercise.title }}</h1>
-            <div class="description">
-                {{ markdown }}
-            </div>
-            <div class="waitings">
-                {% for title in exercise.awaited.titles %}
-                    <div class="waiting {{ title in results ? 'success' : 'error' }}">
-                        {% if title in results %}
-                            <i class="far fa-check-circle"></i>
-                        {% else %}
-                            <i class="far fa-times-circle"></i>
-                        {% endif %}
-                        {{title}}
+    <form method='post'>
+        <div class="exercise__opened__top">
+            <div class="exercise__opened__top__subject">
+                <div class="exercise-header">
+                    <h1>{{ exercise.title }}</h1>
+                    <p>Pourcentage de réussite : {{ exercise.difficulty }}%</p>
+                </div>
+                <div class="exercise-bottom">
+                    <div class="description">
+                        {{ markdown }}
                     </div>
-                {% endfor %}
+                    <div class="waitings">
+                        {% for title in exercise.awaited.titles %}
+                            <div class="waiting {{ title in results ? 'success' : 'error' }}">
+                                {% if title in results %}
+                                    <i class="far fa-check-circle"></i>
+                                {% else %}
+                                    <i class="far fa-times-circle"></i>
+                                {% endif %}
+                                {{title}}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
         </div>
-        {% if skeletonText %} <textarea name="function" id="js-textarea" cols="30" rows="10">{{skeletonText}}</textarea>
-        {% else %}<textarea name="function" id="js-textarea" cols="30" rows="10" data-lang="{{exercise.language}}">{{content.fct}}</textarea>
-        {% endif %}
+        <textarea name="function" id="js-textarea" cols="30" rows="10" data-lang="{{exercise.language}}">{{skeletonText ?: content.fct}}</textarea>
         </div>
         <div class="exercise__opened__bottom">
             {% if user.type == "admin" %}
                 <button class="button button--red button--delete" type="button" data-exercise-id="{{exercise._id}}">Supprimer l'exercice</button>
-                <a href="/profile/update-exercise/{{exercise.language}}/{{exercise.slug}}"><button class="button button--green" type="button">Modifier l'exercice</button></a>
+                <a href="/profile/update-exercise/{{exercise.language}}/{{exercise.slug}}"><button class="button button--blue" type="button">Modifier l'exercice</button></a>
             {% endif %}
-            <div id="openCorrection" class="button button--green">Afficher la correction</div>
-            <button type='submit' class="button button--green">Valider le code</button>
-            {% if setParams.next %}
-                <a href="../{{ setParams.next.language }}/{{ setParams.next.slug }}" class="button button--green">Exercice suivant</a>
-            {% elseif setParams.setslug %}
-                <a href="/sets/{{ setParams.setslug }}" class="button button--green">Terminer série</a>
+
+            {% if user and correctionText %}
+                <div id="openCorrection" class="button button--green">Afficher la correction</div>
+            {% endif %}    
+            {% if not user %}
+                <a href="/login" class="button button--blue">Se connecter</a>
+            {% else %}
+                {% if setParams.success %}
+                    {% if setParams.next %}
+                        <a href="../{{ setParams.next.language }}/{{ setParams.next.slug }}" class="button button--blue">Exercice suivant</a>
+                    {% else %}
+                        <a href="/sets/{{ setslug }}" class="button button--blue">Terminer série</a>
+                    {% endif %}
+                {% else %}
+                    <button type='submit' class="button button--blue">Valider le code</button>
+                {% endif %}
             {% endif %}
         </div>
     </form>
@@ -88,6 +103,7 @@
             extraKeys: {"Ctrl-Space": "autocomplete"},
             gutters: ["CodeMirror-lint-markers"],
             lint: linter
+            autofocus: true
         });
     </script>
     <script src="/js/correction_popup.js"></script>

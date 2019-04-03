@@ -11,8 +11,11 @@ exports.getExoByLang = (req, res) => {
     Exercise.getAllValuesOf("language", function (err, languages) {
         if (err) console.log(err);
         Exercise.getAllValuesOf("tags", (err, tags) => {
+        if (err) console.log(err);
+            Exercise.find({}, function (err, exos) {
             if (err) console.log(err);
-            res.render("BrowsingView", { languages, locale: req.params.lang, tags, menu: "exercises" });
+            let popularExos = exos.sort((a, b) => (a.success + a.fails > b.success + b.fails)).slice(0, 4);
+            res.render("BrowsingView", { languages, locale: req.params.lang, tags, menu: "exercises", popularExos });
         });
     });
 };
@@ -49,7 +52,13 @@ function showExercice (query, req, res, results) {
         if (results) {
             results = results.map(result => result.toLowerCase());
         }
-        res.render("ExerciseView", { exercise, results, menu: "exercises", correctionText, skeletonText, markdown, content: req.session.content, setParams: req.params });
+
+        if (exercise.stats.fails) {
+            exercise.difficulty = ((exercise.stats.fails / (exercise.stats.success + exercise.stats.fails)) * 100).toFixed(1);
+        } else {
+            exercise.difficulty = 100;
+        }
+        res.render("ExerciseView", { exercise, results, menu: "exercises", correctionText, skeletonText, markdown, content: req.session.content, setParams: req.params.setParams, setslug: req.params.setslug });
     });
 }
 
@@ -106,8 +115,11 @@ exports.postExercise = (req, res) => {
 
 function executeDocker (req, res, nameFile, commande, exo) {
     exec(commande, (error, stdout, stderr) => {
+        if (error) console.log(error);
         Generator.remove(nameFile);
-        if (error) {
+        if (stderr) {
+            exo.stats.fails = exo.stats.fails + 1;
+            exo.save();
             req.flash("error", "Une erreur est survenue.");
             res.redirect(req.originalUrl);
         } else {
@@ -127,21 +139,22 @@ function executeDocker (req, res, nameFile, commande, exo) {
 
             if (analyse.total === analyse.success.length) {
                 updateScore(req, exo.language);
-                let stat = {
-                    success: exo.stats.success + 1,
-                    fails: exo.stats.fails
-                };
-                Exercise.findOneAndUpdate(exo._id, { $set: { stats: stat } }, function (err, res) {
-                    if (err) console.log(err);
-                });
+                if (req.user.type === "student") {
+                    exo.stats.success = exo.stats.success + 1;
+                    if (!exo.stats.hasSucceeded.includes(req.user.profile.email)) {
+                        exo.stats.hasSucceeded.push(req.user.profile.email);
+                    }
+                }
+                exo.save();
+
+                if (req.params.setParams) {
+                    req.params.setParams.success = true;
+                }
             } else {
-                let stat = {
-                    success: exo.stats.success,
-                    fails: exo.stats.fails + 1
-                };
-                Exercise.findOneAndUpdate(exo._id, { $set: { stats: stat } }, function (err, res) {
-                    if (err) console.log(err);
-                });
+                if (req.user.type === "student") {
+                    exo.stats.fails = exo.stats.fails + 1;
+                }
+                exo.save();
             }
 
             showExercice(query, req, res, analyse.success);

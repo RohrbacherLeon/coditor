@@ -2,22 +2,29 @@
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    padding: 60px 0;
-
-
+    padding: 25px 0;
+    
     &__head{
         display: flex;
+        margin: 0 auto;
+        padding-left: 50px;
+        background-color: $background-blue;
+        border-radius: 20px;
+        border: 0.05rem solid $primary-color !important;
+        box-shadow: 0 .15rem 1.75rem 0 rgba(58,59,69,.25)!important;
 
         .image{
+            margin-top: auto;
+            margin-bottom: auto;
             .imgAccount {
                 max-height: 300px;
+                height: fit-content;
             }
         }
 
         .infos__user{
-            width: 25%;
             padding: 10px 50px;
-            background-color: #e4e4e4;
+            background-color: $background-blue;
             border-top-right-radius: 20px;
             border-bottom-right-radius: 20px;
 
@@ -32,6 +39,7 @@
 
             &__id{
                 display: flex;
+                font-size: 1.2em;
                 h3:first-child {
                     margin-right: 5px;
                 }
@@ -59,30 +67,62 @@
     }
 
     &__actions{
-        margin-top: 50px;
         width: 50%;
+        margin: 0 auto;
+        margin-top: 50px;
+        font-size: 1.2em;
         display: flex;
         justify-content: space-around;
     }
 
     &__data{
-        h2 {
-            margin-top: 50px;
+        .title {
+            color: $primary-color;
+            text-align: center;
+            margin: 0;
+        }
+
+        .data-container{
+            border-radius: 15px;
+            border-right: 0.25rem solid $primary-color !important;
+            border-left: 0.25rem solid $primary-color !important;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.25) !important;
+            background-color: $background-blue;
+            padding: 15px 0 15px 0;
+            margin: 50px 15px 0 15px;
         }
     }
 
-
-    &__series{
-        
+    &__series{        
         display: grid;
-        grid-template-columns: repeat(5,1fr);
+        margin: 20px 15px 0 15px;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
         grid-gap: 10px;
-        margin-top: 20px;
 
         .serie{
-            border:1px solid black;
             padding: 10px;
             display: block;
+            overflow: auto;
+            box-shadow: 0 0 1px 1px lightgray;
+            border-radius: 4px;
+            background-color: whitesmoke; 
+            text-align: center;
+
+            &:hover{
+                background-color: lightgrey;
+                transition: background-color 0.5s linear;
+
+                h4{
+                    border-bottom: 1px solid gray;
+                }
+            }
+
+            h4{
+                border-bottom: 1px solid lightgray;
+                padding-bottom: 5px;
+                font-weight: bold;
+                font-size: 1.15em;
+            }
 
             .button{
                 margin-top: 15px;
@@ -92,9 +132,9 @@
 
     &__exercises{
         display: grid;
-        grid-template-columns: repeat(5,1fr);
+        margin: 20px 15px 0 15px;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
         grid-gap: 10px;
-        margin-top: 20px;
 
         .exercise-container{    
             position: relative;
@@ -138,26 +178,26 @@
                     background-color: gray;
                 }
             }
-        }
-    }
+            .link-stats{
+                height: 28px;
+                width: 46px;
+                position: absolute;
+                top: 0;
+                right: 0;
+                color: black;
+                background-color: lightgrey;
+                border-right: 2px gray solid;
+                transition: all 0.5s linear;
+                padding: 3px;
+                padding-left: 15px;
+                padding-right: 15px;
+                border-radius: 0 0 4px 4px;
+                margin-right: 92px;
+                cursor: pointer;
 
-    &__series{
-        
-        display: grid;
-        grid-template-columns: repeat(5,1fr);
-        grid-gap: 10px;
-        margin-top: 20px;
-
-        .serie{
-            border:1px solid #e4e4e4;
-            padding: 10px;
-            display: block;
-
-            h4 {
-                font-weight: bold;
-                font-size: 1.15em;
-                text-align:center;
-                margin-bottom: 10px;
+                &:hover{
+                    background-color: gray;
+                }
             }
         }
     }

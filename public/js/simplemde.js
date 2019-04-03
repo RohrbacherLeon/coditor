@@ -3,5 +3,6 @@ var simplemde = new SimpleMDE({
     autoDownloadFontAwesome: true,
     renderingConfig:{
         codeSyntaxHighlighting: true
-    }
+    },
+    spellChecker: false
 });

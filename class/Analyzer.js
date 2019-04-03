@@ -13,12 +13,9 @@ module.exports = {
         let tests = content.match(regTest);
         tests.shift();
         let success = [];
-        let failed = [];
         tests.map(test => {
             if (test.match("\\[x\\]", "g")) {
                 success.push(test.split("]")[1].trim());
-            } else {
-                failed.push(test.split("]")[1].trim());
             }
         });
         return { success, total: tests.length };

@@ -32,7 +32,10 @@ exports.getExerciseInSet = (req, res) => {
                     // on get l'exo next
                     Exercise.findById(set.exercises[index + 1], function (err, data) {
                         if (err) console.log(err);
-                        req.params.next = data;
+                        req.params.setParams = {
+                            next: data,
+                            success: false
+                        };
                         ExerciseController.getExercise(req, res);
                     });
                 }
@@ -52,6 +55,61 @@ exports.getExerciseInSet = (req, res) => {
                             });
                         } else {
                             ExerciseController.getExercise(req, res);
+                        }
+                    });
+                }
+            }
+        });
+    });
+};
+
+exports.postExerciseInSet = (req, res) => {
+    Exercise.getExo({ slug: req.params.slug, language: req.params.lang }, function (err, data) {
+        if (err) console.log(err);
+        let currentEx = data;
+        Set.getSetBySlug(req.params.setslug, function (err, data) {
+            if (err) console.log(err);
+            // get les infos du set
+            let set = data[0];
+            // get l'index de l'exo en cours dans le set d'exos
+            let index = set.exercises.indexOf(currentEx._id);
+            // si l'index de l'exo en cours est ok
+            if (index >= 0 && index < set.exercises.length) {
+                // si c'est le premier
+                if (index === 0) {
+                    // on get l'exo next
+                    Exercise.findById(set.exercises[index + 1], function (err, data) {
+                        if (err) console.log(err);
+                        req.params.setParams = {
+                            next: data,
+                            success: false
+                        };
+
+                        ExerciseController.postExercise(req, res);
+                    });
+                }
+                // si ce n'est pas le premier
+                if (index > 0) {
+                    // on get l'exo previous
+                    Exercise.findById(set.exercises[index - 1], function (err, data) {
+                        if (err) console.log(err);
+                        req.params.setParams = {
+                            previous: data,
+                            success: false
+                        };
+                        // si ce n'ext pas le dernier
+                        if (index < set.exercises.length - 1) {
+                            // on get l'exo next
+                            Exercise.findById(set.exercises[index + 1], function (err, data) {
+                                if (err) console.log(err);
+                                req.params.setParams = {
+                                    next: data,
+                                    success: false
+                                };
+                                ExerciseController.postExercise(req, res);
+                            });
+                        } else {
+                            ExerciseController.postExercise(req, res);
                         }
                     });
                 }

@@ -5,35 +5,42 @@
 {% endblock %}
 
 {% block content %}
-<h2>Demandes d'inscription en cours</h2>
-<table id="requests" class="display" style="width:100%">
-    <thead>
-        <tr>
-            <th>Nom</th>
-            <th>Prénom</th>
-            <th>Email</th>
-            <th>Documents</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for request in requests %}
-        <tr>
-            <td>{{request.profile.last_name}}</td>
-            <td>{{request.profile.first_name}}</td>
-            <td>{{request.profile.email}}</td>
-            <td>{{request.documents}}</td>
-            <td><form action="/admin/{{request._id}}" method="POST"><button type="submit">Inscrire</button></form></td>
-        </tr>
-    {% endfor %}
-    </tbody>
+<div class="admin-container">
+    <h2>Demandes d'inscription en cours</h2>
+    <table id="requests" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Email</th>
+                <th>Documents</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for request in requests %}
+            <tr>
+                <td>{{request.profile.last_name}}</td>
+                <td>{{request.profile.first_name}}</td>
+                <td>{{request.profile.email}}</td>
+                <td>{{request.documents}}</td>
+                <td><form action="/admin/{{request._id}}" method="POST"><button class="button button--blue" type="submit">Inscrire</button></form></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}
 
 {% block scripts %}
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script>
 $(document).ready(function(){
-    $("#requests").DataTable();
+    $("#requests").DataTable({
+        "language": {
+            "url": "https://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json"
+        }
+    });
 });
 </script>
 {% endblock %}

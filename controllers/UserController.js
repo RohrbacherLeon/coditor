@@ -28,9 +28,11 @@ exports.register_post = (req, res) => {
         res.redirect("/register");
     } else {
         // test si l"email n"est deja pas utilise
-        User.findOne({ email: { "$regex": "^" + req.body.email + "\\b", "$options": "i" } }, (err, user) => {
+        console.log(req.body.email);
+        User.findOne({ "profile.email": req.body.email }, (err, user) => {
             if (err) console.log(err);
             // si email deja utilisé, on redirige vers la page register
+            console.log(user);
             if (user) {
                 req.flash("error", "Cette adresse email est déjà utilisée.");
                 formFlash(req);
@@ -56,7 +58,7 @@ exports.register_teacher = (req, res) => {
         res.redirect("/register_teacher");
     } else {
         // test si l"email n"est deja pas utilise
-        User.findOne({ email: { "$regex": "^" + req.body.email + "\\b", "$options": "i" } }, (err, user) => {
+        User.findOne({ "profile.email": req.body.email }, (err, user) => {
             if (err) console.log(err);
             // si email deja utilisé, on redirige vers la page register
             if (user) {

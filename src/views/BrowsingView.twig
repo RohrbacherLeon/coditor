@@ -11,17 +11,21 @@
     <input type="checkbox" id="navigation" />
     <label for="navigation">+</label>
     <div class="browsing__languages">
-        <img src='/images/lang/js.png' id="lang_js">
-        <img src='/images/lang/php.png' id="lang_php">
+        <img src='/images/lang/js.png' data-lang="js">
+        <img src='/images/lang/php.png' data-lang="php">
     </div>
     <div class="browsing__exercises">
         <div class="popular">
             <h2 class="title"><i class="fa fa-star" aria-hidden="true"></i> Les plus populaires</h2>
             <div class="popular__list">
-                <a href="#" class="exercise"><p>Nom</p></a>
-                <a href="#" class="exercise"><p>Nom</p></a>
-                <a href="#" class="exercise"><p>Nom</p></a>
-                <a href="#" class="exercise"><p>Nom</p></a>
+                {% for popular in popularExos %}
+                    <div class="exercise-container" id="{{popular._id}}">
+                        <a href="/exercises/{{popular.language}}/{{popular.slug}}" class="exercise {{popular.language}}">
+                            <h4>{{popular.title}}</h4>
+                            <p>{{popular.author}}</p>
+                        </a>
+                    </div>
+                {% endfor %}
             </div>
         </div>
         <h2 class="title">Tous les exercices :</h2>
