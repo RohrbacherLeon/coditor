@@ -1,0 +1,13 @@
+.admin-container{
+    margin: 0 15px 0 15px;
+    padding: 0 15px 15px 15px;
+    border: 1px solid $primary-color !important;
+    box-shadow: 0 .15rem 1.75rem 0 rgba(58,59,69,.25)!important;
+    background-color: $background-blue;
+    border-radius: 25px;
+
+    h2{
+        color: $primary-color;
+        text-align: center;
+    }
+}
