@@ -9,9 +9,9 @@ passport.use(new GoogleStrategy({
     clientID: "390419281548-9a2agfhgeses62tmouj64jlr5jidi2ug.apps.googleusercontent.com",
     clientSecret: "8e33V8Vyjwl7CrNJ4mqwnW7v",
     callbackURL: url + "/auth/google/callback"
-},
-function (token, tokenSecret, profileGoogle, done) {
-    User.findOne({ "google.id": profileGoogle.id }, function (err, user) {
+  },
+  function (token, tokenSecret, profileGoogle, done) {
+      User.findOne({ "remote_id": profileGoogle.id }, function (err, user) {
         if (err) {
             return done(err);
         }

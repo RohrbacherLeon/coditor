@@ -6,13 +6,10 @@ let delete_arrow = "<img src='/images/delete_arrow.png' class='delete_arrow'>";
 let exercises_selected = [];
 
 
-switchLanguage = function(li_elem) {
-    current_language = li_elem.attr('id').split('_', 2)[1];
-    $.get(base_url + `api/exercises/${current_language}`).then(function(response) {
+switchLanguage = function(lang) {
+    $.get(base_url + `api/exercises/${lang}`).then(function(response) {
         refreshExercises(getExercisesHtml(response));
     });
-    li_elem.siblings().removeClass('active');
-    li_elem.attr('class', 'active');
 }
 
 getExercisesHtml = function(data) {
@@ -53,14 +50,11 @@ $(document).ready(function() {
 
 
     $('#searchByTag').select2({ width: '100%' });
-
-    $('#lang_js').click(function() {
-        switchLanguage($(this));
-    });
-
-    $('#lang_php').click(function() {
-        switchLanguage($(this));
-    });
+    $('.browsing__languages').children().each(function() {
+        $(this).click(()=> {
+            switchLanguage($(this).data('lang'));
+        });
+    })
 
     $('#searchByTag').on('select2:select', function(e) {
         refreshTags(e);
