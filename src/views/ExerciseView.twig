@@ -44,26 +44,26 @@
         <div class="exercise__opened__bottom">
             {% if user.type == "admin" %}
                 <button class="button button--red button--delete" type="button" data-exercise-id="{{exercise._id}}">Supprimer l'exercice</button>
-                {#<button class="button button--green button--modify" type="button" data-exercise-lang="{{exercise.language}}" data-exercise-slug="{{exercise.slug}}">Modifier l'exercice</button>#}
-                <a href="/profile/update-exercise/{{exercise.language}}/{{exercise.slug}}"><button class="button button--green" type="button">Modifier l'exercice</button></a>
+                {#<button class="button button--blue button--modify" type="button" data-exercise-lang="{{exercise.language}}" data-exercise-slug="{{exercise.slug}}">Modifier l'exercice</button>#}
+                <a href="/profile/update-exercise/{{exercise.language}}/{{exercise.slug}}"><button class="button button--blue" type="button">Modifier l'exercice</button></a>
             {% endif %}
             {% if user %}
-                <div id="openCorrection" class="button button--green">Afficher la correction</div>
+                <div id="openCorrection" class="button button--blue">Afficher la correction</div>
             {% endif %}
             
             
             
             {% if not user %}
-                <a href="/login" class="button button--green">Se connecter</a>
+                <a href="/login" class="button button--blue">Se connecter</a>
             {% else %}
                 {% if setParams.success %}
                     {% if setParams.next %}
-                        <a href="../{{ setParams.next.language }}/{{ setParams.next.slug }}" class="button button--green">Exercice suivant</a>
+                        <a href="../{{ setParams.next.language }}/{{ setParams.next.slug }}" class="button button--blue">Exercice suivant</a>
                     {% else %}
-                        <a href="/sets/{{ setslug }}" class="button button--green">Terminer série</a>
+                        <a href="/sets/{{ setslug }}" class="button button--blue">Terminer série</a>
                     {% endif %}
                 {% else %}
-                    <button type='submit' class="button button--green">Valider le code</button>
+                    <button type='submit' class="button button--blue">Valider le code</button>
                 {% endif %}
             {% endif %}
         </div>

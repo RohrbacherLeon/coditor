@@ -13,37 +13,36 @@ passport.use(new GoogleStrategy({
   function (token, tokenSecret, profileGoogle, done) {
       User.findOne({ "remote_id": profileGoogle.id }, function (err, user) {
         if (err) {
-          return done(err);
+            return done(err);
         }
         if (user) {
-          return done(null, user);
+            return done(null, user);
         } else {
-          let newUser = new User();
-          newUser.account = "google";
-          newUser.remote_id = profileGoogle.id;
-          newUser.profile = {
-            email: profileGoogle.emails[0].value,
-            first_name: profileGoogle.name.givenName,
-            last_name: profileGoogle.name.familyName
-          };
-          newUser.urlImage = profileGoogle.photos[0].value;
-          newUser.score = {
-            total: 0,
-            langs: {
-              js: 0
-            }
-          };
-
-          newUser.save(function (err) {
-            if (err) {
-              throw err;
-            }
-            return done(null, newUser);
-          });
+			let newUser = new User();
+			newUser.account = "google";
+			newUser.remote_id = profileGoogle.id;
+			newUser.profile = {
+				email: profileGoogle.emails[0].value,
+				first_name: profileGoogle.name.givenName,
+				last_name: profileGoogle.name.familyName
+			};
+			newUser.score = {
+                total: 0,
+                langs: {
+                    js: 0,
+                    php: 0
+                }
+            };
+      newUser.urlImage = profileGoogle.photos[0].value.replace("s50", "");
+			newUser.save(function (err) {
+				if (err) {
+					throw err;
+				}
+				return done(null, newUser);
+			});
         }
-      });
-  })
-);
+    });
+}));
 
 passport.serializeUser(function (user, done) {
 	done(null, user);
