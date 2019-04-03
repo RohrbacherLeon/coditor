@@ -66,7 +66,7 @@ exports.postCreateExercise = (req, res) => {
         }
 
         if (!languages.includes(files["file_tests"].name.split(".").pop()) || files["file_tests"].name.split(".").pop() !== fields.language) {
-            errors.push("L'extension du fichier de test choisis ne correspond pas avec le language de l'exercice selectonné.");
+            errors.push("L'extension du fichier de test choisis ne correspond pas avec le langage de l'exercice selectionné.");
         }
 
         if (errors.length > 0) {

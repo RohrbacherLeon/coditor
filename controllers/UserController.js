@@ -69,6 +69,7 @@ exports.register_teacher = (req, res) => {
                 // on indique qu'il s'agit d'un enseignant
                 req.body.type = "teacher";
                 req.body.pending = true;
+                req.body.firsttime = true;
                 // si email pas utilisé, on créé l'utilisateur et on le redirige vers le login
                 User.createUser(req.body, (err, user) => {
                     if (err) {

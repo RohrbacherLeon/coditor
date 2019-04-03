@@ -40,11 +40,8 @@
                     </div>
                 </div>
             </div>
-            {% if skeletonText %}
-                <textarea name="function" id="js-textarea" cols="30" rows="10">{{skeletonText}}</textarea>
-            {% else %}
-                <textarea name="function" id="js-textarea" cols="30" rows="10">{{content.fct}}</textarea>
-            {% endif %}
+        </div>
+        <textarea name="function" id="js-textarea" cols="30" rows="10" data-lang="{{exercise.language}}">{{skeletonText ?: content.fct}}</textarea>
         </div>
         <div class="exercise__opened__bottom">
             {% if user.type == "admin" %}
@@ -76,21 +73,37 @@
 
 {% block scripts %}
 
+    <script src="/js/codemirror/mode/clike/clike.js"></script>
     <script src="/js/codemirror/mode/javascript/javascript.js"></script>
+    <script src="/js/codemirror/mode/php/php.js"></script>
     <script src="/js/codemirror/addon/lint/lint.js"></script>
     <script src="/js/codemirror/addon/lint/javascript-lint.js"></script>
     <script src="/js/codemirror/addon/hint/show-hint.js"></script>
     <script src="https://unpkg.com/jshint@2.9.6/dist/jshint.js"></script>
     <script>
+        let lang = "";
+        let linter = false;
+        switch($("#js-textarea").data("lang")){
+            case "js":
+                lang = "javascript";
+                linter = { esversion: 6 };
+                break;
+            case "php":
+                lang = "text/x-php";
+                linter = false;
+                break;
+            default:
+                break;
+        }
         let editor = CodeMirror.fromTextArea(document.getElementById('js-textarea'), {
             value: "",
             lineNumbers: true,
             indentWithTabs: true,
-            mode: "javascript",
+            mode: lang,
             theme: 'ambiance',
             extraKeys: {"Ctrl-Space": "autocomplete"},
             gutters: ["CodeMirror-lint-markers"],
-            lint: { esversion: 6 },
+            lint: linter
             autofocus: true
         });
     </script>

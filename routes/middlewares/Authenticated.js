@@ -16,7 +16,7 @@ function notAuthenticated (req, res, next) {
 };
 
 function isTeacher (req, res, next) {
-    if ((req.user.type === "teacher" && !req.user.pending) || req.user.type === "admin") {
+    if (typeof req.user !== "undefined" && ((req.user.type === "teacher" && !req.user.pending) || req.user.type === "admin")) {
         return next();
     }
     res.redirect("/profile");

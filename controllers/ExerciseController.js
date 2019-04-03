@@ -14,11 +14,8 @@ exports.getExoByLang = (req, res) => {
         if (err) console.log(err);
             Exercise.find({}, function (err, exos) {
             if (err) console.log(err);
-                let locale = req.params.lang;
-                let popularExos = exos.sort((a, b) => (a.success + a.fails > b.success + b.fails)).slice(0, 4);
-
-                res.render("BrowsingView", { languages, locale, tags, menu: "exercises", popularExos });
-            });
+            let popularExos = exos.sort((a, b) => (a.success + a.fails > b.success + b.fails)).slice(0, 4);
+            res.render("BrowsingView", { languages, locale: req.params.lang, tags, menu: "exercises", popularExos });
         });
     });
 };
