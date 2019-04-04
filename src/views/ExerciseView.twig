@@ -86,10 +86,12 @@
             case "js":
                 lang = "javascript";
                 linter = { esversion: 6 };
+                autocomplete = {"Ctrl-Space": "autocomplete"};
                 break;
             case "php":
                 lang = "text/x-php";
                 linter = false;
+                autocomplete = {};
                 break;
             default:
                 break;
@@ -100,7 +102,7 @@
             indentWithTabs: true,
             mode: lang,
             theme: '3024-night',
-            extraKeys: {"Ctrl-Space": "autocomplete"},
+            extraKeys: autocomplete,
             gutters: ["CodeMirror-lint-markers"],
             lint: linter,
             autofocus: true

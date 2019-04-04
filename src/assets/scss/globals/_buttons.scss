@@ -1,61 +1,53 @@
-.button_layout{
+.button_layout {
     display: flex;
-    &--center{
+    &--center {
         justify-content: center;
     }
-
-    &--right{
+    &--right {
         justify-content: flex-end;
     }
-
-    &--between{
+    &--between {
         justify-content: space-between;
     }
-
 }
 
-
-.button{
+.button {
     display: block;
     outline: none;
     border: 0;
     padding: 10px 14px;
     border-radius: 4px;
     cursor: pointer;
-
-    &--green{
+    &--green {
         background-color: green;
         color: white;
         transition: all 0.3s ease 0s;
-        &:hover{
+        &:hover {
             background-color: rgb(1, 97, 1);
         }
     }
-
-    &--red{
+    &--red {
         background-color: red;
         color: white;
         transition: all 0.3s ease 0s;
-        &:hover{
+        &:hover {
             background-color: rgb(147, 3, 3);
         }
     }
-
-    &--blue{
+    &--blue {
         background-color: rgb(68, 139, 245);
         color: white;
         transition: all 0.3s ease 0s;
-        &:hover{
+        &:hover {
             background-color: $primary-color;
         }
     }
-
-    &--white{
+    &--white {
         background-color: white;
         color: black;
         border: 1px solid black;
         transition: all 0.3s ease 0s;
-        &:hover{
+        &:hover {
             background-color: rgb(205, 202, 202);
         }
     }

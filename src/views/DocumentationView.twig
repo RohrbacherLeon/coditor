@@ -1,13 +1,13 @@
 {% extends 'layouts/master.twig' %}
 
 {% block content %}
-<h1>Documentation</h1>
-<div class="doc-links">
-    <a href="/doc/"><button class="button button--blue">Générale</button></a>
-    <a href="/doc/js"><button class="button button--blue">Javascript</button></a>
-    <a href="/doc/php"><button class="button button--blue">PHP</button></a>
-</div>
 <div class="doc-content">
+    <h1>Documentation</h1>
+    <div class="button_layout doc-links">
+        <a href="/doc/"><button class="button button--blue">Générale</button></a>
+        <a href="/doc/js"><button class="button button--blue">Javascript</button></a>
+        <a href="/doc/php"><button class="button button--blue">PHP</button></a>
+    </div>
     {% block doc_text %}{% endblock %}
 </div>
 {% endblock %}

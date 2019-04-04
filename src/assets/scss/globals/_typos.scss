@@ -1,23 +1,27 @@
-.title{
+.title {
     font-size: 1.7em;
     margin-bottom: 1em;
-    &--small{
+    &--small {
         font-size: 1.3em;
     }
 }
 
-.subtitle{
+.subtitle {
     font-size: 1em;
 }
 
-.text{
-    &--small{
+.text {
+    &--small {
         font-size: 0.8em;
     }
 }
 
-a{
+a {
     text-decoration: none;
     color: black;
     cursor: pointer;
+}
+
+.CodeMirror {
+    font-size: 16px;
 }
