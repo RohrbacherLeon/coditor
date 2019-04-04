@@ -3,6 +3,7 @@ let slot = $('.exercises');
 let current_language = "all";
 let arrow_right = "<img src='/images/arrow_right.png' class='arrow_right'>";
 let delete_arrow = "<img src='/images/delete_arrow.png' class='delete_arrow'>";
+let plus = '<img src="/images/plus_button.svg" id="plus_button">';
 let exercises_selected = [];
 
 
@@ -16,13 +17,13 @@ getExercisesHtml = function(data) {
     let exercises = "";
     data.forEach(exercise => {
         if ($.inArray(exercise._id, exercises_selected) == -1) {
-            exercises += `
-            <div class="exercise-container draggable" id="${exercise._id}">
+            exercises += 
+            `<div class="exercise-container draggable" id="${exercise._id}">
                 <a href="/exercises/${exercise.language}/${exercise.slug}" class="exercise ${exercise.language}">
                     <h4>${exercise.title}</h4>
                     <p>${exercise.author}</p>
                 </a>
-            </div>`;
+            </div>`
         }
     });
     return exercises;
