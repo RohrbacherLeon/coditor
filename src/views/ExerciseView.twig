@@ -59,7 +59,7 @@
                     {% if setParams.next %}
                         <a href="../{{ setParams.next.language }}/{{ setParams.next.slug }}" class="button button--blue">Exercice suivant</a>
                     {% else %}
-                        <a href="/sets/{{ setslug }}" class="button button--blue">Terminer série</a>
+                        <div id="post_serie_end" class="button button--blue" data-slug="{{setslug}}">Terminer série</div>
                     {% endif %}
                 {% else %}
                     <button type='submit' class="button button--blue">Valider le code</button>
@@ -107,6 +107,7 @@
         });
     </script>
     <script src="/js/correction_popup.js"></script>
+    <script src="/js/post_serie_end.js"></script>
     <script src="/js/admin_handlers.js"></script>
 
 {% endblock %}

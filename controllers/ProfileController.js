@@ -17,7 +17,25 @@ exports.getProfile = (req, res) => {
             });
         });
     } else {
-        res.render("ProfileView", { menu: "profile" });
+        let exos = [];
+        Exercise.getAll(function (err, allExos) {
+            if (err) console.log(err);
+            allExos.forEach(exo => {
+                if (exo.stats.hasSucceeded.includes(req.user.profile.email)) {
+                    exos.push(exo);
+                }
+            });
+            let series = [];
+            Set.getAll(function (err, allSeries) {
+                if (err) console.log(err);
+                allSeries.forEach(serie => {
+                    if (serie.hasSucceeded.includes(req.user.profile.email)) {
+                        series.push(serie);
+                    }
+                });
+                res.render("ProfileView", { exos, series, menu: "profile" });
+            });
+        });
     }
 };
 
