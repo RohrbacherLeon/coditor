@@ -4,10 +4,11 @@
         <ul class="nav__middle__list">
             <li><a href="/"{{ menu == 'accueil' ? ' class="active"' }}>Accueil</a></li>
             <li><a href="/exercises"{{ menu == 'exercises' ?  'class="active"' }}>Exercices</a></li>
+            <li><a href="/sets"{{ menu == 'series' ? 'class="active"' }}>Séries d'exercices</a></li>
+            <li><a href="/doc/">Documentation</a></li>
             {% if user %}
                 {% if user.type == 'teacher' or user.type == 'admin' %}
                     <li><a href="/profile/create-exercise">Créer un exercice</a></li>
-                    <li><a href="/doc/">Documentation</a></li>
                     {% if user.type == 'admin' %}
                         <li><a href="/admin/">Gérer le site</a></li>
                     {% endif %}

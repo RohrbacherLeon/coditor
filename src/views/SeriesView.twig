@@ -1,0 +1,15 @@
+{% extends 'layouts/master.twig' %}
+
+{% block content %}
+<h2>Les séries d'exercices :</h2>
+<div class="all-sets">
+    {% for serie in sets %}
+    <div class="set">
+        <a href="/sets/{{serie.slug}}">
+            <p class="set-title">{{serie.title}}</p>
+            <p class="set-author">{{serie.author}}</p>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

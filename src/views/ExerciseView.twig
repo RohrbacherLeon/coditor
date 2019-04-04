@@ -4,7 +4,7 @@
 
     <link rel="stylesheet" href="/js/codemirror/lib/codemirror.css" type="text/css">
     <link rel="stylesheet" href="/js/codemirror/addon/hint/show-hint.css" type="text/css">
-    <link rel="stylesheet" href="/js/codemirror/theme/ambiance.css" type="text/css">
+    <link rel="stylesheet" href="/js/codemirror/theme/3024-night.css" type="text/css">
     <link rel="stylesheet" href="/js/codemirror/addon/lint/lint.css" type="text/css">
     <script src="/js/codemirror/lib/codemirror.js"></script>
 
@@ -86,10 +86,12 @@
             case "js":
                 lang = "javascript";
                 linter = { esversion: 6 };
+                autocomplete = {"Ctrl-Space": "autocomplete"};
                 break;
             case "php":
                 lang = "text/x-php";
                 linter = false;
+                autocomplete = {};
                 break;
             default:
                 break;
@@ -99,8 +101,8 @@
             lineNumbers: true,
             indentWithTabs: true,
             mode: lang,
-            theme: 'ambiance',
-            extraKeys: {"Ctrl-Space": "autocomplete"},
+            theme: '3024-night',
+            extraKeys: autocomplete,
             gutters: ["CodeMirror-lint-markers"],
             lint: linter,
             autofocus: true

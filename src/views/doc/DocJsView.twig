@@ -1,4 +1,19 @@
 {% extends '../DocumentationView.twig' %}
 
 {% block doc_text %}
+<h2 class="doc-title">JavaScript</h2>
+<h3 class="doc-subtitle">Pour les enseignants</h3>
+<p>Pour créer un exercice de JavaScript nous vous demandons de prendre en compte ces 2 éléments :</p>
+<ul>
+    <li>Les testes doivent être écris en respectant la syntaxe du framework de testes <a href="https://mochajs.org/">Mocha</a> !</li>
+    <li>Les intitulés des testes qui apparaîtront pour les étudiants lors de la résolution seront les chaînes que prennent en paramètres les méthodes <b>it()</b></li>
+</ul>
+<h4>Exemple :</h4>
+<img src="/images/doc/js1.png" class="doc-img" alt="js_syntaxe_exemple">
+<p>Assez simple non ? Vous pouvez dès maintenant créer un exercice !</p>
+{{ user.type == "teacher" ? '<a href="/profile/create-exercise"><button type="button" class="button button--blue">Commencer</button></a>' : ""}}
+<h3 class="doc-subtitle">Pour les étudiants</h3>
+<p>Pour les exercices en JavaScript, vous bénéficierez d'une experience utilisateur enrichie.</p>
+<p>En effet, dans l'éditeur de texte, vous aurez accès à un linter qui vous avertira des erreurs éventuelles et qui vous aidera pour la syntaxe.</p>
+<p>De plus, vous aurez accès à de l'autocompletion pour les fonctions de base de JavaScript en utilisant le raccourci "Ctrl + Espace".</p>
 {% endblock %}
