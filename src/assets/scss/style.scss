@@ -16,14 +16,12 @@
 @import './views/settingsView';
 @import './views/browser';
 @import './views/adminView';
-
+@import './views/doc';
 @import './views/homeView';
 @import './views/createExerciseView';
 @import './views/createExercisesSetView';
-
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
-
-body{
+body {
     max-width: 1600px;
     margin: 0 auto;
     display: flex;
