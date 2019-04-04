@@ -18,17 +18,18 @@ $(document).ready(function() {
             $(this).removeClass("over");
             var dropped = ui.draggable;
             exercises_selected.push(dropped[0].id);
-            $("#exercises_selected").val(exercises_selected);
             var droppedOn = $(this);
+            droppedOn.children().eq(droppedOn.children().length-1).remove();
+            $("#exercises_selected").val(exercises_selected);
             $(dropped).detach().css({
                 top: 0,
                 left: 0
             }).appendTo(droppedOn).draggable( "disable" ).addClass("selected");
             // Remove/Add + button
-
-            $(delete_arrow+arrow_right).appendTo(droppedOn);
-            $('#plus_button').css("display","none");
             
+            $(delete_arrow+arrow_right).appendTo(droppedOn);
+            //$('#plus_button').css("display","none");
+            $(plus).appendTo(droppedOn);
         },
         over: function(event, elem) {
             $(this).addClass("over");
@@ -50,7 +51,7 @@ $(document).ready(function() {
         });
 
         if(exercises_selected.length === 0){
-            $('#plus_button').css("display","block");
-        }
+            $('#plus_button').css("margin","0 auto");
+}
     });
 });
