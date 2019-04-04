@@ -3,16 +3,17 @@ db.users.insert({
     "type": "teacher",
     "account": "local",
     "profile": {
-        "password": "$2a$10$LFXI9azx6IeVOpQ4mBJqCuGnvWoxMCNLcKyqDUhk5xByU9IPQ2wVm",
-        "first_name": "anthony",
-        "last_name": "zink",
-        "email": "test@test.fr"
+        "password": "$2y$10$7yIqvL5TR7r1Up14hQSTHu0FU33Mb/Vehv6t8qtEQn24Td63H.WrW",
+        "first_name": "teacher",
+        "last_name": "teacher",
+        "email": "teacher@teacher.fr"
     },
     "urlImage": "/images/iconLocal.png",
     "score": {
         "total": 0,
         "langs": {}
-    }
+    },
+    "pending": false
 });
 
 db.users.insert({
