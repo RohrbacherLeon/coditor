@@ -55,7 +55,7 @@ function showExercice (query, req, res, results) {
         }
 
         if (exercise.stats.fails) {
-            exercise.difficulty = (((exercise.stats.success + exercise.stats.fails / exercise.stats.fails)) * 100).toFixed(1);
+            exercise.difficulty = (exercise.stats.success / (exercise.stats.success + exercise.stats.fails) * 100).toFixed(1);
         } else {
             exercise.difficulty = 100;
         }
