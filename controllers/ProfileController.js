@@ -232,7 +232,11 @@ exports.postUpdateExercise = (req, res) => {
                 lastExtFile = exercise.language;
 
                 // After, do all (update, files)
-                let slug = slugify(fields.title);
+                let slug = slugify(fields.title, {
+                    replacement: "-",
+                    remove: /[*+~.()'"!:@]/g,
+                    lower: true
+                });
 
                 Exercise.findOne({ slug }, function (err, exo) {
                     if (err) console.log(err);
@@ -244,6 +248,18 @@ exports.postUpdateExercise = (req, res) => {
                             tags: fields.tags.split(","),
                             description: fields.description
                         };
+
+                        if (files["file_tests"].size > 0) {
+                            let testFile = files["file_tests"];
+                            let testFileData = fs.readFileSync(testFile.path);
+                            let titles = Analyzer.analyseTeacher(testFileData.toString("utf8"), fields.language);
+
+                            if (Array.isArray(titles) && titles.length) {
+                                titles = titles.map(title => decamelize(title));
+                            }
+                            update.awaited = { titles };
+                        }
+
                         // Update exercise
                         Exercise.updateOne({ slug: req.params.slug, language: req.params.lang }, { $set: update }, function (err, exo) {
                             if (err) {
@@ -278,7 +294,7 @@ exports.postUpdateExercise = (req, res) => {
                                         fs.rename(oldFile, newFile, function () {
                                             if (err) {
                                                 console.log(err);
-                                                res.render("CreateExerciseView", { message: "Erreur lors de la création de l'exercice." });
+                                                res.render("CreateExerciseView", { message: "Erreur lors de la modification de l'exercice." });
                                             }
                                         });
                                     }

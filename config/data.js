@@ -1,21 +1,23 @@
 /* eslint-disable no-undef */
 db.users.insert({
+    "score": {
+        "total": 0,
+        "langs": {
+            "js": 0,
+            "php": 0
+        }
+    },
     "type": "teacher",
     "account": "local",
     "profile": {
-        "password": "$2y$10$7yIqvL5TR7r1Up14hQSTHu0FU33Mb/Vehv6t8qtEQn24Td63H.WrW",
-        "first_name": "teacher",
-        "last_name": "teacher",
+        "password": "$2a$10$WqPHQBZwYrgLU28.HKCx9uXcA/qnunG.9ixQbTulJC6wqmKve75sm",
+        "first_name": "Tournesol",
+        "last_name": "professeur",
         "email": "teacher@teacher.fr"
     },
-    "urlImage": "/images/iconLocal.png",
-    "score": {
-        "total": 0,
-        "langs": {}
-    },
-    "pending": false
+    "pending": false,
+    "urlImage": "/images/iconLocal.png"
 });
-
 db.users.insert({
     "type": "admin",
     "account": "local",
@@ -60,7 +62,7 @@ db.exercises.insert({
     "title": "soustraction",
     "slug": "soustraction",
     "language": "js",
-    "author": "test@test.fr",
+    "author": "teacher@teacher.fr",
     "description": "## Soustraction\r\n\r\nEcrire une fonction nommée *sub* qui soustrait deux nombres.",
     "hasSucceeded": []
 });
@@ -77,7 +79,7 @@ db.exercises.insert({
     "title": "addition",
     "slug": "addition",
     "language": "php",
-    "author": "test@test.fr",
+    "author": "teacher@teacher.fr",
     "description": "## Addition\r\n\r\nEcrire une fonction nommée *add* qui additionne deux nombres.",
     "hasSucceeded": []
 });
@@ -96,7 +98,7 @@ db.exercises.insert({
     "title": "Filtrer un tableau",
     "slug": "filtrer-un-tableau",
     "language": "php",
-    "author": "admin@admin.fr",
+    "author": "teacher@teacher.fr",
     "description": "Ecrire une fonction qui filtre un tableau donné en paramètre. La fonction doit se nommer *filtretab*."
 });
 
@@ -114,7 +116,7 @@ db.exercises.insert({
     "title": "Calculer la somme d'un tableau",
     "slug": "calculer-la-somme-dun-tableau",
     "language": "php",
-    "author": "admin@admin.fr",
+    "author": "teacher@teacher.fr",
     "description": "Calculer la somme d'un tableau passé en paramètre de la fonction nommée *sommetab*."
 });
 
@@ -132,6 +134,24 @@ db.exercises.insert({
     "title": "Factoriel",
     "slug": "factoriel",
     "language": "php",
-    "author": "admin@admin.fr",
+    "author": "teacher@teacher.fr",
     "description": "Ecrire une fonction factorielle d'un nombre nommée *factoriel*."
+});
+
+db.exercises.insert({
+    "stats": {
+        "fails": 0,
+        "success": 2,
+        "hasSucceeded": [ "student@student.fr" ]
+    },
+    "awaited": {
+        "titles": [ "le personnage doit avoir le nom toto", "le personnage doit avoir 18 ans" ]
+    },
+    "tags": [ "classe" ],
+    "inSets": [ ],
+    "title": "Ecrire une classe",
+    "slug": "ecrire-une-classe",
+    "language": "js",
+    "author": "teacher@teacher.fr",
+    "description": "Ecrire une classe qui comporte un constructeur. Ce constructeur prend 2 arguments : un nom et un age."
 });
