@@ -232,7 +232,11 @@ exports.postUpdateExercise = (req, res) => {
                 lastExtFile = exercise.language;
 
                 // After, do all (update, files)
-                let slug = slugify(fields.title);
+                let slug = slugify(fields.title, {
+                    replacement: "-",
+                    remove: /[*+~.()'"!:@]/g,
+                    lower: true
+                });
 
                 Exercise.findOne({ slug }, function (err, exo) {
                     if (err) console.log(err);
