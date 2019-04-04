@@ -1,3 +1,38 @@
-.all-sets {}
+.title_series{
+    text-align: center;
+    color: $primary-color;
+}
 
-.set {}
+.all-sets {
+    border-radius: 15px;
+    border: .15rem solid $primary-color !important;
+    box-shadow: 0 .15rem 1.75rem 0 rgba(58,59,69,.25)!important;
+
+    background-color: $background-blue;
+    width: 50vw;
+    padding: 10px;
+    margin: 0 auto;
+    
+    .set {
+        padding: 10px;
+        margin: 10px;
+        border-radius: 10px;
+        border-left: .15rem solid $primary-color !important;
+        border-right: .15rem solid $primary-color !important;
+        background-color: rgb(217, 219, 233);
+        transition: background-color 0.5s linear;
+        text-align: center;
+
+        &-title{
+            font-weight: bold;
+        }
+
+        &-author{
+            font-style: italic;
+        }
+
+        &:hover{
+            background-color: rgb(197, 200, 235);
+        }
+    }
+}
