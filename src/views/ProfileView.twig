@@ -55,7 +55,6 @@
                         <a href="/exercises/{{exo.language}}/{{exo.slug}}" class="exercise {{exo.language}}">
                             <h4>{{exo.title}}</h4>
                             <p>{{exo.author}}</p>
-                            <p>{{exo.description}}</p>                    
                         </a>
                         {% if user.type == "teacher" or user.type == "admin" %}
                             <button class="link-delete" type="button"><i class="fas fa-trash-alt"></i></button>                     
