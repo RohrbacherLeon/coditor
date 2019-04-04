@@ -1,6 +1,6 @@
 describe('test class', function() {
 
-    it('Le personnage doit s\'appeler toto', function() {
+    it('Le personnage doit avoir le nom toto', function() {
         let p = new Person("toto", 18);
         assert.equal(p.name, "toto")
     });

@@ -141,11 +141,11 @@ db.exercises.insert({
 db.exercises.insert({
     "stats": {
         "fails": 0,
-        "success": 0,
-        "hasSucceeded": [ ]
+        "success": 2,
+        "hasSucceeded": [ "student@student.fr" ]
     },
     "awaited": {
-        "titles": [ "le personnage doit s\\'appeler toto", "le personnage doit avoir 18 ans" ]
+        "titles": [ "le personnage doit avoir le nom toto", "le personnage doit avoir 18 ans" ]
     },
     "tags": [ "classe" ],
     "inSets": [ ],
@@ -154,5 +154,4 @@ db.exercises.insert({
     "language": "js",
     "author": "teacher@teacher.fr",
     "description": "Ecrire une classe qui comporte un constructeur. Ce constructeur prend 2 arguments : un nom et un age."
-
 });
