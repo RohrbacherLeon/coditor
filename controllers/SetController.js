@@ -15,6 +15,7 @@ exports.getSet = (req, res) => {
 };
 
 exports.getExerciseInSet = (req, res) => {
+    req.params.setParams = { success: false };
     // get l'exo en cours
     Exercise.getExo({ slug: req.params.slug, language: req.params.lang }, function (err, data) {
         if (err) console.log(err);
@@ -32,10 +33,7 @@ exports.getExerciseInSet = (req, res) => {
                     // on get l'exo next
                     Exercise.findById(set.exercises[index + 1], function (err, data) {
                         if (err) console.log(err);
-                        req.params.setParams = {
-                            next: data,
-                            success: false
-                        };
+                        req.params.setParams.next = data;
                         ExerciseController.getExercise(req, res);
                     });
                 }
@@ -44,16 +42,13 @@ exports.getExerciseInSet = (req, res) => {
                     // on get l'exo previous
                     Exercise.findById(set.exercises[index - 1], function (err, data) {
                         if (err) console.log(err);
-                        req.params.previous = data;
+                        req.params.setParams.previous = data;
                         // si ce n'ext pas le dernier
                         if (index < set.exercises.length - 1) {
                             // on get l'exo next
                             Exercise.findById(set.exercises[index + 1], function (err, data) {
                                 if (err) console.log(err);
-                                req.params.setParams = {
-                                    next: data,
-                                    success: false
-                                };
+                                req.params.setParams.next = data;
                                 ExerciseController.getExercise(req, res);
                             });
                         } else {
@@ -122,5 +117,14 @@ exports.postExerciseInSet = (req, res) => {
 };
 
 exports.postSetSuccess = (req, res) => {
-    console.log(req);
+    Set.getSetBySlug(req.params.slug, function (err, data) {
+        if (err) console.log(err);
+        let exo = data[0];
+        if (!exo.hasSucceeded.includes(req.user.profile.email)) {
+            exo.hasSucceeded.push(req.user.profile.email);
+            exo.save();
+        }
+        req.flash("success", "Série terminée avec succès.");
+        res.send("OK");
+    });
 };

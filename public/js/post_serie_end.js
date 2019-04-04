@@ -1,9 +1,14 @@
 // Get the button that post
-let btn = document.getElementById("post_serie_end");
-let baseUrl = "localhost:3000/"
-if(btn){
+let btnEndSerie = document.getElementById("post_serie_end");
+let baseUrl = "http://localhost:3000/"
+if(btnEndSerie){
     // When the user clicks on the button, open the popup 
-    btn.onclick = function() {
-        $.post( baseUrl + "sets/une-serie", { name: "John", time: "2pm" } );
+    btnEndSerie.onclick = function() {
+        let setsSlug = this.firstElementChild.id;
+        $.post( baseUrl + "sets/" + setsSlug, function() {
+            window.location.href = baseUrl + "sets/" + setsSlug;
+        }).fail(function(error) {
+            console.log(error);
+        });   
     }
 }

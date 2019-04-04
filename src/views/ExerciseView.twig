@@ -55,11 +55,11 @@
             {% if not user %}
                 <a href="/login" class="button button--blue">Se connecter</a>
             {% else %}
-                {% if setParams %}
+                {% if setParams.success %}
                     {% if setParams.next %}
                         <a href="../{{ setParams.next.language }}/{{ setParams.next.slug }}" class="button button--blue">Exercice suivant</a>
                     {% else %}
-                        <button id="post_serie_end" class="button button--blue">Terminer série</button>
+                        <div id="post_serie_end" class="button button--blue"><input type="hidden" id="{{setslug}}">Terminer série</div>
                     {% endif %}
                 {% else %}
                     <button type='submit' class="button button--blue">Valider le code</button>
