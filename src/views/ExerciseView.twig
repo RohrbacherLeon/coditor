@@ -59,7 +59,7 @@
                     {% if setParams.next %}
                         <a href="../{{ setParams.next.language }}/{{ setParams.next.slug }}" class="button button--blue">Exercice suivant</a>
                     {% else %}
-                        <div id="post_serie_end" class="button button--blue"><input type="hidden" id="{{setslug}}">Terminer série</div>
+                        <div id="post_serie_end" class="button button--blue" data-slug="{{setslug}}">Terminer série</div>
                     {% endif %}
                 {% else %}
                     <button type='submit' class="button button--blue">Valider le code</button>
