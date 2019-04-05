@@ -32,13 +32,9 @@ make run
 
 ## Comptes utilisateurs
 
-Un compte étudiant est disponible avec les informations suivantes :  
-    email : a@a.fr  
-    password: a  
-
-Un compte professeur est disponible avec les informations suivantes :  
-    email : teacher@teacher.fr  
-    password: teacher  
+Compte étudiant : Login : student@student.fr; Password : student
+Compte enseignant : Login : teacher@teacher.fr; Password : teacher
+Compte administrateur : Login : admin@admin.fr; Password : admin
 
 ## Auteurs
 * **CORDIER Florian**
