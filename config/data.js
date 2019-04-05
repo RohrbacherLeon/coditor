@@ -18,6 +18,27 @@ db.users.insert({
     "pending": false,
     "urlImage": "/images/iconLocal.png"
 });
+
+db.users.insert({
+    "score": {
+        "total": 0,
+        "langs": {
+            "js": 0,
+            "php": 0
+        }
+    },
+    "type": "teacher",
+    "account": "local",
+    "profile": {
+        "password": "$2a$10$WqPHQBZwYrgLU28.HKCx9uXcA/qnunG.9ixQbTulJC6wqmKve75sm",
+        "first_name": "teacher",
+        "last_name": "teacher",
+        "email": "prof@prof.fr"
+    },
+    "pending": true,
+    "urlImage": "/images/iconLocal.png"
+});
+
 db.users.insert({
     "type": "admin",
     "account": "local",
@@ -50,6 +71,7 @@ db.users.insert({
     }
 });
 
+// Insére exercice JS
 db.exercises.insert({
     "stats": {
         "fails": 0,
@@ -70,20 +92,22 @@ db.exercises.insert({
 db.exercises.insert({
     "stats": {
         "fails": 0,
-        "success": 0
+        "success": 2,
+        "hasSucceeded": [ "student@student.fr" ]
     },
     "awaited": {
-        "titles": ["la methode soustrait", "fausse methode"]
+        "titles": [ "le personnage doit avoir le nom toto", "le personnage doit avoir 18 ans" ]
     },
-    "tags": ["function"],
-    "title": "addition",
-    "slug": "addition",
-    "language": "php",
+    "tags": [ "classe" ],
+    "inSets": [ ],
+    "title": "Ecrire une classe",
+    "slug": "ecrire-une-classe",
+    "language": "js",
     "author": "teacher@teacher.fr",
-    "description": "## Addition\r\n\r\nEcrire une fonction nommée *add* qui additionne deux nombres.",
-    "hasSucceeded": []
+    "description": "Ecrire une classe qui comporte un constructeur. Ce constructeur prend 2 arguments : un nom et un age."
 });
 
+// Insére exercice PHP
 db.exercises.insert({
     "stats": {
         "fails": 2,
@@ -140,18 +164,18 @@ db.exercises.insert({
 
 db.exercises.insert({
     "stats": {
-        "fails": 0,
-        "success": 2,
+        "fails": 3,
+        "success": 1,
         "hasSucceeded": [ "student@student.fr" ]
     },
     "awaited": {
-        "titles": [ "le personnage doit avoir le nom toto", "le personnage doit avoir 18 ans" ]
+        "titles": [ "factoriel" ]
     },
-    "tags": [ "classe" ],
+    "tags": [ "la methode additionne" ],
     "inSets": [ ],
-    "title": "Ecrire une classe",
-    "slug": "ecrire-une-classe",
-    "language": "js",
+    "title": "Addition",
+    "slug": "addition",
+    "language": "php",
     "author": "teacher@teacher.fr",
-    "description": "Ecrire une classe qui comporte un constructeur. Ce constructeur prend 2 arguments : un nom et un age."
+    "description": "Ecrire une fonction d'addition d'un nombre nommée *add*."
 });
