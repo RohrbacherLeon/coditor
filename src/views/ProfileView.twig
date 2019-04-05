@@ -57,7 +57,7 @@
                             <p>{{exo.author}}</p>
                         </a>
                         {% if user.type == "teacher" or user.type == "admin" %}
-                            <button class="link-delete" type="button"><i class="fas fa-trash-alt"></i></button>                     
+                            <button class="link-delete-exercise" type="button"><i class="fas fa-trash-alt"></i></button>                     
                             <button class="link-stats openExerciseStats" type="button"><i class="fa fa-info-circle"></i></button>
                             <a href="/profile/update-exercise/{{exo.language}}/{{exo.slug}}" class="link-modify"><i class="fas fa-cog"></i></a>
                         {% endif %}
@@ -72,11 +72,15 @@
                     <h2>Aucune série {{ user.type == "student" ? "réalisée" : "créée" }}.</h2>
                 {% endif %}
                 {% for serie in series %}
-                    <a href="/sets/{{serie.slug}}" class="serie">
-                        <h4>{{serie.title}}</h4>
-                        <p>{{serie.author}}</p>
-                        <p>{{serie.description}}</p>
-                    </a>
+                    <div class="serie" id="{{ serie._id }}">
+                        <a href="/sets/{{serie.slug}}">
+                            <h4>{{serie.title}}</h4>
+                            <p>{{serie.author}}</p>
+                        </a>
+                        {% if user.type == "teacher" or user.type == "admin" %}
+                            <button class="link-delete-set" type="button"><i class="fas fa-trash-alt"></i></button>
+                        {% endif %}
+                    </div>
                 {% endfor %}
             </div>
         </div>

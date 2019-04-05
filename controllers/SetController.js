@@ -128,3 +128,16 @@ exports.postSetSuccess = (req, res) => {
         res.send("OK");
     });
 };
+
+exports.deleteSet = (req, res) => {
+    Set.findById(req.params.id, (err, set) => {
+        if (err) res.sendStatus(404);
+        if (set.author === req.user.profile.email || set.user.type === "admin") {
+            set.remove();
+            set.save();
+            res.sendStatus(200);
+        } else {
+            res.sendStatus(403);
+        }
+    });
+};
