@@ -1,40 +1,38 @@
-.serie{
-    padding: 10px;
-    display: block;
-    overflow: auto;
-    box-shadow: 0 0 1px 1px lightgray;
-    border-radius: 4px;
-    background-color: whitesmoke; 
+.title_series{
     text-align: center;
-
-    &:hover{
-        background-color: lightgrey;
-        transition: background-color 0.5s linear;
-
-        h4{
-            border-bottom: 1px solid gray;
-        }
-    }
-
-    h4{
-        border-bottom: 1px solid lightgray;
-        padding-bottom: 5px;
-        font-weight: bold;
-        font-size: 1.15em;
-    }
-
-    .button{
-        margin-top: 15px;
-    }
+    color: $primary-color;
 }
 
 .all-sets {
-    display: flex;
-    flex-direction: column;
+    border-radius: 15px;
+    border: .15rem solid $primary-color !important;
+    box-shadow: 0 .15rem 1.75rem 0 rgba(58,59,69,.25)!important;
+
+    background-color: $background-blue;
+    width: 50vw;
+    padding: 10px;
+    margin: 0 auto;
     
-    div {
-        width: 50%;
-        margin: 0 auto;
-        margin-bottom: 10px;
+    .set {
+        padding: 10px;
+        margin: 10px;
+        border-radius: 10px;
+        border-left: .15rem solid $primary-color !important;
+        border-right: .15rem solid $primary-color !important;
+        background-color: rgb(217, 219, 233);
+        transition: background-color 0.5s linear;
+        text-align: center;
+
+        &-title{
+            font-weight: bold;
+        }
+
+        &-author{
+            font-style: italic;
+        }
+
+        &:hover{
+            background-color: rgb(197, 200, 235);
+        }
     }
 }
