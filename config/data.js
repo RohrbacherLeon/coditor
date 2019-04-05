@@ -89,24 +89,6 @@ db.exercises.insert({
     "hasSucceeded": []
 });
 
-db.exercises.insert({
-    "stats": {
-        "fails": 0,
-        "success": 2,
-        "hasSucceeded": [ "student@student.fr" ]
-    },
-    "awaited": {
-        "titles": [ "le personnage doit avoir le nom toto", "le personnage doit avoir 18 ans" ]
-    },
-    "tags": [ "classe" ],
-    "inSets": [ ],
-    "title": "Ecrire une classe",
-    "slug": "ecrire-une-classe",
-    "language": "js",
-    "author": "teacher@teacher.fr",
-    "description": "Ecrire une classe qui comporte un constructeur. Ce constructeur prend 2 arguments : un nom et un age."
-});
-
 // Insére exercice PHP
 db.exercises.insert({
     "stats": {
