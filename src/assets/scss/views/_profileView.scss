@@ -99,35 +99,30 @@
         grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
         grid-gap: 10px;
 
-        .serie{
-            padding: 10px;
-            display: block;
-            overflow: auto;
-            box-shadow: 0 0 1px 1px lightgray;
-            border-radius: 4px;
-            background-color: whitesmoke; 
-            text-align: center;
-
-            &:hover{
+        .serie {    
+            position: relative;
+            .link-delete-set{
+                height: 28px;
+                width: 46px;
+                position: absolute;
+                top: 0;
+                right: 0;
+                color: red;
                 background-color: lightgrey;
-                transition: background-color 0.5s linear;
+                border-right: 2px gray solid;
+                transition: all 0.5s linear;
+                padding: 3px;
+                padding-left: 15px;
+                padding-right: 15px;
+                border-radius: 0 0 4px 4px;
+                cursor: pointer;
 
-                h4{
-                    border-bottom: 1px solid gray;
+                &:hover{
+                    background-color: gray;
                 }
             }
-
-            h4{
-                border-bottom: 1px solid lightgray;
-                padding-bottom: 5px;
-                font-weight: bold;
-                font-size: 1.15em;
-            }
-
-            .button{
-                margin-top: 15px;
-            }
         }
+        
     }
 
     &__exercises{
@@ -157,7 +152,7 @@
                 }
             }
 
-            .link-delete{
+            .link-delete-exercise {
                 height: 28px;
                 width: 46px;
                 position: absolute;

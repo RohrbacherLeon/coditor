@@ -5,6 +5,7 @@ const Set = require("../models/Set");
 
 router.get("/:slug", SetController.getSet);
 router.post("/:slug", SetController.postSetSuccess);
+router.delete("/:id", SetController.deleteSet);
 
 router.get("/:setslug/exercises/:lang/:slug", SetController.getExerciseInSet);
 router.post("/:setslug/exercises/:lang/:slug", SetController.postExerciseInSet);
