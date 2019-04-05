@@ -28,11 +28,9 @@ exports.register_post = (req, res) => {
         res.redirect("/register");
     } else {
         // test si l"email n"est deja pas utilise
-        console.log(req.body.email);
         User.findOne({ "profile.email": req.body.email }, (err, user) => {
             if (err) console.log(err);
             // si email deja utilisé, on redirige vers la page register
-            console.log(user);
             if (user) {
                 req.flash("error", "Cette adresse email est déjà utilisée.");
                 formFlash(req);
